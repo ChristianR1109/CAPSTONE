@@ -3,6 +3,7 @@ package christian_ragonese.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,4 +20,7 @@ public class Team {
     private UUID id;
     @Column(name = "name", nullable = false)
     private String name;
+
+
+
 }
