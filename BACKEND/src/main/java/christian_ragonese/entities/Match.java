@@ -22,4 +22,5 @@ public class Match {
     private String matchTitle;
     private String location;
     private LocalDate date;
+
 }
