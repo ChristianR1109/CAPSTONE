@@ -1,6 +1,7 @@
 package christian_ragonese.exceptions;
 
-import org.hibernate.validator.constraints.UUID;
+
+import java.util.UUID;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(Long id) {
