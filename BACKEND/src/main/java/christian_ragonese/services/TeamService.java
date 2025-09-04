@@ -1,7 +1,10 @@
 package christian_ragonese.services;
 
 import christian_ragonese.entities.Team;
+import christian_ragonese.exceptions.BadRequestException;
 import christian_ragonese.exceptions.NotFoundException;
+import christian_ragonese.payloads.TeamDTO;
+import christian_ragonese.payloads.TeamRespDTO;
 import christian_ragonese.repositories.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +29,24 @@ public class TeamService {
     public Team findById(UUID teamId) {
         return teamRepository.findById(teamId).orElseThrow(() -> new NotFoundException(teamId));
     }
+
+    public TeamRespDTO save(TeamDTO body) {
+
+        teamRepository.findByName(body.name()).ifPresent(team -> {
+            throw new BadRequestException("Name " + body.name() + " is already in use!");
+        });
+        Team newTeam = new Team(
+                body.name()
+        );
+
+        Team savedTeam = teamRepository.save(newTeam);
+        return new TeamRespDTO(savedTeam.getId());
+}
+    public Team findByName(String name) {
+        return teamRepository.findByName(name).orElseThrow(()-> new NotFoundException("Team named "+ name+ " not found!"));
+
+    }
+
 
 
 }

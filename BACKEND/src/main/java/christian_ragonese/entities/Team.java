@@ -20,11 +20,15 @@ public class Team {
     private UUID id;
     @Column(name = "name", nullable = false)
     private String name;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_matches",
-            joinColumns = @JoinColumn(name = "team_id"),
-            inverseJoinColumns = @JoinColumn(name = "match_id")
-    )
-    private List<Match> matches;
+
+    @OneToMany(mappedBy = "team1")
+    private List<Match> matchesAsTeam1;
+
+    @OneToMany(mappedBy = "team2")
+    private List<Match> matchesAsTeam2;
+
+
+    public Team(String name){
+this.name=name;
+    }
 }
