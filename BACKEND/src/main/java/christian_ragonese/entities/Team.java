@@ -1,5 +1,6 @@
 package christian_ragonese.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,9 +23,11 @@ public class Team {
     private String name;
 
     @OneToMany(mappedBy = "team1")
+    @JsonManagedReference(value = "team1-matches")
     private List<Match> matchesAsTeam1;
 
     @OneToMany(mappedBy = "team2")
+    @JsonManagedReference(value = "team2-matches")
     private List<Match> matchesAsTeam2;
 
 

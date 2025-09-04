@@ -7,6 +7,7 @@ import christian_ragonese.payloads.MatchRespDTO;
 import christian_ragonese.services.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -23,12 +24,12 @@ public class MatchController {
 
     @GetMapping
     public Page<Match> findAllMatches(@RequestParam(defaultValue = "0") int page,
-                                      @RequestParam(defaultValue = "10") int size,
+                                      @RequestParam(defaultValue = "5") int size,
                                       @RequestParam(defaultValue = "id") String sortBy){
         return matchService.findAllMatches(page,size,sortBy);
     }
 
-    @GetMapping("/id/{matchId}")
+    @GetMapping("/{matchId}")
     public Match findMatchById(@PathVariable UUID matchId){
         return matchService.findById(matchId);
     }
@@ -47,9 +48,21 @@ public class MatchController {
         }
         return matchService.save(body);
     }
-
-    @GetMapping("/{id}/matches")
-    public List<Match> getMatchesByTeamId(@PathVariable UUID id) {
-        return matchService.findMatchesByTeamId(id);
+    @DeleteMapping("/{matchId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void findByIdAndDelete(@PathVariable UUID matchId) {
+        matchService.findByIdAndDelete(matchId);
     }
+
+    @PutMapping("/{matchId}")
+    public Match findByIdAndUpdate(@PathVariable UUID matchId, @RequestBody @Validated MatchDTO body, BindingResult validationResult) {
+        if (validationResult.hasErrors()) {
+            List<String> errors = validationResult.getAllErrors().stream()
+                    .map(objectError -> objectError.getDefaultMessage())
+                    .toList();
+            throw new ValidationException(errors);
+        }
+        return matchService.findByIdAndUpdate(matchId, body);
+    }
+
 }

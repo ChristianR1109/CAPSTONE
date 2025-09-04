@@ -1,5 +1,6 @@
 package christian_ragonese.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,18 +24,21 @@ public class Match {
     private String location;
     private LocalDate date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team1")
+    @JsonBackReference(value = "team1-matches")
     private Team team1;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team2")
+    @JsonBackReference(value = "team2-matches")
     private Team team2;
 
-    public Match(String matchTitle, String location, LocalDate date, UUID team1Id, UUID team2Id) {
+    public Match(String matchTitle, String location, LocalDate date, Team team1, Team team2) {
         this.matchTitle = matchTitle;
         this.location = location;
         this.date = date;
-
+        this.team1= team1;
+        this.team2= team2;
     }
 }

@@ -17,4 +17,6 @@ public interface MatchRepository extends JpaRepository<Match, UUID> {
 
     @Query("SELECT m FROM Match m WHERE m.team1.id = :teamId OR m.team2.id = :teamId")
     List<Match> findMatchesByTeamId(@Param("teamId") UUID teamId);
+
+    List<Match> findByTeam1OrTeam2(Team team1, Team team2);
 }

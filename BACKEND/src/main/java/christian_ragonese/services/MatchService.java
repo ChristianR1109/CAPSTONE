@@ -6,6 +6,7 @@ import christian_ragonese.exceptions.BadRequestException;
 import christian_ragonese.exceptions.NotFoundException;
 import christian_ragonese.payloads.MatchDTO;
 import christian_ragonese.payloads.MatchRespDTO;
+import christian_ragonese.payloads.TeamDTO;
 import christian_ragonese.repositories.MatchRepository;
 import christian_ragonese.repositories.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,7 +28,7 @@ public class MatchService {
 private TeamRepository teamRepository;
 
     public Page<Match> findAllMatches(int page, int size, String sortBy) {
-        if (size > 50) size = 50;
+        if (size > 20) size = 20;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
         return matchRepository.findAll(pageable);
     }
@@ -43,17 +45,69 @@ private TeamRepository teamRepository;
         matchRepository.findByMatchTitle(body.matchTitle()).ifPresent(match -> {
             throw new BadRequestException("Match title "+ body.matchTitle() + " is already in use!");
         });
+
+        Team team1 = teamRepository.findById(body.team1Id())
+                .orElseThrow(() -> new NotFoundException(body.team1Id()));
+        Team team2 = teamRepository.findById(body.team2Id())
+                .orElseThrow(() -> new NotFoundException(body.team2Id()));
+
         Match newMatch = new Match(
                 body.matchTitle(),
                 body.location(),
                 body.date(),
-                body.team1Id(),
-                body.team2Id()
+                team1,
+                team2
         );
-        Match savedMatch = matchRepository.save(newMatch);
+        if (team1.getMatchesAsTeam1() != null) {
+            team1.getMatchesAsTeam1().add(newMatch);
+        } else {
+            List<Match> list = new ArrayList<>();
+            list.add(newMatch);
+            team1.setMatchesAsTeam1(list);
+        }
+
+        if (team2.getMatchesAsTeam2() != null) {
+            team2.getMatchesAsTeam2().add(newMatch);
+        } else {
+            List<Match> list = new ArrayList<>();
+            list.add(newMatch);
+            team2.setMatchesAsTeam2(list);
+        }
+
+        Match savedMatch=matchRepository.save(newMatch);
         return new MatchRespDTO(savedMatch.getId());
     }
+
+
     public List<Match> findMatchesByTeamId(UUID teamId) {
-        return matchRepository.findMatchesByTeamId(teamId);
+
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new NotFoundException(teamId));
+
+
+        return matchRepository.findByTeam1OrTeam2(team, team);
     }
+
+    public void findByIdAndDelete(UUID matchId) {
+        Match found = this.findById(matchId);
+        matchRepository.delete(found);
+    }
+
+    public Match findByIdAndUpdate(UUID matchId, MatchDTO body) {
+    
+        Team team1 = teamRepository.findById(body.team1Id())
+                .orElseThrow(() -> new NotFoundException(body.team1Id()));
+        Team team2 = teamRepository.findById(body.team2Id())
+                .orElseThrow(() -> new NotFoundException(body.team2Id()));
+
+        Match found = this.findById(matchId);
+        found.setMatchTitle(body.matchTitle());
+        found.setLocation(body.location());
+        found.setDate(body.date());
+        found.setTeam1(team1);
+        found.setTeam2(team2);
+
+        return matchRepository.save(found);
+    }
+
 }

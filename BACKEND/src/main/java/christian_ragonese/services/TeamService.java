@@ -47,6 +47,17 @@ public class TeamService {
 
     }
 
+    public void findByIdAndDelete(UUID teamId) {
+        Team found = this.findById(teamId);
+        teamRepository.delete(found);
+    }
+
+    public Team findByIdAndUpdate(UUID teamId, TeamDTO body) {
+        Team found = this.findById(teamId);
+        found.setName(body.name());
+        return teamRepository.save(found);
+    }
+
 
 
 }
