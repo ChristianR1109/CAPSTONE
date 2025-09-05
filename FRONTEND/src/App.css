@@ -1,3 +1,9 @@
-body {
-  background-color: blue;
+html {
+  background-color: rgb(119, 242, 242);
+}
+img {
+  width: 100%;
+}
+.wewe {
+  max-width: 20%;
 }
