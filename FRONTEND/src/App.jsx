@@ -5,7 +5,7 @@ import TopBar from "./components/Topbar";
 function App() {
   return (
     <BrowserRouter>
-      <TopBar claim="PROVISSIMA TOPBAR" />
+      <TopBar claim="" />
       <Routes>
         {/* i componenti possono tranquillamente ricevere props al loro interno */}
         <Route path="/" element="" />
