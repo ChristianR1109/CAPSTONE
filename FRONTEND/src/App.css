@@ -7,3 +7,7 @@ body {
   background-color: #171c1f;
   font-family: "Robonto", "Ubuntu", sans-serif;
 }
+.nav-div {
+  width: 3em;
+  height: 3.3em;
+}

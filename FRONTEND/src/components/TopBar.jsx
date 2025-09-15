@@ -2,8 +2,8 @@ import { Container, Nav, Navbar, Row, Col } from "react-bootstrap";
 
 const TopBar = (props) => (
   <Navbar expand="lg" className="nav-bg flex-column">
-    <Container className="ms-5 ">
-      <Navbar.Brand className="text-white" href="#home">
+    <Container className="ms-5 ps-0">
+      <Navbar.Brand className="text-white " href="#home">
         EASYTICKETS {props.claim}
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -11,83 +11,170 @@ const TopBar = (props) => (
         <Nav className="ms-auto"></Nav>
       </Navbar.Collapse>
     </Container>
-    <Container className="mt-4">
-      <Row>
-        <Col lg={1}>
-          <div className="p-3 border">1</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">1</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">1</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">1</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">2</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">3</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">4</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">5</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">6</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">7</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">8</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">9</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">10</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">1</div>
-        </Col>
-      </Row>
-      <Row>
-        <Col lg={1}>
-          <div className="p-3 border">11</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">12</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">13</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">14</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">15</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">16</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">17</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">18</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">19</div>
-        </Col>
-        <Col lg={1}>
-          <div className="p-3 border">20</div>
-        </Col>
-      </Row>
+    <Container className="ms-5 align-self-start ps-0">
+      <div
+        className="d-flex flex-wrap text-white"
+        style={{ gap: "10px" }} // spazio tra i div
+      >
+        <div className="nav-div">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/it/thumb/8/81/Logo_Atalanta_Bergamo.svg/524px-Logo_Atalanta_Bergamo.svg.png?20230226110525"
+            alt="Atalanta"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Bologna_F.C._1909_logo.svg/244px-Bologna_F.C._1909_logo.svg.png"
+            alt="Bologna"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/it/thumb/8/88/Cagliari_calcio.svg/800px-Cagliari_calcio.svg.png"
+            alt="Cagliari"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Calcio_Como_-_logo_%28Italy%2C_2019-%29.svg/726px-Calcio_Como_-_logo_%28Italy%2C_2019-%29.svg.png"
+            alt="Como"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/it/thumb/2/23/Unione_Sportiva_Cremonese_logo.svg/330px-Unione_Sportiva_Cremonese_logo.svg.png"
+            alt="Cremonese"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/ACF_Fiorentina_-_logo_%28Italy%2C_2022%29.svg/1024px-ACF_Fiorentina_-_logo_%28Italy%2C_2022%29.svg.png"
+            alt="Fiorentina"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/it/thumb/9/99/Genoa_Cricket_and_Football_Club_logo.svg/800px-Genoa_Cricket_and_Football_Club_logo.svg.png"
+            alt="Genoa"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/it/thumb/9/92/Hellas_Verona_FC_logo_%282020%29.svg/800px-Hellas_Verona_FC_logo_%282020%29.svg.png"
+            alt="Verona"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/1024px-FC_Internazionale_Milano_2021.svg.png"
+            alt="Inter"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Juventus_FC_-_logo_black_%28Italy%2C_2020%29.svg/246px-Juventus_FC_-_logo_black_%28Italy%2C_2020%29.svg.png"
+            alt="Juventus"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/it/thumb/6/62/Stemma_della_Societ%C3%A0_Sportiva_Lazio.svg/1280px-Stemma_della_Societ%C3%A0_Sportiva_Lazio.svg.png"
+            alt="Lazio"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/it/thumb/3/36/US_Lecce_Stemma.svg/720px-US_Lecce_Stemma.svg.png?20241002144328"
+            alt="Lecce"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Logo_of_AC_Milan.svg/541px-Logo_of_AC_Milan.svg.png"
+            alt="Milan"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/SSC_Napoli_2024_%28deep_blue_navy%29.svg/1024px-SSC_Napoli_2024_%28deep_blue_navy%29.svg.png"
+            alt="Napoli"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Logo_Parma_Calcio_1913_%28adozione_2016%29.svg/800px-Logo_Parma_Calcio_1913_%28adozione_2016%29.svg.png"
+            alt="Parma"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/it/thumb/d/d7/Logo_Pisa_SC_2017.svg/800px-Logo_Pisa_SC_2017.svg.png"
+            alt="Pisa"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/it/thumb/0/0e/AS_Roma_Logo_2017.svg/800px-AS_Roma_Logo_2017.svg.png"
+            alt="Roma"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/it/thumb/a/a4/Ussassuolostemma.svg/800px-Ussassuolostemma.svg.png"
+            alt="Sassuolo"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/it/thumb/0/04/Torino_FC_logo.svg/800px-Torino_FC_logo.svg.png"
+            alt="Torino"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+        <div className="nav-div">
+          {" "}
+          <img
+            src="https://upload.wikimedia.org/wikipedia/it/thumb/a/ae/Logo_Udinese_Calcio_2010.svg/1024px-Logo_Udinese_Calcio_2010.svg.png"
+            alt="Udinese"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+      </div>
     </Container>
   </Navbar>
 );
