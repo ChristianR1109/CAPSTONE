@@ -8,7 +8,7 @@ body {
   font-family: "Robonto", "Ubuntu", sans-serif;
 }
 .nav-div {
-  height: 2em;
+  height: 2.5em;
   align-content: end;
   cursor: pointer;
   padding: 0.1em;
@@ -32,4 +32,39 @@ h6 {
   margin-bottom: 0;
   display: inline-block;
   padding-right: 0.3em;
+}
+
+/* Controlli generali */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 40px; /* area cliccabile */
+  height: 40px; /* proporzionata */
+  top: 50%; /* centra verticalmente */
+  transform: translateY(-50%);
+  opacity: 0.8;
+  border-radius: 50%; /* facoltativo: freccia tonda */
+  background-color: rgba(0, 0, 0, 0.3); /* colore sfondo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Freccia sinistra */
+.carousel-control-prev {
+  left: 0; /* posizione base */
+  transform: translate(-50%, -50%); /* sposta metà fuori dal carosello */
+}
+
+/* Freccia destra */
+.carousel-control-next {
+  right: 0;
+  transform: translate(50%, -50%); /* sposta metà fuori dal carosello */
+}
+
+/* Icone freccia (Bootstrap default) */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-size: 100%, 100%;
+  background-color: rgba(255, 255, 255, 0.8); /* icona più visibile */
+  border-radius: 50%;
 }
