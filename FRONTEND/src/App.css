@@ -68,3 +68,32 @@ h6 {
   background-color: rgba(255, 255, 255, 0.8); /* icona più visibile */
   border-radius: 50%;
 }
+
+.home-text {
+  color: white;
+}
+
+.leaderboard-cs {
+  color: white;
+  background-color: #171c1f;
+}
+.table {
+  border-collapse: separate; /* necessario per arrotondare le celle */
+  border-spacing: 0; /* rimuove spazi extra tra le celle */
+}
+
+.table th:first-child {
+  border-top-left-radius: 0.5rem;
+}
+
+.table th:last-child {
+  border-top-right-radius: 0.5rem;
+}
+
+.table tr:last-child td:first-child {
+  border-bottom-left-radius: 0.5rem;
+}
+
+.table tr:last-child td:last-child {
+  border-bottom-right-radius: 0.5rem;
+}

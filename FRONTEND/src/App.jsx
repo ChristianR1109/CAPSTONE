@@ -1,16 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+
 import TopBar from "./components/Topbar";
-import TeamCarousel from "./components/TeamCarousel";
+import Home from "./components/Home";
 
 function App() {
   return (
     <BrowserRouter>
       <TopBar claim="" />
-      <TeamCarousel />
       <Routes>
-        {/* i componenti possono tranquillamente ricevere props al loro interno */}
-        <Route path="/" element="" />
+        <Route path="/" element={<Home />} />
+        {/* <Route path="/" element="" /> */}
       </Routes>
     </BrowserRouter>
   );
