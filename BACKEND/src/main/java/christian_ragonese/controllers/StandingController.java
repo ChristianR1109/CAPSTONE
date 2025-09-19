@@ -3,6 +3,7 @@ package christian_ragonese.controllers;
 import christian_ragonese.entities.Standings;
 import christian_ragonese.services.StandingService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/standings")
 public class StandingController {
+    @Autowired
     private  StandingService standingService;
 
     @GetMapping

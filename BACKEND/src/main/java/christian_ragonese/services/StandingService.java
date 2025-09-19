@@ -2,6 +2,7 @@ package christian_ragonese.services;
 
 import christian_ragonese.entities.Standings;
 import christian_ragonese.repositories.StandingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 @Service
 public class StandingService {
+    @Autowired
     private StandingRepository standingsRepository;
 
 

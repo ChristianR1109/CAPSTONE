@@ -13,7 +13,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Match {
+public class   Match {
     @Id
     @GeneratedValue
     @Column(name = "match_id", nullable = false)
