@@ -21,6 +21,15 @@ public class Team {
     private UUID id;
     @Column(name = "name", nullable = false)
     private String name;
+    private Integer pos;
+    private Integer played;
+    private Integer won;
+    private Integer drawn;
+    private Integer lost;
+    private Integer goalsFor;
+    private Integer goalsAgainst;
+    private Integer diff;
+    private Integer pts;
 
     @OneToMany(mappedBy = "team1")
     @JsonManagedReference(value = "team1-matches")
@@ -30,8 +39,17 @@ public class Team {
     @JsonManagedReference(value = "team2-matches")
     private List<Match> matchesAsTeam2;
 
-
-    public Team(String name){
-this.name=name;
+    public Team(String name, Integer pos, Integer played, Integer won, Integer drawn, Integer lost, Integer goalsFor, Integer goalsAgainst, Integer diff, Integer pts) {
+        this.name = name;
+        this.pos = pos;
+        this.played = played;
+        this.won = won;
+        this.drawn = drawn;
+        this.lost = lost;
+        this.goalsFor = goalsFor;
+        this.goalsAgainst = goalsAgainst;
+        this.diff = diff;
+        this.pts = pts;
     }
+
 }

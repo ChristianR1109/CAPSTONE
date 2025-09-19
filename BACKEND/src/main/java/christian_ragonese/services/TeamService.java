@@ -36,7 +36,16 @@ public class TeamService {
             throw new BadRequestException("Name " + body.name() + " is already in use!");
         });
         Team newTeam = new Team(
-                body.name()
+                body.name(),
+                body.pos(),
+                body.played(),
+                body.won(),
+                body.drawn(),
+                body.lost(),
+                body.goalsFor(),
+                body.goalsAgainst(),
+                body.diff(),
+                body.pts()
         );
 
         Team savedTeam = teamRepository.save(newTeam);
