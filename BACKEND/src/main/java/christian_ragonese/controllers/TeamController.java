@@ -56,10 +56,10 @@ public class TeamController {
 return teamService.save(body);
     }
 
-    @GetMapping("/{teamId}/matches")
-    public List<Match> getMatchesByTeamId(@PathVariable UUID teamId) {
-        return matchService.findMatchesByTeamId(teamId);
-    }
+//    @GetMapping("/{teamId}/matches")
+//    public List<Match> getMatchesByTeamId(@PathVariable UUID teamId) {
+//        return matchService.findMatchesByTeamId(teamId);
+//    }
 
     @DeleteMapping("/{teamId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

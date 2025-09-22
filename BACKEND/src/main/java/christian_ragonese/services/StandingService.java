@@ -30,4 +30,9 @@ public class StandingService {
     public void deleteById(UUID id) {
         standingsRepository.deleteById(id);
     }
+    public long count() {
+        return standingsRepository.count();
+    }
+
+
 }

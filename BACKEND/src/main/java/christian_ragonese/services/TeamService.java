@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -51,6 +52,10 @@ public class TeamService {
         Team savedTeam = teamRepository.save(newTeam);
         return new TeamRespDTO(savedTeam.getId());
 }
+
+    public Team save(Team team) {
+        return teamRepository.save(team);
+    }
     public Team findByName(String name) {
         return teamRepository.findByName(name).orElseThrow(()-> new NotFoundException("Team named "+ name+ " not found!"));
 
@@ -68,5 +73,16 @@ public class TeamService {
     }
 
 
+    public List<Team> findAll() {
+        return teamRepository.findAll();
+    }
 
+
+    public void saveAll(List<Team> teams2026) {
+        teamRepository.saveAll(teams2026);
+    }
+
+    public long count() {
+        return teamRepository.count();
+    }
 }

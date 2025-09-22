@@ -1,14 +1,7 @@
 package christian_ragonese.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -16,6 +9,7 @@ import java.util.UUID;
 @Table(name = "standings")
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 public class Standings {
@@ -35,9 +29,11 @@ public class Standings {
     private Integer goalsAgainst;
     private Integer diff;
     private Integer pts;
+    @Column(name = "last5")
+    private String last5;
 
-    public Standings(UUID id, Team team, Integer pos, Integer played, Integer won, Integer drawn, Integer lost, Integer goalsFor, Integer goalsAgainst, Integer diff, Integer pts) {
-        this.id = id;
+
+    public Standings(Team team, Integer pos, Integer played, Integer won, Integer drawn, Integer lost, Integer goalsFor, Integer goalsAgainst, Integer diff, Integer pts, String last5) {
         this.team = team;
         this.pos = pos;
         this.played = played;
@@ -48,5 +44,7 @@ public class Standings {
         this.goalsAgainst = goalsAgainst;
         this.diff = diff;
         this.pts = pts;
+        this.last5=last5;
     }
+
 }
