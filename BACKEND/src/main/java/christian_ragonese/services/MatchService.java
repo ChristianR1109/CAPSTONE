@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -25,7 +26,7 @@ public class MatchService {
 @Autowired
     private MatchRepository matchRepository;
 @Autowired
-private TeamRepository teamRepository;
+private TeamService teamService;
 
     public Page<Match> findAllMatches(int page, int size, String sortBy) {
         if (size > 20) size = 20;
@@ -36,8 +37,8 @@ private TeamRepository teamRepository;
         return matchRepository.findById(matchId).orElseThrow(() -> new NotFoundException(matchId));
     }
 
-    public Match findByMatchTitle(String matchTitle){
-        return matchRepository.findByMatchTitle(matchTitle).orElseThrow(()-> new NotFoundException(matchTitle));
+    public Optional<Match> findByMatchTitle(String matchTitle) {
+        return matchRepository.findByMatchTitle(matchTitle);
     }
 
     public MatchRespDTO save (MatchDTO body){
@@ -46,10 +47,9 @@ private TeamRepository teamRepository;
             throw new BadRequestException("Match title "+ body.matchTitle() + " is already in use!");
         });
 
-        Team team1 = teamRepository.findById(body.team1Id())
-                .orElseThrow(() -> new NotFoundException(body.team1Id()));
-        Team team2 = teamRepository.findById(body.team2Id())
-                .orElseThrow(() -> new NotFoundException(body.team2Id()));
+        Team team1 = teamService.findById(body.team1Id());
+
+        Team team2 = teamService.findById(body.team2Id());
 
         Match newMatch = new Match(
                 body.matchTitle(),
@@ -81,8 +81,7 @@ private TeamRepository teamRepository;
 
     public List<Match> findMatchesByTeamId(UUID teamId) {
 
-        Team team = teamRepository.findById(teamId)
-                .orElseThrow(() -> new NotFoundException(teamId));
+        Team team = teamService.findById(teamId);
 
 
         return matchRepository.findByTeam1OrTeam2(team, team);
@@ -95,10 +94,10 @@ private TeamRepository teamRepository;
 
     public Match findByIdAndUpdate(UUID matchId, MatchDTO body) {
     
-        Team team1 = teamRepository.findById(body.team1Id())
-                .orElseThrow(() -> new NotFoundException(body.team1Id()));
-        Team team2 = teamRepository.findById(body.team2Id())
-                .orElseThrow(() -> new NotFoundException(body.team2Id()));
+        Team team1 = teamService.findById(body.team1Id());
+
+        Team team2 = teamService.findById(body.team2Id());
+
 
         Match found = this.findById(matchId);
         found.setMatchTitle(body.matchTitle());
@@ -109,5 +108,14 @@ private TeamRepository teamRepository;
 
         return matchRepository.save(found);
     }
+    public List<Match> saveAll(List<Match> matches) {
+        return matchRepository.saveAll(matches);
+    }
+
+    public Match save(Match match) {
+        return matchRepository.save(match);
+    }
+
+
 
 }

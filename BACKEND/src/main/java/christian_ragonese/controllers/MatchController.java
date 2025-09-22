@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -24,7 +25,7 @@ public class MatchController {
 
     @GetMapping
     public Page<Match> findAllMatches(@RequestParam(defaultValue = "0") int page,
-                                      @RequestParam(defaultValue = "5") int size,
+                                      @RequestParam(defaultValue = "10") int size,
                                       @RequestParam(defaultValue = "id") String sortBy){
         return matchService.findAllMatches(page,size,sortBy);
     }
@@ -35,7 +36,7 @@ public class MatchController {
     }
 
     @GetMapping("/title/{matchTitle}")
-    public Match findMatchByTitle(@PathVariable String matchTitle){
+    public Optional<Match> findMatchByTitle(@PathVariable String matchTitle){
         return matchService.findByMatchTitle(matchTitle);
     }
 

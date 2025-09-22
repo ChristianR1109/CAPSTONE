@@ -13,7 +13,14 @@ const TopBar = (props) => (
       </Navbar.Collapse>
     </Container>
     <Container className="ms-5 align-self-start ps-0">
-      <div className="d-flex flex-wrap text-white" style={{ gap: "10px" }}>
+      {/* <DropdownButton id="dropdown-item-button" title="Dropdown button">
+        <Dropdown.ItemText>Dropdown item text</Dropdown.ItemText>
+        <Dropdown.Item as="button">Action</Dropdown.Item>
+        <Dropdown.Item as="button">Another action</Dropdown.Item>
+        <Dropdown.Item as="button">Something else</Dropdown.Item>
+      </DropdownButton> */}
+
+      {/* <div className="d-flex flex-wrap text-white" style={{ gap: "10px" }}>
         <Row>
           <Col>
             <div className="nav-div">
@@ -218,7 +225,7 @@ const TopBar = (props) => (
             </div>
           </Col>
         </Row>
-      </div>
+      </div> */}
     </Container>
   </Navbar>
 );

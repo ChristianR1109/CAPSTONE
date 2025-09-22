@@ -125,26 +125,31 @@ const LeagueTable = () => {
         <Col lg={4}>
           <Table striped bordered hover variant="dark" responsive className="rounded text-center">
             <thead>
+              <tr>PROSSIMA GIORNATA</tr>
+            </thead>
+
+            <tbody>
               <tr>
                 <th>Date</th>
                 <th>Home</th>
                 <th>Away</th>
               </tr>
-            </thead>
-            <tbody>
               {Array.isArray(matches) && matches.length > 0 ? (
-                matches.map((match, idx) => {
-                  const teams = match.matchTitle.split(" vs ");
-                  const team1 = teams[0] || "";
-                  const team2 = teams[1] || "";
-                  return (
-                    <tr key={idx}>
-                      <td>{match.date}</td>
-                      <td>{team1}</td>
-                      <td>{team2}</td>
-                    </tr>
-                  );
-                })
+                [...matches]
+                  .sort((a, b) => new Date(a.date) - new Date(b.date)) // Ordina per data crescente
+                  .slice(0, 10)
+                  .map((match, idx) => {
+                    const teams = match.matchTitle.split(" vs ");
+                    const team1 = teams[0] || "";
+                    const team2 = teams[1] || "";
+                    return (
+                      <tr key={idx}>
+                        <td>{match.date}</td>
+                        <td>{team1}</td>
+                        <td>{team2}</td>
+                      </tr>
+                    );
+                  })
               ) : (
                 <tr>
                   <td colSpan="4" className="text-center">
