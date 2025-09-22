@@ -1,4 +1,31 @@
 import { Container, Nav, Navbar, Row, Col } from "react-bootstrap";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
+
+const teams = [
+  { name: "Atalanta", img: "https://upload.wikimedia.org/wikipedia/it/thumb/8/81/Logo_Atalanta_Bergamo.svg/800px-Logo_Atalanta_Bergamo.svg.png" },
+  { name: "Bologna", img: "url2" },
+  { name: "Cagliari", img: "url3" },
+  { name: "Como", img: "url1" },
+  { name: "Cremonese", img: "url2" },
+  { name: "Fiorentina", img: "url3" },
+  { name: "Genoa", img: "url1" },
+  { name: "Verona", img: "url2" },
+  { name: "Inter", img: "url3" },
+  { name: "Juventus", img: "url1" },
+  { name: "Lazio", img: "url2" },
+  { name: "Lecce", img: "url3" },
+  { name: "Milan", img: "url1" },
+  { name: "Napoli", img: "url2" },
+  { name: "Parma", img: "url3" },
+  { name: "Pisa", img: "url1" },
+  { name: "Roma", img: "url2" },
+  { name: "Sassuolo", img: "url3" },
+  { name: "Torino", img: "url1" },
+  { name: "Udinese", img: "url2" },
+
+  // ... fino a 20 elementi unici
+];
 
 const TopBar = (props) => (
   <Navbar expand="lg" className="nav-bg flex-column ">
@@ -13,12 +40,26 @@ const TopBar = (props) => (
       </Navbar.Collapse>
     </Container>
     <Container className="ms-5 align-self-start ps-0">
-      {/* <DropdownButton id="dropdown-item-button" title="Dropdown button">
-        <Dropdown.ItemText>Dropdown item text</Dropdown.ItemText>
-        <Dropdown.Item as="button">Action</Dropdown.Item>
-        <Dropdown.Item as="button">Another action</Dropdown.Item>
-        <Dropdown.Item as="button">Something else</Dropdown.Item>
-      </DropdownButton> */}
+      <DropdownButton id="dropdown-item-button" title="Acquista biglietti" variant="dark">
+        <Dropdown.Item as="div" variant="dark" className=" bg-dark text-white my-dark-dropdown p-2" style={{ minWidth: "550px", width: "100%" }}>
+          <Row>
+            {[...Array(4)].map((_, colIndex) => (
+              <Col key={colIndex} xs={3}>
+                {[...Array(5)].map((_, rowIndex) => {
+                  const index = colIndex * 5 + rowIndex;
+                  const item = teams[index];
+                  return (
+                    <div className="nav-div mb-3" key={index}>
+                      <h6>{item.name}</h6>
+                      <img src={item.img} alt={item.name} style={{ width: "20%", height: "100%" }} />
+                    </div>
+                  );
+                })}
+              </Col>
+            ))}
+          </Row>
+        </Dropdown.Item>
+      </DropdownButton>
 
       {/* <div className="d-flex flex-wrap text-white" style={{ gap: "10px" }}>
         <Row>
