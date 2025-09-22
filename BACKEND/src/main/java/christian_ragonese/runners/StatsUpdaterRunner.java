@@ -1,6 +1,7 @@
 package christian_ragonese.runners;
 
 import christian_ragonese.entities.Team;
+import christian_ragonese.payloads.StatsDTO;
 import christian_ragonese.repositories.TeamRepository;
 import christian_ragonese.services.StandingService;
 import christian_ragonese.services.TeamService;
@@ -26,51 +27,50 @@ public class StatsUpdaterRunner implements CommandLineRunner {
         List<Team> teams = teamService.findAll();
 
         for (Team team : teams) {
-            Optional<Team> updatedStats = getUpdatedStatsForTeam(team.getName());
-            if (updatedStats.isPresent()) {
-                Team updated = updatedStats.get();
-                team.setPos(updated.getPos());
-                team.setPlayed(updated.getPlayed());
-                team.setWon(updated.getWon());
-                team.setDrawn(updated.getDrawn());
-                team.setLost(updated.getLost());
-                team.setGoalsFor(updated.getGoalsFor());
-                team.setGoalsAgainst(updated.getGoalsAgainst());
-                team.setDiff(updated.getDiff());
-                team.setPts(updated.getPts());
+            StatsDTO updatedStats = getUpdatedStatsForTeam(team.getName());
 
-                teamService.save(team);
-            }
+                if(updatedStats !=null) {
+                    team.setWon(updatedStats.won());
+                    team.setDrawn(updatedStats.drawn());
+                    team.setLost(updatedStats.lost());
+                    team.setGoalsFor(updatedStats.goalsFor());
+                    team.setGoalsAgainst(updatedStats.goalsAgainst());
+                    team.setLast5(updatedStats.last5());
+                    team.setLogo(updatedStats.logo());
+
+                    teamService.save(team);
+                }
         }
 
         System.out.println("Statistiche squadre Serie A aggiornate.");
     }
 
     // Metodo di esempio per restituire dati aggiornati per una squadra
-    private Optional<Team> getUpdatedStatsForTeam(String name) {
+    private StatsDTO getUpdatedStatsForTeam(String name) {
         // Simulazione dati aggiornati
         return switch (name) {
-            case "Atalanta" -> Optional.of(new Team(name, 5, 4, 32, 2, 0, 9, 3, +6, 8));
-            case "Bologna" -> Optional.of(new Team(name, 11, 4, 2, 0, 2, 3, 3, +0, 6));
-            case "Cagliari" -> Optional.of(new Team(name, 7, 4, 2, 1, 1, 5, 3, +2, 7));
-            case "Como" -> Optional.of(new Team(name, 8, 4, 2, 1, 1, 5, 3, +2, 7));
-            case "Cremonese" -> Optional.of(new Team(name, 6, 4, 2, 2, 0, 5, 3, +2, 8));
-            case "Fiorentina" -> Optional.of(new Team(name, 17, 4, 0, 2, 2, 3, 6, -3, 2));
-            case "Genoa" -> Optional.of(new Team(name, 16, 4, 0, 2, 2, 2, 4, -2, 2));
-            case "Verona" -> Optional.of(new Team(name, 15, 4, 0, 3, 1, 2, 6, -4, 3));
-            case "Inter" -> Optional.of(new Team(name, 10, 4, 2, 0, 2, 11, 7, +4, 6));
-            case "Juventus" -> Optional.of(new Team(name, 1, 4, 3, 1, 0, 8, 4, +4, 10));
-            case "Lazio" -> Optional.of(new Team(name, 13, 4, 1, 0, 3, 4, 4, 0, 3));
-            case "Lecce" -> Optional.of(new Team(name, 20, 4, 0, 1, 3, 2, 8, -6, 1));
-            case "Milan" -> Optional.of(new Team(name, 2, 4, 3, 0, 1, 7, 2, +5, 9));
-            case "Napoli" -> Optional.of(new Team(name, 3, 3, 3, 0, 0, 6, 1, +5, 9));
-            case "Parma" -> Optional.of(new Team(name, 18, 4, 0, 2, 2, 1, 5, -4, 2));
-            case "Pisa" -> Optional.of(new Team(name, 19, 3, 0, 1, 2, 1, 3, -2, 1));
-            case "Roma" -> Optional.of(new Team(name, 4, 4, 3, 0, 1, 3, 1, +2, 9));
-            case "Sassuolo" -> Optional.of(new Team(name, 14, 4, 1, 0, 3, 4, 7, -3, 3));
-            case "Torino" -> Optional.of(new Team(name, 12, 4, 1, 1, 2, 1, 8, -7, 4));
-            case "Udinese" -> Optional.of(new Team(name, 9, 4, 2, 1, 1, 4, 5, -1, 7));
-            default -> Optional.empty();
+            case "Atalanta" -> new StatsDTO( 2, 2, 0, 9, 3,  "DDWW", "DDWW");
+            case "Bologna" -> new StatsDTO( 2, 0, 2, 3, 3, "LWLW", "LWLW");
+            case "Cagliari" -> new StatsDTO( 2, 1, 1, 5, 3,  "DLWW", "DLWW");
+            case "Como" -> new StatsDTO( 2, 1, 1, 5, 3,  "WLDN", "WLDW");
+            case "Cremonese" -> new StatsDTO( 2, 2, 0, 5, 3,  "WWDD", "WWDD");
+            case "Fiorentina" -> new StatsDTO( 0, 2, 2, 3, 6,  "DDLL", "DDLL");
+            case "Genoa" -> new StatsDTO( 0, 2, 2, 2, 4,  "DLDL", "DLDL");
+            case "Verona" -> new StatsDTO( 0, 3, 1, 2, 6,  "DLDD", "DLDD");
+            case "Inter" -> new StatsDTO(2, 0, 2, 11, 7,  "WLLW", "WLLW");
+            case "Juventus" -> new StatsDTO( 3, 1, 0, 8, 4, "WWWD", "WWWD");
+            case "Lazio" -> new StatsDTO( 1, 0, 3, 4, 4, "LWLL", "LWLL");
+            case "Lecce" -> new StatsDTO( 0, 1, 3, 2, 8,  "DLLL", "DLLL");
+            case "Milan" -> new StatsDTO( 3, 0, 1, 7, 2,  "LWWW", "LWWW");
+            case "Napoli" -> new StatsDTO( 4, 0, 0, 9, 3,  "WWWW", "WWWW");
+            case "Parma" -> new StatsDTO( 0, 2, 2, 1, 5,  "LDLD", "LDLD");
+            case "Pisa" -> new StatsDTO( 0, 1, 3, 3, 6,  "DLLL", "DLLL");
+            case "Roma" -> new StatsDTO( 3, 0, 1, 3, 1,  "WWLW", "WWLW");
+            case "Sassuolo" -> new StatsDTO( 1, 0, 3, 4, 7,  "LLWL", "LLWL");
+            case "Torino" -> new StatsDTO( 1, 1, 2, 1, 8,  "LDWL", "LDWL");
+            case "Udinese" -> new StatsDTO( 2, 1, 1, 4, 5,  "DWWL", "DWWL");
+
+            default -> new StatsDTO( 0, 0, 0, 0, 0,  "", "");
         };
     }
 }

@@ -38,15 +38,14 @@ public class TeamService {
         });
         Team newTeam = new Team(
                 body.name(),
-                body.pos(),
-                body.played(),
                 body.won(),
                 body.drawn(),
                 body.lost(),
                 body.goalsFor(),
                 body.goalsAgainst(),
-                body.diff(),
-                body.pts()
+                body.last5(),
+                body.logo()
+
         );
 
         Team savedTeam = teamRepository.save(newTeam);

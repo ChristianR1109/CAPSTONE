@@ -10,10 +10,6 @@ public record TeamDTO(
         @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters.")
         String name,
 
-        @NotNull(message = "Position is required.")
-        @PositiveOrZero(message = "Position must be zero or positive.")
-        Integer pos,
-
         @NotNull(message = "Played matches count is required.")
         @PositiveOrZero(message = "Played matches must be zero or positive.")
         Integer played,
@@ -38,11 +34,11 @@ public record TeamDTO(
         @PositiveOrZero(message = "Goals Against must be zero or positive.")
         Integer goalsAgainst,
 
-        @NotNull(message = "Goal difference is required.")
-        Integer diff,
+        @NotNull(message = "last 5 are reqiored")
+        String last5,
 
-        @NotNull(message = "Points are required.")
-        @PositiveOrZero(message = "Points must be zero or positive.")
-        Integer pts
+        @NotNull(message = "Logo is required.")
+
+        String logo
 ) {
 }

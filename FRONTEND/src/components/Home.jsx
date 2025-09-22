@@ -87,16 +87,21 @@ const LeagueTable = () => {
             <tbody>
               {Array.isArray(standings) && standings.length > 0 ? (
                 [...standings]
-                  .sort((a, b) => a.pos - b.pos)
-                  .map((team) => (
+                  .sort((a, b) => {
+                    if (b.won * 3 + b.drawn === a.won * 3 + a.drawn) {
+                      return b.goalsFor - b.goalsAgainst - (a.goalsFor - a.goalsAgainst);
+                    }
+                    return b.won * 3 + b.drawn - (a.won * 3 + a.drawn);
+                  })
+                  .map((team, c) => (
                     <tr key={team.team.name}>
-                      <td>{team.pos}</td>
+                      <td>{c + 1}</td>
                       <td>{team.team.name}</td>
-                      <td>{team.played}</td>
+                      <td>{team.won + team.lost + team.drawn}</td>
                       <td>{team.won}</td>
                       <td>{team.drawn}</td>
                       <td>{team.lost}</td>
-                      <td>{team.diff}</td>
+                      <td>{team.goalsFor - team.goalsAgainst}</td>
                       <td>{team.goalsFor + ":" + team.goalsAgainst}</td>
                       <td>
                         {typeof team.last5 === "string" && team.last5.length > 0 ? (
@@ -109,7 +114,7 @@ const LeagueTable = () => {
                           <span>-</span>
                         )}
                       </td>
-                      <td>{team.pts}</td>
+                      <td>{team.won * 3 + team.drawn}</td>
                     </tr>
                   ))
               ) : (
