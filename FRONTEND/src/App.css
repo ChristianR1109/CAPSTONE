@@ -7,7 +7,7 @@ html {
 .nav-bg {
   background-color: #171c1f;
   font-family: "Robonto", "Ubuntu", sans-serif;
-  z-index: 0;
+
   width: 100%;
 }
 .nav-div {
@@ -131,4 +131,5 @@ h6 {
 .navbar {
   margin-bottom: 0; /* niente spazio sotto */
   border-bottom: none; /* se vuoi un effetto continuo */
+  z-index: 1050;
 }

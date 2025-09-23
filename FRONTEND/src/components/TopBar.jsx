@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Container, Nav, Navbar, Row, Col, Spinner, Alert } from "react-bootstrap";
+import { Container, Nav, Navbar, Row, Col, Spinner, Alert, Button } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import { useLocation } from "react-router-dom"; // Importa location hook
 
 const TopBar = (props) => {
+  const location = useLocation();
+  const isAtalantaPage = location.pathname.startsWith("/atalanta");
+
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,7 +23,6 @@ const TopBar = (props) => {
         setTeams(teamsSorted);
         setLoading(false);
       })
-
       .catch((err) => {
         setError(err.message);
         setLoading(false);
@@ -46,21 +49,23 @@ const TopBar = (props) => {
   const numColumns = Math.ceil((teams?.length || 0) / 5);
 
   return (
-    <Navbar expand="lg" className="nav-bg sticky-top d-flex" variant="dark">
+    <Navbar expand="lg" className="nav-bg sticky-top d-flex flex-column" variant="dark">
       <Container fluid className="page-container mx-auto">
-        <div className="w-100">
-          <Container fluid className="logo-cont ms-0 ps-0 me-0 align-self-start mt-0 d-flex justify-content-center">
-            <Navbar.Brand className="text-white text-center" href="#home">
-              <h4 className="my-2">EASYTICKETS</h4>
+        {/* Prima riga: brand */}
+        <div className="d-block w-100">
+          <div className="w-100 d-flex mb-0">
+            <Navbar.Brand className="text-white text-center" href="home">
+              {isAtalantaPage ? <span style={{ color: "#1b9af7", fontWeight: "bold" }}>Atalanta Tickets</span> : "EASYTICKETS"}
               {props.claim}
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="mx-auto"></Nav>
-            </Navbar.Collapse>
-          </Container>
-          <Container fluid className="d-flex flex-column ms-0 align-self-start ps-0 mt-0 justify-content-center">
-            <DropdownButton id="dropdown-item-button" title="Acquista biglietti" variant="dark" className="mx-0">
+          </div>
+          <div>
+            <DropdownButton
+              id="dropdown-item-button"
+              title={<span style={{ color: "white", cursor: "pointer", textDecoration: "none" }}>Acquista biglietti</span>}
+              variant="dark"
+              className="p-0 m-0"
+            >
               <Dropdown.Item as="div" variant="dark" className="bg-dark text-white my-dark-dropdown p-2" style={{ minWidth: "550px", width: "100%" }}>
                 <Row>
                   {[...Array(numColumns)].map((_, colIndex) => (
@@ -76,7 +81,34 @@ const TopBar = (props) => {
                 </Row>
               </Dropdown.Item>
             </DropdownButton>
-          </Container>
+          </div>
+        </div>
+        <div className="w-100 d-flex justify-content-end gap-3">
+          {/* Seconda riga: bottoni e dropdown */}
+
+          {isAtalantaPage ? (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+              <Button variant="outline-light" href="/atalanta/matches">
+                Partite
+              </Button>
+              <Button variant="outline-light" href="/atalanta/contact">
+                Contatti
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+
+              <Button variant="outline-light" href="/about">
+                Info
+              </Button>
+            </>
+          )}
         </div>
       </Container>
     </Navbar>

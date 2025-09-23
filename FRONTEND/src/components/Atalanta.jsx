@@ -23,31 +23,12 @@ const Atalanta = () => {
 
   return (
     <>
-      <div className="stripe-background" style={{ minHeight: "100vh", color: "white" }}>
-        <Navbar bg="dark" variant="dark" className="mb-4 sticky-top" style={{ borderBottom: "4px solid #0a2e6e" }}>
-          <Container>
-            <Navbar.Brand href="#home" style={{ color: "#0a2e6e", fontWeight: "bold" }}>
-              Atalanta Tickets
-            </Navbar.Brand>
-            <Nav className="me-auto">
-              <Nav.Link href="#home" style={{ color: "#0a2e6e" }}>
-                Home
-              </Nav.Link>
-              <Nav.Link href="#matches" style={{ color: "#0a2e6e" }}>
-                Partite
-              </Nav.Link>
-              <Nav.Link href="#contact" style={{ color: "#0a2e6e" }}>
-                Contatti
-              </Nav.Link>
-            </Nav>
-          </Container>
-        </Navbar>
-
-        <Container style={{ maxWidth: "600px" }}>
-          <Card bg="black" text="white" className="p-4 shadow-lg" style={{ border: "2px solid #0a2e6e" }}>
+      <div className="stripe-atalanta" style={{ minHeight: "100vh", color: "white" }}>
+        <Container fluid className=" my-5 " style={{ maxWidth: "600px" }}>
+          <Card bg="black" text="white" className=" p-0 shadow-lg" style={{ border: "2px solid #ffffffff" }}>
             <Card.Body>
-              <Card.Title style={{ color: "#0a2e6e" }}>Acquista i tuoi biglietti per Atalanta</Card.Title>
-              <Card.Subtitle className="mb-3" style={{ color: "#c0c7d0" }}>
+              <Card.Title style={{ color: "#ffffffff" }}>Acquista i tuoi biglietti per Atalanta</Card.Title>
+              <Card.Subtitle className="mb-3" style={{ color: "#ffffffff" }}>
                 Seleziona la partita e inserisci i tuoi dati
               </Card.Subtitle>
 
@@ -64,13 +45,13 @@ const Atalanta = () => {
                     value={selectedMatch}
                     onChange={(e) => setSelectedMatch(e.target.value)}
                     required
-                    style={{ backgroundColor: "#0a2e6e", color: "white", borderColor: "#0a2e6e" }}
+                    style={{ backgroundColor: "#0a2e6e", color: "white", borderColor: "#ffffffff" }}
                   >
                     <option value="" style={{ color: "black" }}>
                       Seleziona partita
                     </option>
                     {matches.map((match, idx) => (
-                      <option key={idx} value={match} style={{ color: "black" }}>
+                      <option key={idx} value={match} style={{ color: "white" }}>
                         {match}
                       </option>
                     ))}
@@ -86,21 +67,21 @@ const Atalanta = () => {
                     value={tickets}
                     onChange={(e) => setTickets(e.target.value)}
                     required
-                    style={{ backgroundColor: "#0a2e6e", color: "white", borderColor: "#0a2e6e" }}
+                    style={{ backgroundColor: "#0a2e6e", color: "white", borderColor: "#ffffffff" }}
                   />
                 </Form.Group>
 
                 <Row>
                   <Col>
                     <Form.Group className="mb-3" controlId="formName">
-                      <Form.Label style={{ color: "#c0c7d0" }}>Nome</Form.Label>
+                      <Form.Label style={{ color: "#ffffffff" }}>Nome</Form.Label>
                       <Form.Control
                         type="text"
                         placeholder="Nome completo"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        style={{ backgroundColor: "#0a2e6e", color: "white", borderColor: "#0a2e6e" }}
+                        style={{ backgroundColor: "#4268aaff", color: "white", borderColor: "#ffffffff" }}
                       />
                     </Form.Group>
                   </Col>
@@ -113,7 +94,7 @@ const Atalanta = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        style={{ backgroundColor: "#0a2e6e", color: "white", borderColor: "#0a2e6e" }}
+                        style={{ backgroundColor: "#4268aaff", color: "white", borderColor: "#ffffffff" }}
                       />
                     </Form.Group>
                   </Col>
