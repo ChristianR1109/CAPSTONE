@@ -66,106 +66,118 @@ const LeagueTable = () => {
   }
 
   return (
-    <Container className="mx-5 my-3">
-      <Row>
-        <Col lg={8}>
-          <Table className="rounded" striped bordered hover variant="dark" responsive>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Team</th>
-                <th>P</th>
-                <th>W</th>
-                <th>D</th>
-                <th>L</th>
-                <th>DIFF</th>
-                <th>Goals</th>
-                <th>Last 5</th>
-                <th>PTS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Array.isArray(standings) && standings.length > 0 ? (
-                [...standings]
-                  .sort((a, b) => {
-                    if (b.won * 3 + b.drawn === a.won * 3 + a.drawn) {
-                      return b.goalsFor - b.goalsAgainst - (a.goalsFor - a.goalsAgainst);
-                    }
-                    return b.won * 3 + b.drawn - (a.won * 3 + a.drawn);
-                  })
-                  .map((team, c) => (
-                    <tr key={team.team.name}>
-                      <td>{c + 1}</td>
-                      <td>{team.team.name}</td>
-                      <td>{team.won + team.lost + team.drawn}</td>
-                      <td>{team.won}</td>
-                      <td>{team.drawn}</td>
-                      <td>{team.lost}</td>
-                      <td>{team.goalsFor - team.goalsAgainst}</td>
-                      <td>{team.goalsFor + ":" + team.goalsAgainst}</td>
-                      <td>
-                        {typeof team.last5 === "string" && team.last5.length > 0 ? (
-                          team.last5.split("").map((res, i) => (
-                            <Badge key={`${res}-${i}`} bg={getBadgeVariant(res)} className="me-1 px-2 py-1">
-                              {res}
-                            </Badge>
-                          ))
-                        ) : (
-                          <span>-</span>
-                        )}
-                      </td>
-                      <td>{team.won * 3 + team.drawn}</td>
-                    </tr>
-                  ))
-              ) : (
+    <Container fluid className="page-container">
+      <Container fluid className="my-5 d-flex justify-content-center mx-auto p-0">
+        <Row className="w-100">
+          <Col lg={8} className="p-0">
+            <Table className="rounded" striped bordered hover variant="dark" responsive>
+              <thead>
                 <tr>
-                  <td colSpan="10" className="text-center">
-                    No standings available
-                  </td>
+                  <th>#</th>
+                  <th>Team</th>
+                  <th>P</th>
+                  <th>W</th>
+                  <th>D</th>
+                  <th>L</th>
+                  <th>DIFF</th>
+                  <th>Goals</th>
+                  <th>Last 5</th>
+                  <th>PTS</th>
                 </tr>
-              )}
-            </tbody>
-          </Table>
-        </Col>
-        <Col lg={4}>
-          <Table striped bordered hover variant="dark" responsive className="rounded text-center">
-            <thead>
-              <tr>PROSSIMA GIORNATA</tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <th>Date</th>
-                <th>Home</th>
-                <th>Away</th>
-              </tr>
-              {Array.isArray(matches) && matches.length > 0 ? (
-                [...matches]
-                  .sort((a, b) => new Date(a.date) - new Date(b.date)) // Ordina per data crescente
-                  .slice(0, 10)
-                  .map((match, idx) => {
-                    const teams = match.matchTitle.split(" vs ");
-                    const team1 = teams[0] || "";
-                    const team2 = teams[1] || "";
-                    return (
-                      <tr key={idx}>
-                        <td>{match.date}</td>
-                        <td>{team1}</td>
-                        <td>{team2}</td>
+              </thead>
+              <tbody>
+                {Array.isArray(standings) && standings.length > 0 ? (
+                  [...standings]
+                    .sort((a, b) => {
+                      if (b.won * 3 + b.drawn === a.won * 3 + a.drawn) {
+                        return b.goalsFor - b.goalsAgainst - (a.goalsFor - a.goalsAgainst);
+                      }
+                      return b.won * 3 + b.drawn - (a.won * 3 + a.drawn);
+                    })
+                    .map((team, c) => (
+                      <tr key={team.team.name}>
+                        <td>{c + 1}</td>
+                        <td>
+                          <div className="d-flex align-items-center">
+                            <img
+                              src={team.team.logo} // adatta il path corretto al logo
+                              alt={team.team.name + " logo"}
+                              style={{ width: "30px", height: "30px", objectFit: "contain", marginRight: "10px" }}
+                            />
+                            <span>{team.team.name}</span>
+                          </div>
+                        </td>
+                        <td>{team.won + team.lost + team.drawn}</td>
+                        <td>{team.won}</td>
+                        <td>{team.drawn}</td>
+                        <td>{team.lost}</td>
+                        <td>{team.goalsFor - team.goalsAgainst}</td>
+                        <td>{team.goalsFor + ":" + team.goalsAgainst}</td>
+                        <td>
+                          {typeof team.last5 === "string" && team.last5.length > 0 ? (
+                            team.last5.split("").map((res, i) => (
+                              <Badge key={`${res}-${i}`} bg={getBadgeVariant(res)} className="me-1 px-2 py-1">
+                                {res}
+                              </Badge>
+                            ))
+                          ) : (
+                            <span>-</span>
+                          )}
+                        </td>
+                        <td>{team.won * 3 + team.drawn}</td>
                       </tr>
-                    );
-                  })
-              ) : (
+                    ))
+                ) : (
+                  <tr>
+                    <td colSpan="10" className="text-center">
+                      No standings available
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </Table>
+          </Col>
+          <Col lg={4}>
+            <Table striped bordered hover variant="dark" responsive className="rounded text-center">
+              <thead>
                 <tr>
-                  <td colSpan="4" className="text-center">
-                    No matches available
-                  </td>
+                  <th colSpan={3}>PROSSIMA GIORNATA</th>
                 </tr>
-              )}
-            </tbody>
-          </Table>
-        </Col>
-      </Row>
+                <tr>
+                  <th>Date</th>
+                  <th>Home</th>
+                  <th>Away</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Array.isArray(matches) && matches.length > 0 ? (
+                  [...matches]
+                    .sort((a, b) => new Date(a.date) - new Date(b.date)) // Ordina per data crescente
+                    .slice(0, 10)
+                    .map((match, idx) => {
+                      const teams = match.matchTitle.split(" vs ");
+                      const team1 = teams[0] || "";
+                      const team2 = teams[1] || "";
+                      return (
+                        <tr key={idx}>
+                          <td>{match.date}</td>
+                          <td>{team1}</td>
+                          <td>{team2}</td>
+                        </tr>
+                      );
+                    })
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="text-center">
+                      No matches available
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
+      </Container>
     </Container>
   );
 };

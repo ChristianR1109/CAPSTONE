@@ -2,12 +2,13 @@
 
 body,
 html {
-  overflow-x: hidden;
   background-color: black;
 }
 .nav-bg {
   background-color: #171c1f;
   font-family: "Robonto", "Ubuntu", sans-serif;
+  z-index: 0;
+  width: 100%;
 }
 .nav-div {
   height: 2.5em;
@@ -110,4 +111,24 @@ h6 {
   box-shadow: none !important; /* opzionale se vuoi togliere anche l'ombra */
   background-color: #212529 !important; /* assicura colore scuro anche in hover */
   padding: 0;
+}
+.logo-cont {
+  height: 3.5em;
+}
+.page-container {
+  max-width: 1140px; /* larghezza container di bootstrap lg */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem; /* padding coerente */
+  padding-right: 1rem;
+}
+.stripe-atalanta {
+  background: repeating-linear-gradient(90deg, #000000, /* nero */ #000000 30px, #0a2e6e 30px, /* blu Atalanta */ #0a2e6e 60px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.navbar {
+  margin-bottom: 0; /* niente spazio sotto */
+  border-bottom: none; /* se vuoi un effetto continuo */
 }
