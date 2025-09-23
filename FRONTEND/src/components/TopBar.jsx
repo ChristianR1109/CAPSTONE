@@ -2,15 +2,43 @@ import React, { useEffect, useState } from "react";
 import { Container, Nav, Navbar, Row, Col, Spinner, Alert, Button } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { useLocation } from "react-router-dom"; // Importa location hook
+import { Link, useLocation } from "react-router-dom"; // Importa location hook
 
 const TopBar = (props) => {
   const location = useLocation();
   const isAtalantaPage = location.pathname.startsWith("/atalanta");
+  const isBolognaPage = location.pathname.startsWith("/bologna");
 
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const teamLogos = {
+    Atalanta: "https://upload.wikimedia.org/wikipedia/it/thumb/8/81/Logo_Atalanta_Bergamo.svg/800px-Logo_Atalanta_Bergamo.svg.png",
+    Bologna: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Bologna_F.C._1909_logo.svg/244px-Bologna_F.C._1909_logo.svg.png",
+    Cagliari: "https://upload.wikimedia.org/wikipedia/it/thumb/8/88/Cagliari_calcio.svg/800px-Cagliari_calcio.svg.png",
+    Como: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Calcio_Como_-_logo_%28Italy%2C_2019-%29.svg/726px-Calcio_Como_-_logo_%28Italy%2C_2019-%29.svg.png",
+    Cremonese: "https://upload.wikimedia.org/wikipedia/it/thumb/2/23/Unione_Sportiva_Cremonese_logo.svg/330px-Unione_Sportiva_Cremonese_logo.svg.png",
+    Fiorentina:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/ACF_Fiorentina_-_logo_%28Italy%2C_2022%29.svg/1024px-ACF_Fiorentina_-_logo_%28Italy%2C_2022%29.svg.png",
+    Genoa: "https://upload.wikimedia.org/wikipedia/it/thumb/9/99/Genoa_Cricket_and_Football_Club_logo.svg/800px-Genoa_Cricket_and_Football_Club_logo.svg.png",
+    Verona: "https://upload.wikimedia.org/wikipedia/it/thumb/9/92/Hellas_Verona_FC_logo_%282020%29.svg/800px-Hellas_Verona_FC_logo_%282020%29.svg.png",
+    Inter: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/1024px-FC_Internazionale_Milano_2021.svg.png",
+    Juventus:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Juventus_FC_-_logo_black_%28Italy%2C_2020%29.svg/246px-Juventus_FC_-_logo_black_%28Italy%2C_2020%29.svg.png",
+    Lazio:
+      "https://upload.wikimedia.org/wikipedia/it/thumb/6/62/Stemma_della_Societ%C3%A0_Sportiva_Lazio.svg/1280px-Stemma_della_Societ%C3%A0_Sportiva_Lazio.svg.png",
+    Lecce: "https://upload.wikimedia.org/wikipedia/it/thumb/3/36/US_Lecce_Stemma.svg/720px-US_Lecce_Stemma.svg.png?20241002144328",
+    Milan: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Logo_of_AC_Milan.svg/541px-Logo_of_AC_Milan.svg.png",
+    Napoli: "https://images.seeklogo.com/logo-png/55/2/ssc-napoli-logo-png_seeklogo-550076.png",
+    Parma:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Logo_Parma_Calcio_1913_%28adozione_2016%29.svg/800px-Logo_Parma_Calcio_1913_%28adozione_2016%29.svg.png",
+    Pisa: "https://upload.wikimedia.org/wikipedia/it/thumb/d/d7/Logo_Pisa_SC_2017.svg/800px-Logo_Pisa_SC_2017.svg.png",
+    Roma: "https://upload.wikimedia.org/wikipedia/it/thumb/0/0e/AS_Roma_Logo_2017.svg/800px-AS_Roma_Logo_2017.svg.png",
+    Sassuolo: "https://upload.wikimedia.org/wikipedia/it/thumb/a/a4/Ussassuolostemma.svg/800px-Ussassuolostemma.svg.png",
+    Torino: "https://upload.wikimedia.org/wikipedia/it/thumb/0/04/Torino_FC_logo.svg/800px-Torino_FC_logo.svg.png",
+    Udinese: "https://upload.wikimedia.org/wikipedia/it/thumb/a/ae/Logo_Udinese_Calcio_2010.svg/1024px-Logo_Udinese_Calcio_2010.svg.png",
+  };
 
   useEffect(() => {
     fetch("http://localhost:1313/teams?size=20")
@@ -49,13 +77,25 @@ const TopBar = (props) => {
   const numColumns = Math.ceil((teams?.length || 0) / 5);
 
   return (
-    <Navbar expand="lg" className="nav-bg sticky-top d-flex flex-column" variant="dark">
+    <Navbar expand="lg" className="nav-bg sticky-top d-flex flex-column mt-0" variant="dark">
       <Container fluid className="page-container mx-auto">
         {/* Prima riga: brand */}
         <div className="d-block w-100">
           <div className="w-100 d-flex mb-0">
-            <Navbar.Brand className="text-white text-center" href="home">
-              {isAtalantaPage ? <span style={{ color: "#1b9af7", fontWeight: "bold" }}>Atalanta Tickets</span> : "EASYTICKETS"}
+            <Navbar.Brand className="text-white text-center d-flex align-items-center">
+              {isAtalantaPage ? (
+                <>
+                  <span style={{ color: "#1b9af7", fontWeight: "bold", marginRight: 10 }}>Atalanta Tickets</span>
+                  <img src={teamLogos["Atalanta"]} alt="Logo Atalanta" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                </>
+              ) : isBolognaPage ? (
+                <>
+                  <span style={{ color: "#dc3545", fontWeight: "bold", marginRight: 10 }}>Bologna Tickets</span>
+                  <img src={teamLogos["Bologna"]} alt="Logo Bologna" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                </>
+              ) : (
+                "EASYTICKETS"
+              )}
               {props.claim}
             </Navbar.Brand>
           </div>
@@ -71,10 +111,12 @@ const TopBar = (props) => {
                   {[...Array(numColumns)].map((_, colIndex) => (
                     <Col key={colIndex} xs={3}>
                       {teams.slice(colIndex * 5, colIndex * 5 + 5).map((item, idx) => (
-                        <div key={idx} className="nav-div mb-3 d-flex justify-content-between align-items-center">
-                          <h6>{item.name}</h6>
-                          <img src={item.logo || item.img} alt={item.name} style={{ width: "30%", height: "100%", objectFit: "contain" }} />
-                        </div>
+                        <a href={`/${item.name.toLowerCase()}`} className="text-decoration-none">
+                          <div key={idx} className="nav-div mb-3 d-flex justify-content-between align-items-center">
+                            <h6>{item.name}</h6>
+                            <img src={item.logo || item.img} alt={item.name} style={{ width: "30%", height: "100%", objectFit: "contain" }} />
+                          </div>
+                        </a>
                       ))}
                     </Col>
                   ))}
@@ -95,6 +137,18 @@ const TopBar = (props) => {
                 Partite
               </Button>
               <Button variant="outline-light" href="/atalanta/contact">
+                Contatti
+              </Button>
+            </>
+          ) : isBolognaPage ? (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+              <Button variant="outline-light" href="/bologna/matches">
+                Partite
+              </Button>
+              <Button variant="outline-light" href="/bologna/contact">
                 Contatti
               </Button>
             </>

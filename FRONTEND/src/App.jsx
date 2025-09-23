@@ -10,6 +10,7 @@ function App() {
     <BrowserRouter>
       <TopBar claim="" />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/atalanta" element={<Atalanta />} />
       </Routes>

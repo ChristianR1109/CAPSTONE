@@ -70,10 +70,10 @@ const LeagueTable = () => {
       <Container fluid className="my-5 d-flex justify-content-center mx-auto p-0">
         <Row className="w-100">
           <Col lg={8} className="p-0">
-            <Table className="rounded" striped bordered hover variant="dark" responsive>
+            <Table striped bordered hover variant="dark" responsive>
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th className="table-rnd-l">#</th>
                   <th>Team</th>
                   <th>P</th>
                   <th>W</th>
@@ -82,7 +82,7 @@ const LeagueTable = () => {
                   <th>DIFF</th>
                   <th>Goals</th>
                   <th>Last 5</th>
-                  <th>PTS</th>
+                  <th className="table-rnd-r">PTS</th>
                 </tr>
               </thead>
               <tbody>
@@ -137,11 +137,13 @@ const LeagueTable = () => {
               </tbody>
             </Table>
           </Col>
-          <Col lg={4}>
-            <Table striped bordered hover variant="dark" responsive className="rounded text-center">
+          <Col lg={4} className="pe-0">
+            <Table striped bordered hover variant="dark" responsive className="  text-center">
               <thead>
                 <tr>
-                  <th colSpan={3}>PROSSIMA GIORNATA</th>
+                  <th colSpan={3} className="table-rnd">
+                    PROSSIMA GIORNATA
+                  </th>
                 </tr>
                 <tr>
                   <th>Date</th>
