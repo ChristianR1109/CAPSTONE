@@ -3,6 +3,7 @@ import { Container, Nav, Navbar, Row, Col, Spinner, Alert, Button } from "react-
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { Link, useLocation } from "react-router-dom"; // Importa location hook
+import Image from "../../public/Easytickets.png";
 
 const TopBar = (props) => {
   const location = useLocation();
@@ -205,6 +206,7 @@ const TopBar = (props) => {
                 "EASYTICKETS"
               )}
               {props.claim}
+              <img src={Image} style={{ width: 50 }}></img>
             </Navbar.Brand>
           </div>
           <div>

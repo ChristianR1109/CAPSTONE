@@ -25,8 +25,8 @@ const Atalanta = () => {
     <>
       <div className="stripe-atalanta" style={{ minHeight: "100vh", color: "white" }}>
         <Container fluid className=" my-5 " style={{ maxWidth: "600px" }}>
-          <Card className="p-0 mb-4 border-dark border-1">
-            <h1 className="text-center team-title m-0">Atalanta Bergamasca Calcio</h1>
+          <Card className="p-0 mb-4 border-white border-1 team-title-card">
+            <h1 className="text-center team-title m-0 text-white">Atalanta Bergamasca Calcio</h1>
           </Card>
           <Card bg="black" text="white" className=" p-0 card-box-shadow" style={{ border: "2px solid #ffffffff" }}>
             <Card.Body>

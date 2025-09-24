@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Badge, Container, Row, Col, Spinner, Alert } from "react-bootstrap";
-
+import Image from "../../public/Easytickets.png";
 const getBadgeVariant = (result) => {
   switch (result) {
     case "W":
@@ -67,7 +67,11 @@ const LeagueTable = () => {
 
   return (
     <Container fluid className="page-container">
-      <Container fluid className="my-5 d-flex justify-content-center mx-auto p-0">
+      {" "}
+      <h1 className="text-center team-title m-0 text-white pt-4">
+        EASYTICKETS <img src={Image} style={{ width: 80, marginBottom: 5 }} className="img-border"></img>
+      </h1>
+      <Container fluid className="my-4 d-flex justify-content-center mx-auto p-0">
         <Row className="w-100">
           <Col lg={8} className="p-0">
             <Table striped bordered hover variant="dark" responsive>
