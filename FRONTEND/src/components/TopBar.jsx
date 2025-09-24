@@ -60,7 +60,7 @@ const TopBar = (props) => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:1313/teams?size=20")
+    fetch("http://localhost:1313/public/teams?size=20")
       .then((res) => {
         if (!res.ok) throw new Error("Errore nel caricamento delle squadre");
         return res.json();

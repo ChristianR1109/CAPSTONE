@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/standings")
+@RequestMapping("/public/standings")
 public class StandingController {
     @Autowired
     private  StandingService standingService;

@@ -22,7 +22,7 @@ const LeagueTable = () => {
 
   useEffect(() => {
     // Fetch standings
-    const fetchStandings = fetch("http://localhost:1313/standings")
+    const fetchStandings = fetch("http://localhost:1313/public/standings")
       .then((res) => {
         if (!res.ok) throw new Error("Errore nel caricamento della classifica");
         return res.json();
@@ -30,7 +30,7 @@ const LeagueTable = () => {
       .then((data) => setStandings(data));
 
     // Fetch matches
-    const fetchMatches = fetch("http://localhost:1313/matches")
+    const fetchMatches = fetch("http://localhost:1313/public/matches")
       .then((res) => {
         if (!res.ok) throw new Error("Errore nel caricamento degli incontri");
         return res.json();
