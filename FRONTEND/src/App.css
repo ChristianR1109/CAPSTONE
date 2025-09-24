@@ -131,14 +131,44 @@ h6 {
   padding-left: 1rem; /* padding coerente */
   padding-right: 1rem;
 }
+.navbar {
+  margin-bottom: 0; /* niente spazio sotto */
+  border-bottom: none; /* se vuoi un effetto continuo */
+  z-index: 1050;
+}
+.custom-placeholder::placeholder {
+  color: white;
+}
+
+/* SQUADRE*/
+
 .stripe-atalanta {
   background: repeating-linear-gradient(90deg, #000000, /* nero */ #000000 30px, #0a2e6e 30px, /* blu Atalanta */ #0a2e6e 60px);
   color: white;
   min-height: 100vh;
   padding: 2rem 0;
 }
-.navbar {
-  margin-bottom: 0; /* niente spazio sotto */
-  border-bottom: none; /* se vuoi un effetto continuo */
-  z-index: 1050;
+.stripe-bologna {
+  background: repeating-linear-gradient(90deg, #a01930, #a01930 30px, #142335 30px, #142335 60px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-cagliari {
+  background: repeating-linear-gradient(90deg, #d50110, #d50110 30px, #00285b 30px, #00285b 60px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-como {
+  background: repeating-linear-gradient(90deg, #073f6a, #073f6a 30px, #ffffff 30px, #ffffff 60px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-cremonese {
+  background: repeating-linear-gradient(90deg, #ed221c, #ed221c 30px, #8b898f 30px, #8b898f 60px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
 }

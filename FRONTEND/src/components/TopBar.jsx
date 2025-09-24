@@ -8,6 +8,9 @@ const TopBar = (props) => {
   const location = useLocation();
   const isAtalantaPage = location.pathname.startsWith("/atalanta");
   const isBolognaPage = location.pathname.startsWith("/bologna");
+  const isCagliariPage = location.pathname.startsWith("/cagliari");
+  const isComoPage = location.pathname.startsWith("/como");
+  const isCremonesePage = location.pathname.startsWith("/cremonese");
 
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -85,13 +88,28 @@ const TopBar = (props) => {
             <Navbar.Brand className="text-white text-center d-flex align-items-center">
               {isAtalantaPage ? (
                 <>
-                  <span style={{ color: "#1b9af7", fontWeight: "bold", marginRight: 10 }}>Atalanta Tickets</span>
+                  <span style={{ color: "#0a2e6e", fontWeight: "bold", marginRight: 10 }}>Atalanta Tickets</span>
                   <img src={teamLogos["Atalanta"]} alt="Logo Atalanta" style={{ width: 30, height: 30, objectFit: "contain" }} />
                 </>
               ) : isBolognaPage ? (
                 <>
                   <span style={{ color: "#dc3545", fontWeight: "bold", marginRight: 10 }}>Bologna Tickets</span>
                   <img src={teamLogos["Bologna"]} alt="Logo Bologna" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                </>
+              ) : isCagliariPage ? (
+                <>
+                  <span style={{ color: "#d50110", fontWeight: "bold", marginRight: 10 }}>Cagliari Tickets</span>
+                  <img src={teamLogos["Cagliari"]} alt="Logo Cagliari" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                </>
+              ) : isComoPage ? (
+                <>
+                  <span style={{ color: "#073f6a", fontWeight: "bold", marginRight: 10 }}>Como Tickets</span>
+                  <img src={teamLogos["Como"]} alt="Logo Como" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                </>
+              ) : isCremonesePage ? (
+                <>
+                  <span style={{ color: "#ed221c", fontWeight: "bold", marginRight: 10 }}>Cremonese Tickets</span>
+                  <img src={teamLogos["Cremonese"]} alt="Logo Cremonese" style={{ width: 30, height: 30, objectFit: "contain" }} />
                 </>
               ) : (
                 "EASYTICKETS"
@@ -149,6 +167,42 @@ const TopBar = (props) => {
                 Partite
               </Button>
               <Button variant="outline-light" href="/bologna/contact">
+                Contatti
+              </Button>
+            </>
+          ) : isCagliariPage ? (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+              <Button variant="outline-light" href="/cagliari/matches">
+                Partite
+              </Button>
+              <Button variant="outline-light" href="/cagliari/contact">
+                Contatti
+              </Button>
+            </>
+          ) : isComoPage ? (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+              <Button variant="outline-light" href="/como/matches">
+                Partite
+              </Button>
+              <Button variant="outline-light" href="/como/contact">
+                Contatti
+              </Button>
+            </>
+          ) : isCremonesePage ? (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+              <Button variant="outline-light" href="/cremonese/matches">
+                Partite
+              </Button>
+              <Button variant="outline-light" href="/cremonese/contact">
                 Contatti
               </Button>
             </>
