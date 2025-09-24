@@ -3,7 +3,7 @@ import { Container, Navbar, Nav, Form, Button, Row, Col, Card, Alert } from "rea
 
 const matches = ["Atalanta vs Juventus - 05/10/2025", "Atalanta vs Milan - 19/10/2025", "Atalanta vs Inter - 02/11/2025"];
 
-const Cagliari = () => {
+const Cremonese = () => {
   const [selectedMatch, setSelectedMatch] = useState("");
   const [tickets, setTickets] = useState(1);
   const [name, setName] = useState("");
@@ -114,4 +114,4 @@ const Cagliari = () => {
   );
 };
 
-export default Cagliari;
+export default Cremonese;

@@ -172,3 +172,33 @@ h6 {
   min-height: 100vh;
   padding: 2rem 0;
 }
+.stripe-fiorentina {
+  background: repeating-linear-gradient(90deg, #61328c, #61328c 30px, #61328c 30px, #61328c 60px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-genoa {
+  background: repeating-linear-gradient(90deg, #ac0b15, #ac0b15 30px, #002440 30px, #002440 60px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-inter {
+  background: repeating-linear-gradient(90deg, #001e9d, #001e9d 30px, #000000 30px, #000000 60px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-juventus {
+  background: repeating-linear-gradient(90deg, #ffffff, #ffffff 30px, #000000 30px, #000000 60px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-lazio {
+  background: repeating-linear-gradient(90deg, #75d2eb, #75d2eb 30px, #ffffff 30px, #ffffff 60px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}

@@ -3,7 +3,7 @@ import { Container, Navbar, Nav, Form, Button, Row, Col, Card, Alert } from "rea
 
 const matches = ["Atalanta vs Juventus - 05/10/2025", "Atalanta vs Milan - 19/10/2025", "Atalanta vs Inter - 02/11/2025"];
 
-const Cremonese = () => {
+const Lazio = () => {
   const [selectedMatch, setSelectedMatch] = useState("");
   const [tickets, setTickets] = useState(1);
   const [name, setName] = useState("");
@@ -23,7 +23,7 @@ const Cremonese = () => {
 
   return (
     <>
-      <div className="stripe-cremonese" style={{ minHeight: "100vh", color: "white" }}>
+      <div className="stripe-lazio" style={{ minHeight: "100vh", color: "white" }}>
         <Container fluid className=" my-5 " style={{ maxWidth: "600px" }}>
           <Card bg="black" text="white" className=" p-0 shadow-lg" style={{ border: "2px solid #ffffffff" }}>
             <Card.Body>
@@ -45,7 +45,7 @@ const Cremonese = () => {
                     value={selectedMatch}
                     onChange={(e) => setSelectedMatch(e.target.value)}
                     required
-                    style={{ backgroundColor: "#ed221c", color: "white", borderColor: "#ffffffff" }}
+                    style={{ backgroundColor: "#75D2EB", color: "white", borderColor: "#ffffffff" }}
                   >
                     <option value="" style={{ color: "black" }}>
                       Seleziona partita
@@ -67,7 +67,7 @@ const Cremonese = () => {
                     value={tickets}
                     onChange={(e) => setTickets(e.target.value)}
                     required
-                    style={{ backgroundColor: "#ed221c", color: "white", borderColor: "#ffffffff" }}
+                    style={{ backgroundColor: "#75D2EB", color: "white", borderColor: "#ffffffff" }}
                   />
                 </Form.Group>
 
@@ -81,7 +81,7 @@ const Cremonese = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        style={{ backgroundColor: "#ed221c", color: "white", borderColor: "#ffffffff" }}
+                        style={{ backgroundColor: "#75D2EB", color: "white", borderColor: "#ffffffff" }}
                         className="custom-placeholder"
                       />
                     </Form.Group>
@@ -95,14 +95,14 @@ const Cremonese = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        style={{ backgroundColor: "#ed221c", color: "white", borderColor: "#ffffffff" }}
+                        style={{ backgroundColor: "#75D2EB", color: "white", borderColor: "#ffffffff" }}
                         className="custom-placeholder"
                       />
                     </Form.Group>
                   </Col>
                 </Row>
 
-                <Button type="submit" variant="primary" style={{ backgroundColor: "#ed221c", borderColor: "white" }}>
+                <Button type="submit" variant="primary" style={{ backgroundColor: "#75D2EB", borderColor: "white" }}>
                   Acquista
                 </Button>
               </Form>
@@ -114,4 +114,4 @@ const Cremonese = () => {
   );
 };
 
-export default Cremonese;
+export default Lazio;
