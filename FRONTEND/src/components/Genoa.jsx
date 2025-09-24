@@ -25,7 +25,10 @@ const Genoa = () => {
     <>
       <div className="stripe-genoa" style={{ minHeight: "100vh", color: "white" }}>
         <Container fluid className=" my-5 " style={{ maxWidth: "600px" }}>
-          <Card bg="black" text="white" className=" p-0 shadow-lg" style={{ border: "2px solid #ffffffff" }}>
+          <Card className="p-0 mb-4 border-dark border-2">
+            <h1 className="text-center team-title m-0">Genoa Football Club</h1>
+          </Card>
+          <Card bg="black" text="white" className=" p-0 card-box-shadow" style={{ border: "2px solid #ffffffff" }}>
             <Card.Body>
               <Card.Title style={{ color: "#ffffffff" }}>Acquista i tuoi biglietti per Atalanta</Card.Title>
               <Card.Subtitle className="mb-3" style={{ color: "#ffffffff" }}>
@@ -45,7 +48,7 @@ const Genoa = () => {
                     value={selectedMatch}
                     onChange={(e) => setSelectedMatch(e.target.value)}
                     required
-                    style={{ backgroundColor: "#ac0b15", color: "white", borderColor: "#ffffffff" }}
+                    style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
                   >
                     <option value="" style={{ color: "black" }}>
                       Seleziona partita
@@ -67,7 +70,7 @@ const Genoa = () => {
                     value={tickets}
                     onChange={(e) => setTickets(e.target.value)}
                     required
-                    style={{ backgroundColor: "#ac0b15", color: "white", borderColor: "#ffffffff" }}
+                    style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
                   />
                 </Form.Group>
 
@@ -81,7 +84,7 @@ const Genoa = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        style={{ backgroundColor: "#ac0b15", color: "white", borderColor: "#ffffffff" }}
+                        style={{ backgroundColor: "#ffffffff", color: "white", borderColor: "#ffffffff" }}
                         className="custom-placeholder"
                       />
                     </Form.Group>
@@ -95,14 +98,14 @@ const Genoa = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        style={{ backgroundColor: "#ac0b15", color: "white", borderColor: "#ffffffff" }}
+                        style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
                         className="custom-placeholder"
                       />
                     </Form.Group>
                   </Col>
                 </Row>
 
-                <Button type="submit" variant="primary" style={{ backgroundColor: "#ac0b15", borderColor: "white" }}>
+                <Button type="submit" variant="black" style={{ backgroundColor: "#000000", borderColor: "#ffffff", color: "white" }}>
                   Acquista
                 </Button>
               </Form>

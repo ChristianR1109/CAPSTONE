@@ -3,7 +3,7 @@ import { Container, Navbar, Nav, Form, Button, Row, Col, Card, Alert } from "rea
 
 const matches = ["Atalanta vs Juventus - 05/10/2025", "Atalanta vs Milan - 19/10/2025", "Atalanta vs Inter - 02/11/2025"];
 
-const Bologna = () => {
+const Sassuolo = () => {
   const [selectedMatch, setSelectedMatch] = useState("");
   const [tickets, setTickets] = useState(1);
   const [name, setName] = useState("");
@@ -23,10 +23,10 @@ const Bologna = () => {
 
   return (
     <>
-      <div className="stripe-bologna" style={{ minHeight: "100vh", color: "white" }}>
+      <div className="stripe-sassuolo" style={{ minHeight: "100vh", color: "white" }}>
         <Container fluid className=" my-5 " style={{ maxWidth: "600px" }}>
           <Card className="p-0 mb-4 border-dark border-2">
-            <h1 className="text-center team-title m-0">Bologna Football Club 1909</h1>
+            <h1 className="text-center team-title m-0">Unione Sportiva Sassuolo</h1>
           </Card>
           <Card bg="black" text="white" className=" p-0 card-box-shadow" style={{ border: "2px solid #ffffffff" }}>
             <Card.Body>
@@ -117,4 +117,4 @@ const Bologna = () => {
   );
 };
 
-export default Bologna;
+export default Sassuolo;

@@ -16,6 +16,16 @@ const TopBar = (props) => {
   const isInterPage = location.pathname.startsWith("/inter");
   const isJuventusPage = location.pathname.startsWith("/juventus");
   const isLazioPage = location.pathname.startsWith("/lazio");
+  const isLeccePage = location.pathname.startsWith("/lecce");
+  const isMilanPage = location.pathname.startsWith("/milan");
+  const isNapoliPage = location.pathname.startsWith("/napoli");
+  const isParmaPage = location.pathname.startsWith("/parma");
+  const isPisaPage = location.pathname.startsWith("/pisa");
+  const isRomaPage = location.pathname.startsWith("/roma");
+  const isSassuoloPage = location.pathname.startsWith("/sassuolo");
+  const isTorinoPage = location.pathname.startsWith("/torino");
+  const isUdinesePage = location.pathname.startsWith("/udinese");
+  const isVeronaPage = location.pathname.startsWith("/verona");
 
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -140,6 +150,56 @@ const TopBar = (props) => {
                 <>
                   <span style={{ color: "#75D2EB", fontWeight: "bold", marginRight: 10 }}>Lazio Tickets</span>
                   <img src={teamLogos["Lazio"]} alt="Logo Lazio" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                </>
+              ) : isLeccePage ? (
+                <>
+                  <span style={{ color: "#fef200", fontWeight: "bold", marginRight: 10 }}>Lecce Tickets</span>
+                  <img src={teamLogos["Lecce"]} alt="Logo Lecce" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                </>
+              ) : isMilanPage ? (
+                <>
+                  <span style={{ color: "#FE0032", fontWeight: "bold", marginRight: 10 }}>Milan Tickets</span>
+                  <img src={teamLogos["Milan"]} alt="Logo Milan" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                </>
+              ) : isNapoliPage ? (
+                <>
+                  <span style={{ color: "#61C4E2", fontWeight: "bold", marginRight: 10 }}>Napoli Tickets</span>
+                  <img src={teamLogos["Napoli"]} alt="Logo Napoli" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                </>
+              ) : isParmaPage ? (
+                <>
+                  <span style={{ color: "#FFD000", fontWeight: "bold", marginRight: 10 }}>Parma Tickets</span>
+                  <img src={teamLogos["Parma"]} alt="Logo Parma" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                </>
+              ) : isPisaPage ? (
+                <>
+                  <span style={{ color: "#005eb8", fontWeight: "bold", marginRight: 10 }}>Pisa Tickets</span>
+                  <img src={teamLogos["Pisa"]} alt="Logo Pisa" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                </>
+              ) : isRomaPage ? (
+                <>
+                  <span style={{ color: "#98142B", fontWeight: "bold", marginRight: 10 }}>Roma Tickets</span>
+                  <img src={teamLogos["Roma"]} alt="Logo Roma" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                </>
+              ) : isSassuoloPage ? (
+                <>
+                  <span style={{ color: "#00a452", fontWeight: "bold", marginRight: 10 }}>Sassuolo Tickets</span>
+                  <img src={teamLogos["Sassuolo"]} alt="Logo Sassuolo" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                </>
+              ) : isTorinoPage ? (
+                <>
+                  <span style={{ color: "#8c2519", fontWeight: "bold", marginRight: 10 }}>Torino Tickets</span>
+                  <img src={teamLogos["Torino"]} alt="Logo Torino" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                </>
+              ) : isUdinesePage ? (
+                <>
+                  <span style={{ color: "#ffffff", fontWeight: "bold", marginRight: 10 }}>Udinese Tickets</span>
+                  <img src={teamLogos["Udinese"]} alt="Logo Udinese" style={{ width: 30, height: 30, objectFit: "contain" }} />
+                </>
+              ) : isVeronaPage ? (
+                <>
+                  <span style={{ color: "#ffd101", fontWeight: "bold", marginRight: 10 }}>Verona Tickets</span>
+                  <img src={teamLogos["Verona"]} alt="Logo Verona" style={{ width: 30, height: 30, objectFit: "contain" }} />
                 </>
               ) : (
                 "EASYTICKETS"
@@ -285,6 +345,126 @@ const TopBar = (props) => {
               </Button>
             </>
           ) : isLazioPage ? (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+              <Button variant="outline-light" href="/cremonese/matches">
+                Partite
+              </Button>
+              <Button variant="outline-light" href="/cremonese/contact">
+                Contatti
+              </Button>
+            </>
+          ) : isLeccePage ? (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+              <Button variant="outline-light" href="/cremonese/matches">
+                Partite
+              </Button>
+              <Button variant="outline-light" href="/cremonese/contact">
+                Contatti
+              </Button>
+            </>
+          ) : isMilanPage ? (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+              <Button variant="outline-light" href="/cremonese/matches">
+                Partite
+              </Button>
+              <Button variant="outline-light" href="/cremonese/contact">
+                Contatti
+              </Button>
+            </>
+          ) : isNapoliPage ? (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+              <Button variant="outline-light" href="/cremonese/matches">
+                Partite
+              </Button>
+              <Button variant="outline-light" href="/cremonese/contact">
+                Contatti
+              </Button>
+            </>
+          ) : isParmaPage ? (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+              <Button variant="outline-light" href="/cremonese/matches">
+                Partite
+              </Button>
+              <Button variant="outline-light" href="/cremonese/contact">
+                Contatti
+              </Button>
+            </>
+          ) : isPisaPage ? (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+              <Button variant="outline-light" href="/cremonese/matches">
+                Partite
+              </Button>
+              <Button variant="outline-light" href="/cremonese/contact">
+                Contatti
+              </Button>
+            </>
+          ) : isRomaPage ? (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+              <Button variant="outline-light" href="/cremonese/matches">
+                Partite
+              </Button>
+              <Button variant="outline-light" href="/cremonese/contact">
+                Contatti
+              </Button>
+            </>
+          ) : isSassuoloPage ? (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+              <Button variant="outline-light" href="/cremonese/matches">
+                Partite
+              </Button>
+              <Button variant="outline-light" href="/cremonese/contact">
+                Contatti
+              </Button>
+            </>
+          ) : isTorinoPage ? (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+              <Button variant="outline-light" href="/cremonese/matches">
+                Partite
+              </Button>
+              <Button variant="outline-light" href="/cremonese/contact">
+                Contatti
+              </Button>
+            </>
+          ) : isUdinesePage ? (
+            <>
+              <Button variant="outline-light" href="/home">
+                Home
+              </Button>
+              <Button variant="outline-light" href="/cremonese/matches">
+                Partite
+              </Button>
+              <Button variant="outline-light" href="/cremonese/contact">
+                Contatti
+              </Button>
+            </>
+          ) : isVeronaPage ? (
             <>
               <Button variant="outline-light" href="/home">
                 Home

@@ -25,7 +25,10 @@ const Atalanta = () => {
     <>
       <div className="stripe-atalanta" style={{ minHeight: "100vh", color: "white" }}>
         <Container fluid className=" my-5 " style={{ maxWidth: "600px" }}>
-          <Card bg="black" text="white" className=" p-0 shadow-lg" style={{ border: "2px solid #ffffffff" }}>
+          <Card className="p-0 mb-4 border-dark border-1">
+            <h1 className="text-center team-title m-0">Atalanta Bergamasca Calcio</h1>
+          </Card>
+          <Card bg="black" text="white" className=" p-0 card-box-shadow" style={{ border: "2px solid #ffffffff" }}>
             <Card.Body>
               <Card.Title style={{ color: "#ffffffff" }}>Acquista i tuoi biglietti per Atalanta</Card.Title>
               <Card.Subtitle className="mb-3" style={{ color: "#ffffffff" }}>
@@ -40,12 +43,12 @@ const Atalanta = () => {
 
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formMatch">
-                  <Form.Label style={{ color: "#c0c7d0" }}>Partita</Form.Label>
+                  <Form.Label style={{ color: "#ffffffff" }}>Partita</Form.Label>
                   <Form.Select
                     value={selectedMatch}
                     onChange={(e) => setSelectedMatch(e.target.value)}
                     required
-                    style={{ backgroundColor: "#0a2e6e", color: "white", borderColor: "#ffffffff" }}
+                    style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
                   >
                     <option value="" style={{ color: "black" }}>
                       Seleziona partita
@@ -59,7 +62,7 @@ const Atalanta = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formTickets">
-                  <Form.Label style={{ color: "#c0c7d0" }}>Numero biglietti</Form.Label>
+                  <Form.Label style={{ color: "#ffffffff" }}>Numero biglietti</Form.Label>
                   <Form.Control
                     type="number"
                     min="1"
@@ -67,7 +70,7 @@ const Atalanta = () => {
                     value={tickets}
                     onChange={(e) => setTickets(e.target.value)}
                     required
-                    style={{ backgroundColor: "#0a2e6e", color: "white", borderColor: "#ffffffff" }}
+                    style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
                   />
                 </Form.Group>
 
@@ -81,28 +84,28 @@ const Atalanta = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        style={{ backgroundColor: "#0a2e6e", color: "white", borderColor: "#ffffffff" }}
+                        style={{ backgroundColor: "#ffffffff", color: "white", borderColor: "#ffffffff" }}
                         className="custom-placeholder"
                       />
                     </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group className="mb-3" controlId="formEmail">
-                      <Form.Label style={{ color: "#c0c7d0" }}>Email</Form.Label>
+                      <Form.Label style={{ color: "#ffffffff" }}>Email</Form.Label>
                       <Form.Control
                         type="email"
                         placeholder="esempio@mail.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        style={{ backgroundColor: "#0a2e6e", color: "white", borderColor: "#ffffffff" }}
+                        style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
                         className="custom-placeholder"
                       />
                     </Form.Group>
                   </Col>
                 </Row>
 
-                <Button type="submit" variant="primary" style={{ backgroundColor: "#0a2e6e", borderColor: "#0a2e6e" }}>
+                <Button type="submit" variant="black" style={{ backgroundColor: "#000000", borderColor: "#ffffff", color: "white" }}>
                   Acquista
                 </Button>
               </Form>

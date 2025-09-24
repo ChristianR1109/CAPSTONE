@@ -1,12 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Delius&family=Roboto:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
 
 body,
 html {
   background-color: black;
+  overflow-y: hidden;
 }
 .nav-bg {
   background-color: #171c1f;
-  font-family: "Robonto", "Ubuntu", sans-serif;
+  font-family: "Roboto", "Ubuntu", sans-serif;
 
   width: 100%;
 }
@@ -137,68 +139,138 @@ h6 {
   z-index: 1050;
 }
 .custom-placeholder::placeholder {
-  color: white;
+  color: black;
 }
 
 /* SQUADRE*/
 
 .stripe-atalanta {
-  background: repeating-linear-gradient(90deg, #000000, /* nero */ #000000 30px, #0a2e6e 30px, /* blu Atalanta */ #0a2e6e 60px);
+  background: repeating-linear-gradient(90deg, #000000, /* nero */ #000000 85px, #0a2e6e 85px, /* blu Atalanta */ #0a2e6e 170px);
   color: white;
-  min-height: 100vh;
-  padding: 2rem 0;
+
+  padding: 2rem;
 }
 .stripe-bologna {
-  background: repeating-linear-gradient(90deg, #a01930, #a01930 30px, #142335 30px, #142335 60px);
+  background: repeating-linear-gradient(90deg, #a01930, #a01930 85px, #142335 85px, #142335 170px);
   color: white;
   min-height: 100vh;
   padding: 2rem 0;
 }
 .stripe-cagliari {
-  background: repeating-linear-gradient(90deg, #d50110, #d50110 30px, #00285b 30px, #00285b 60px);
+  background: repeating-linear-gradient(90deg, #d50110, #d50110 85px, #00285b 85px, #00285b 170px);
   color: white;
   min-height: 100vh;
   padding: 2rem 0;
 }
 .stripe-como {
-  background: repeating-linear-gradient(90deg, #073f6a, #073f6a 30px, #ffffff 30px, #ffffff 60px);
+  background: repeating-linear-gradient(90deg, #073f6a, #073f6a 85px, #ffffff 85px, #ffffff 170px);
   color: white;
   min-height: 100vh;
   padding: 2rem 0;
 }
 .stripe-cremonese {
-  background: repeating-linear-gradient(90deg, #ed221c, #ed221c 30px, #8b898f 30px, #8b898f 60px);
+  background: repeating-linear-gradient(90deg, #ed221c, #ed221c 85px, #8b898f 85px, #8b898f 170px);
   color: white;
   min-height: 100vh;
   padding: 2rem 0;
 }
 .stripe-fiorentina {
-  background: repeating-linear-gradient(90deg, #61328c, #61328c 30px, #61328c 30px, #61328c 60px);
+  background: repeating-linear-gradient(90deg, #61328c, #61328c 85px, #61328c 85px, #61328c 170px);
   color: white;
   min-height: 100vh;
   padding: 2rem 0;
 }
 .stripe-genoa {
-  background: repeating-linear-gradient(90deg, #ac0b15, #ac0b15 30px, #002440 30px, #002440 60px);
+  background: repeating-linear-gradient(90deg, #ac0b15, #ac0b15 85px, #002440 85px, #002440 170px);
   color: white;
   min-height: 100vh;
   padding: 2rem 0;
 }
 .stripe-inter {
-  background: repeating-linear-gradient(90deg, #001e9d, #001e9d 30px, #000000 30px, #000000 60px);
+  background: repeating-linear-gradient(90deg, #001e9d, #001e9d 85px, #000000 85px, #000000 170px);
   color: white;
   min-height: 100vh;
   padding: 2rem 0;
 }
 .stripe-juventus {
-  background: repeating-linear-gradient(90deg, #ffffff, #ffffff 30px, #000000 30px, #000000 60px);
+  background: repeating-linear-gradient(90deg, #ffffff, #ffffff 85px, #000000 85px, #000000 170px);
   color: white;
   min-height: 100vh;
   padding: 2rem 0;
 }
 .stripe-lazio {
-  background: repeating-linear-gradient(90deg, #75d2eb, #75d2eb 30px, #ffffff 30px, #ffffff 60px);
+  background: repeating-linear-gradient(90deg, #75d2eb, #75d2eb 85px, #ffffff 85px, #ffffff 170px);
   color: white;
   min-height: 100vh;
   padding: 2rem 0;
+}
+.stripe-lecce {
+  background: repeating-linear-gradient(90deg, #fef200, #fef200 85px, #e12e20 85px, #e12e20 170px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-milan {
+  background: repeating-linear-gradient(90deg, #fe0032, #fe0032 85px, #000000 85px, #000000 170px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-napoli {
+  background: repeating-linear-gradient(90deg, #61c4e2, #61c4e2 85px, #61c4e2 85px, #61c4e2 170px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-parma {
+  background: repeating-linear-gradient(90deg, #1f308b, #1f308b 85px, #ffd000 85px, #ffd000 170px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-pisa {
+  background: repeating-linear-gradient(90deg, #005eb8, #005eb8 85px, #000000 85px, #000000 170px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-roma {
+  background: repeating-linear-gradient(90deg, #ffb600, #ffb600 85px, #98142b 85px, #98142b 170px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-sassuolo {
+  background: repeating-linear-gradient(90deg, #00a452, #00a452 85px, #151815 85px, #151815 170px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-torino {
+  background: repeating-linear-gradient(90deg, #8c2519, #8c2519 85px, #8c2519 85px, #8c2519 170px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-udinese {
+  background: repeating-linear-gradient(90deg, #2f2d29, #2f2d29 85px, #ffffff 85px, #ffffff 170px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.stripe-verona {
+  background: repeating-linear-gradient(90deg, #ffd101, #ffd101 85px, #022d72 85px, #022d72 170px);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.team-title {
+  font-size: 45px;
+  font-family: "Delius", cursive;
+  margin-bottom: 0.5em;
+  text-align: center;
+  font-weight: 900;
+}
+.card-box-shadow {
+  box-shadow: 3px 4px 9px 2px;
 }

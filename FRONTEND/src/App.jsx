@@ -13,6 +13,16 @@ import Genoa from "./components/Genoa";
 import Inter from "./components/Inter";
 import Juventus from "./components/Juventus";
 import Lazio from "./components/Lazio";
+import Lecce from "./components/Lecce";
+import Milan from "./components/Milan";
+import Napoli from "./components/Napoli";
+import Parma from "./components/Parma";
+import Pisa from "./components/Pisa";
+import Roma from "./components/Roma";
+import Sassuolo from "./components/Sassuolo";
+import Torino from "./components/Torino";
+import Udinese from "./components/Udinese";
+import Verona from "./components/Verona";
 
 function App() {
   return (
@@ -31,6 +41,16 @@ function App() {
         <Route path="/inter" element={<Inter />} />
         <Route path="/juventus" element={<Juventus />} />
         <Route path="/lazio" element={<Lazio />} />
+        <Route path="/lecce" element={<Lecce />} />
+        <Route path="/milan" element={<Milan />} />
+        <Route path="/napoli" element={<Napoli />} />
+        <Route path="/parma" element={<Parma />} />
+        <Route path="/pisa" element={<Pisa />} />
+        <Route path="/roma" element={<Roma />} />
+        <Route path="/sassuolo" element={<Sassuolo />} />
+        <Route path="/torino" element={<Torino />} />
+        <Route path="/udinese" element={<Udinese />} />
+        <Route path="/verona" element={<Verona />} />
       </Routes>
     </BrowserRouter>
   );

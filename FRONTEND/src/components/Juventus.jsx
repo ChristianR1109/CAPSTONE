@@ -25,7 +25,10 @@ const Juventus = () => {
     <>
       <div className="stripe-juventus" style={{ minHeight: "100vh", color: "white" }}>
         <Container fluid className=" my-5 " style={{ maxWidth: "600px" }}>
-          <Card bg="black" text="white" className=" p-0 shadow-lg" style={{ border: "2px solid #ffffffff" }}>
+          <Card className="p-0 mb-4 border-dark border-2">
+            <h1 className="text-center team-title m-0">FC Juventus</h1>
+          </Card>
+          <Card bg="black" text="white" className=" p-0 card-box-shadow" style={{ border: "2px solid #ffffffff" }}>
             <Card.Body>
               <Card.Title style={{ color: "#ffffffff" }}>Acquista i tuoi biglietti per Atalanta</Card.Title>
               <Card.Subtitle className="mb-3" style={{ color: "#ffffffff" }}>
@@ -81,7 +84,8 @@ const Juventus = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
+                        style={{ backgroundColor: "#ffffffff", color: "white", borderColor: "#ffffffff" }}
+                        className="custom-placeholder"
                       />
                     </Form.Group>
                   </Col>
@@ -95,12 +99,13 @@ const Juventus = () => {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                         style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
+                        className="custom-placeholder"
                       />
                     </Form.Group>
                   </Col>
                 </Row>
 
-                <Button type="submit" variant="primary" style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "white" }}>
+                <Button type="submit" variant="black" style={{ backgroundColor: "#000000", borderColor: "#ffffff", color: "white" }}>
                   Acquista
                 </Button>
               </Form>
