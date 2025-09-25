@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import React, { useState, useEffect } from "react";
 
 import TopBar from "./components/Topbar";
 import Home from "./components/Home";
@@ -23,14 +24,26 @@ import Sassuolo from "./components/Sassuolo";
 import Torino from "./components/Torino";
 import Udinese from "./components/Udinese";
 import Verona from "./components/Verona";
+import RegistrationForm from "./components/RegistrationForm";
+import LoginForm from "./components/LoginForm";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Qui controlli se esiste un token nello storage
+    const token = localStorage.getItem("token");
+    setIsAuthenticated(!!token);
+  }, []);
+
   return (
     <BrowserRouter>
-      <TopBar claim="" />
+      <TopBar isAuthenticated={isAuthenticated} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/login" element={<LoginForm />} />
         <Route path="/atalanta" element={<Atalanta />} />
         <Route path="/bologna" element={<Bologna />} />
         <Route path="/cagliari" element={<Cagliari />} />

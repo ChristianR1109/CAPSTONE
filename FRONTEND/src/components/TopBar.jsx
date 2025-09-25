@@ -5,7 +5,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import { Link, useLocation } from "react-router-dom"; // Importa location hook
 import Image from "../../public/Easytickets.png";
 
-const TopBar = (props) => {
+const TopBar = ({ props, isAuthenticated }) => {
   const location = useLocation();
   const isAtalantaPage = location.pathname.startsWith("/atalanta");
   const isBolognaPage = location.pathname.startsWith("/bologna");
@@ -94,7 +94,26 @@ const TopBar = (props) => {
   }
 
   const numColumns = Math.ceil((teams?.length || 0) / 5);
-
+  if (!isAuthenticated) {
+    return (
+      <Navbar expand="lg" className="sticky-top nav-bg d-flex flex-column mt-0" variant="dark">
+        <Container fluid className="page-container mx-auto d-flex justify-content-space-between gap-3 p-2">
+          <div className="d-flex align-items-center ms-2">
+            <h2 className="d-inline text-white text-center m-0 flex-start">EASYTICKETS</h2>
+            <img src={Image} style={{ width: 50 }}></img>
+          </div>
+          <div>
+            <Button variant="outline-light" href="/login" className="me-3">
+              Login
+            </Button>
+            <Button variant="outline-light" href="/register" className="me-2">
+              Registrazione
+            </Button>
+          </div>
+        </Container>
+      </Navbar>
+    );
+  }
   return (
     <Navbar expand="lg" className="nav-bg sticky-top d-flex flex-column mt-0" variant="dark">
       <Container fluid className="page-container mx-auto">
