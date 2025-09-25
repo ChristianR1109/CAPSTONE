@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/public/users")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -65,8 +65,7 @@ public class UserController {
     }
 
 
-    @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public UserRespDTO createNewUser(@RequestBody @Validated UserRegistrationDTO body, BindingResult validationResult) {
         if (validationResult.hasErrors()) {

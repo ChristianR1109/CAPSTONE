@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
+import useAuth from "../auth/useAuth";
 
 function LoginForm() {
   const [form, setForm] = useState({
@@ -9,7 +13,18 @@ function LoginForm() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState(null);
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const successMessage = location.state?.successMessage;
+  const [visibleMessage, setVisibleMessage] = useState(successMessage);
 
+  useEffect(() => {
+    if (visibleMessage) {
+      const timer = setTimeout(() => setVisibleMessage(null), 5000); // sparisce dopo 5 secondi
+      return () => clearTimeout(timer);
+    }
+  }, [visibleMessage]);
   const validate = () => {
     const e = {};
     if (!form.email) e.email = "Email obbligatoria";
@@ -49,8 +64,8 @@ function LoginForm() {
         setServerError(message);
       } else {
         const payload = await res.json().catch(() => null);
-        localStorage.setItem("token", payload?.token || "");
-        window.location.href = "/"; // redirect alla home
+        login(payload.token);
+        navigate("/home"); // redirect alla home
       }
     } catch {
       setServerError("Impossibile contattare il server");
@@ -63,6 +78,7 @@ function LoginForm() {
     <div className="min-h-screen bg-gradient-to-br from-sky-900 to-indigo-800 flex items-center justify-center p-6">
       <div className="max-w-md w-full bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl shadow-xl p-6">
         <h2 className="text-2xl font-semibold text-white text-center mb-4">Accedi</h2>
+        {visibleMessage && <div className="bg-green-600/90 text-white px-4 py-2 rounded mb-4">{visibleMessage}</div>}
 
         {serverError && <div className="bg-red-600/90 text-white px-4 py-2 rounded mb-4">{String(serverError)}</div>}
 
@@ -73,7 +89,7 @@ function LoginForm() {
               name="email"
               value={form.email}
               onChange={handleChange}
-              className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.email ? "border-red-400" : "border-white/10"} text-white`}
+              className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.email ? "border-red-400" : "border-white/10"} text-black`}
               placeholder="mario@example.com"
               aria-invalid={!!errors.email}
               aria-describedby={errors.email ? "err-email" : undefined}
@@ -92,7 +108,7 @@ function LoginForm() {
               type="password"
               value={form.password}
               onChange={handleChange}
-              className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.password ? "border-red-400" : "border-white/10"} text-white`}
+              className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.password ? "border-red-400" : "border-white/10"} text-black`}
               placeholder="Password"
               aria-invalid={!!errors.password}
               aria-describedby={errors.password ? "err-password" : undefined}

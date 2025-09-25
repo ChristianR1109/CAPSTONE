@@ -1,36 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Container, Nav, Navbar, Row, Col, Spinner, Alert, Button } from "react-bootstrap";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import { Link, useLocation } from "react-router-dom"; // Importa location hook
+import { Container, Nav, Navbar, Row, Col, Spinner, Alert, Button, Dropdown, DropdownButton } from "react-bootstrap";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Image from "../../public/Easytickets.png";
+import useAuth from "../auth/useAuth";
 
-const TopBar = ({ props, isAuthenticated }) => {
+const TopBar = () => {
+  const { isAuthenticated, logout } = useAuth();
   const location = useLocation();
-  const isAtalantaPage = location.pathname.startsWith("/atalanta");
-  const isBolognaPage = location.pathname.startsWith("/bologna");
-  const isCagliariPage = location.pathname.startsWith("/cagliari");
-  const isComoPage = location.pathname.startsWith("/como");
-  const isCremonesePage = location.pathname.startsWith("/cremonese");
-  const isFiorentinaPage = location.pathname.startsWith("/fiorentina");
-  const isGenoaPage = location.pathname.startsWith("/genoa");
-  const isInterPage = location.pathname.startsWith("/inter");
-  const isJuventusPage = location.pathname.startsWith("/juventus");
-  const isLazioPage = location.pathname.startsWith("/lazio");
-  const isLeccePage = location.pathname.startsWith("/lecce");
-  const isMilanPage = location.pathname.startsWith("/milan");
-  const isNapoliPage = location.pathname.startsWith("/napoli");
-  const isParmaPage = location.pathname.startsWith("/parma");
-  const isPisaPage = location.pathname.startsWith("/pisa");
-  const isRomaPage = location.pathname.startsWith("/roma");
-  const isSassuoloPage = location.pathname.startsWith("/sassuolo");
-  const isTorinoPage = location.pathname.startsWith("/torino");
-  const isUdinesePage = location.pathname.startsWith("/udinese");
-  const isVeronaPage = location.pathname.startsWith("/verona");
-
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const teamLogos = {
     Atalanta: "https://upload.wikimedia.org/wikipedia/it/thumb/8/81/Logo_Atalanta_Bergamo.svg/800px-Logo_Atalanta_Bergamo.svg.png",
@@ -76,159 +56,48 @@ const TopBar = ({ props, isAuthenticated }) => {
       });
   }, []);
 
-  if (loading) {
+  if (loading)
     return (
       <Container className="mx-5 my-3 text-center">
         <Spinner animation="border" variant="primary" />
         <p>Caricamento squadre...</p>
       </Container>
     );
-  }
 
-  if (error) {
+  if (error)
     return (
       <Container className="mx-5 my-3">
         <Alert variant="danger">{error}</Alert>
       </Container>
     );
-  }
 
+  const getTeamFromPath = () => {
+    const pathTeam = location.pathname.split("/")[1];
+    const foundTeam = teams.find((t) => t.name.toLowerCase() === pathTeam.toLowerCase());
+    return foundTeam?.name || null;
+  };
+
+  const currentTeam = getTeamFromPath();
   const numColumns = Math.ceil((teams?.length || 0) / 5);
-  if (!isAuthenticated) {
-    return (
-      <Navbar expand="lg" className="sticky-top nav-bg d-flex flex-column mt-0" variant="dark">
-        <Container fluid className="page-container mx-auto d-flex justify-content-space-between gap-3 p-2">
-          <div className="d-flex align-items-center ms-2">
-            <h2 className="d-inline text-white text-center m-0 flex-start">EASYTICKETS</h2>
-            <img src={Image} style={{ width: 50 }}></img>
-          </div>
-          <div>
-            <Button variant="outline-light" href="/login" className="me-3">
-              Login
-            </Button>
-            <Button variant="outline-light" href="/register" className="me-2">
-              Registrazione
-            </Button>
-          </div>
-        </Container>
-      </Navbar>
-    );
-  }
   return (
-    <Navbar expand="lg" className="nav-bg sticky-top d-flex flex-column mt-0" variant="dark">
-      <Container fluid className="page-container mx-auto">
-        {/* Prima riga: brand */}
-        <div className="d-block w-100">
-          <div className="w-100 d-flex mb-0">
-            <Navbar.Brand className="text-white text-center d-flex align-items-center">
-              {isAtalantaPage ? (
-                <>
-                  <span style={{ color: "#0a2e6e", fontWeight: "bold", marginRight: 10 }}>Atalanta Tickets</span>
-                  <img src={teamLogos["Atalanta"]} alt="Logo Atalanta" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isBolognaPage ? (
-                <>
-                  <span style={{ color: "#dc3545", fontWeight: "bold", marginRight: 10 }}>Bologna Tickets</span>
-                  <img src={teamLogos["Bologna"]} alt="Logo Bologna" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isCagliariPage ? (
-                <>
-                  <span style={{ color: "#d50110", fontWeight: "bold", marginRight: 10 }}>Cagliari Tickets</span>
-                  <img src={teamLogos["Cagliari"]} alt="Logo Cagliari" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isComoPage ? (
-                <>
-                  <span style={{ color: "#073f6a", fontWeight: "bold", marginRight: 10 }}>Como Tickets</span>
-                  <img src={teamLogos["Como"]} alt="Logo Como" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isCremonesePage ? (
-                <>
-                  <span style={{ color: "#ed221c", fontWeight: "bold", marginRight: 10 }}>Cremonese Tickets</span>
-                  <img src={teamLogos["Cremonese"]} alt="Logo Cremonese" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isFiorentinaPage ? (
-                <>
-                  <span style={{ color: "#61328C", fontWeight: "bold", marginRight: 10 }}>Fiorentina Tickets</span>
-                  <img src={teamLogos["Fiorentina"]} alt="Logo Fiorentina" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isGenoaPage ? (
-                <>
-                  <span style={{ color: "#AC0B15", fontWeight: "bold", marginRight: 10 }}>Genoa Tickets</span>
-                  <img src={teamLogos["Genoa"]} alt="Logo Genoa" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isInterPage ? (
-                <>
-                  <span style={{ color: "#0d2dbcff", fontWeight: "bold", marginRight: 10 }}>Inter Tickets</span>
-                  <img src={teamLogos["Inter"]} alt="Logo Inter" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isJuventusPage ? (
-                <>
-                  <span style={{ color: "#ffffffff", fontWeight: "bold", marginRight: 10 }}>Juventus Tickets</span>
-                  <img src={teamLogos["Juventus"]} alt="Logo Juventus" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isLazioPage ? (
-                <>
-                  <span style={{ color: "#75D2EB", fontWeight: "bold", marginRight: 10 }}>Lazio Tickets</span>
-                  <img src={teamLogos["Lazio"]} alt="Logo Lazio" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isLeccePage ? (
-                <>
-                  <span style={{ color: "#fef200", fontWeight: "bold", marginRight: 10 }}>Lecce Tickets</span>
-                  <img src={teamLogos["Lecce"]} alt="Logo Lecce" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isMilanPage ? (
-                <>
-                  <span style={{ color: "#FE0032", fontWeight: "bold", marginRight: 10 }}>Milan Tickets</span>
-                  <img src={teamLogos["Milan"]} alt="Logo Milan" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isNapoliPage ? (
-                <>
-                  <span style={{ color: "#61C4E2", fontWeight: "bold", marginRight: 10 }}>Napoli Tickets</span>
-                  <img src={teamLogos["Napoli"]} alt="Logo Napoli" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isParmaPage ? (
-                <>
-                  <span style={{ color: "#FFD000", fontWeight: "bold", marginRight: 10 }}>Parma Tickets</span>
-                  <img src={teamLogos["Parma"]} alt="Logo Parma" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isPisaPage ? (
-                <>
-                  <span style={{ color: "#005eb8", fontWeight: "bold", marginRight: 10 }}>Pisa Tickets</span>
-                  <img src={teamLogos["Pisa"]} alt="Logo Pisa" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isRomaPage ? (
-                <>
-                  <span style={{ color: "#98142B", fontWeight: "bold", marginRight: 10 }}>Roma Tickets</span>
-                  <img src={teamLogos["Roma"]} alt="Logo Roma" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isSassuoloPage ? (
-                <>
-                  <span style={{ color: "#00a452", fontWeight: "bold", marginRight: 10 }}>Sassuolo Tickets</span>
-                  <img src={teamLogos["Sassuolo"]} alt="Logo Sassuolo" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isTorinoPage ? (
-                <>
-                  <span style={{ color: "#8c2519", fontWeight: "bold", marginRight: 10 }}>Torino Tickets</span>
-                  <img src={teamLogos["Torino"]} alt="Logo Torino" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isUdinesePage ? (
-                <>
-                  <span style={{ color: "#ffffff", fontWeight: "bold", marginRight: 10 }}>Udinese Tickets</span>
-                  <img src={teamLogos["Udinese"]} alt="Logo Udinese" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : isVeronaPage ? (
-                <>
-                  <span style={{ color: "#ffd101", fontWeight: "bold", marginRight: 10 }}>Verona Tickets</span>
-                  <img src={teamLogos["Verona"]} alt="Logo Verona" style={{ width: 30, height: 30, objectFit: "contain" }} />
-                </>
-              ) : (
-                "EASYTICKETS"
-              )}
-              {props.claim}
-              <img src={Image} style={{ width: 50 }}></img>
-            </Navbar.Brand>
-          </div>
-          <div>
+    <Navbar expand="lg" className="sticky-top nav-bg mt-0" variant="dark">
+      <Container fluid className="page-container mx-auto d-flex justify-content-between align-items-start">
+        {/* Brand + Dropdown */}
+        <div className="d-flex flex-column">
+          <Navbar.Brand className="d-flex align-items-center text-white mb-0 p-0">
+            {currentTeam ? (
+              <>
+                <span style={{ fontWeight: "bold", marginRight: 10 }}>{currentTeam} Tickets</span>
+                <img src={teamLogos[currentTeam]} alt={currentTeam} style={{ width: 30, height: 30, objectFit: "contain" }} />
+              </>
+            ) : (
+              "EASYTICKETS"
+            )}
+            <img src={Image} alt="Easytickets" style={{ width: 50, marginLeft: 10 }} />
+          </Navbar.Brand>
+
+          {/* Dropdown sotto il brand */}
+          {isAuthenticated && (
             <DropdownButton
               id="dropdown-item-button"
               title={<span style={{ color: "white", cursor: "pointer", textDecoration: "none" }}>Acquista biglietti</span>}
@@ -240,8 +109,8 @@ const TopBar = ({ props, isAuthenticated }) => {
                   {[...Array(numColumns)].map((_, colIndex) => (
                     <Col key={colIndex} xs={3}>
                       {teams.slice(colIndex * 5, colIndex * 5 + 5).map((item, idx) => (
-                        <a href={`/${item.name.toLowerCase()}`} className="text-decoration-none">
-                          <div key={idx} className="nav-div mb-3 d-flex justify-content-between align-items-center">
+                        <a href={`/${item.name.toLowerCase()}`} className="text-decoration-none" key={idx}>
+                          <div className="nav-div mb-3 d-flex justify-content-between align-items-center">
                             <h6>{item.name}</h6>
                             <img src={item.logo || item.img} alt={item.name} style={{ width: "30%", height: "100%", objectFit: "contain" }} />
                           </div>
@@ -252,259 +121,33 @@ const TopBar = ({ props, isAuthenticated }) => {
                 </Row>
               </Dropdown.Item>
             </DropdownButton>
-          </div>
+          )}
         </div>
-        <div className="w-100 d-flex justify-content-end gap-3">
-          {/* Seconda riga: bottoni e dropdown */}
 
-          {isAtalantaPage ? (
+        {/* Bottoni login/register o logout */}
+        <div className="d-flex gap-2 align-self-start">
+          {!isAuthenticated ? (
             <>
-              <Button variant="outline-light" href="/home">
+              <Button variant="outline-light mt-2" onClick={() => navigate("/home")}>
                 Home
               </Button>
-              <Button variant="outline-light" href="/atalanta/matches">
-                Partite
+              <Button variant="outline-light mt-2" href="/login">
+                Login
               </Button>
-              <Button variant="outline-light" href="/atalanta/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isBolognaPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/bologna/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/bologna/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isCagliariPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cagliari/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cagliari/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isComoPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/como/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/como/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isCremonesePage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isFiorentinaPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isGenoaPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isInterPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isJuventusPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isLazioPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isLeccePage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isMilanPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isNapoliPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isParmaPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isPisaPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isRomaPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isSassuoloPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isTorinoPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isUdinesePage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
-              </Button>
-            </>
-          ) : isVeronaPage ? (
-            <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
-              <Button variant="outline-light" href="/cremonese/matches">
-                Partite
-              </Button>
-              <Button variant="outline-light" href="/cremonese/contact">
-                Contatti
+              <Button variant="outline-light mt-2" href="/register">
+                Registrazione
               </Button>
             </>
           ) : (
             <>
-              <Button variant="outline-light" href="/home">
-                Home
-              </Button>
+              {isAuthenticated && currentTeam && (
+                <Button variant="outline-light mt-2" onClick={() => navigate("/home")}>
+                  Home
+                </Button>
+              )}
 
-              <Button variant="outline-light" href="/about">
-                Info
+              <Button variant="outline-light mt-2" onClick={logout}>
+                Logout
               </Button>
             </>
           )}

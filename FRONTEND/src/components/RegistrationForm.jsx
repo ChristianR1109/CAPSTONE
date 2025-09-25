@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function RegistrationForm() {
+function RegistrationForm() {
   const [form, setForm] = useState({
+    username: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -13,9 +15,11 @@ export default function RegistrationForm() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(null);
   const [serverError, setServerError] = useState(null);
+  const navigate = useNavigate();
 
   const validate = () => {
     const e = {};
+    if (!form.username.trim()) e.username = "Username obbligatorio";
     if (!form.firstName.trim()) e.firstName = "Nome obbligatorio";
     if (!form.lastName.trim()) e.lastName = "Cognome obbligatorio";
     if (!form.email) e.email = "Email obbligatoria";
@@ -42,14 +46,15 @@ export default function RegistrationForm() {
     setLoading(true);
     setServerError(null);
     try {
-      const res = await fetch("http://localhost:1313/public/register", {
+      const res = await fetch("http://localhost:1313/public/users/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          firstName: form.firstName,
-          lastName: form.lastName,
+          username: form.username,
           email: form.email,
           password: form.password,
+          name: form.firstName,
+          surname: form.lastName,
         }),
       });
 
@@ -59,8 +64,9 @@ export default function RegistrationForm() {
         setServerError(message);
       } else {
         const payload = await res.json().catch(() => null);
-        setSuccess(payload?.message || "Registrazione avvenuta con successo. Controlla la tua email.");
-        setForm({ firstName: "", lastName: "", email: "", password: "", confirmPassword: "" });
+        setSuccess(payload?.message || "Registrazione avvenuta con successo!");
+        setForm({ username: "", firstName: "", lastName: "", email: "", password: "", confirmPassword: "" });
+        navigate("/login", { state: { successMessage: payload?.message || "Registrazione avvenuta con successo, effettua il login!" } });
       }
     } catch {
       setServerError("Impossibile contattare il server");
@@ -75,10 +81,27 @@ export default function RegistrationForm() {
         <h2 className="text-2xl font-semibold text-white text-center mb-4">Crea il tuo account</h2>
 
         {serverError && <div className="bg-red-600/90 text-white px-4 py-2 rounded mb-4">{String(serverError)}</div>}
-
         {success && <div className="bg-green-600/90 text-white px-4 py-2 rounded mb-4">{success}</div>}
 
         <form onSubmit={handleSubmit} noValidate>
+          <label className="flex flex-col text-sm text-white/85 mb-3">
+            <span className="mb-1">Username</span>
+            <input
+              name="username"
+              value={form.username}
+              onChange={handleChange}
+              className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.username ? "border-red-400" : "border-white/10"} text-black`}
+              placeholder="mario.rossi"
+              aria-invalid={!!errors.username}
+              aria-describedby={errors.username ? "err-username" : undefined}
+            />
+            {errors.username && (
+              <small id="err-username" className="text-red-300 mt-1">
+                {errors.username}
+              </small>
+            )}
+          </label>
+
           <div className="grid grid-cols-2 gap-3 mb-3">
             <label className="flex flex-col text-sm text-white/85">
               <span className="mb-1">Nome</span>
@@ -86,7 +109,7 @@ export default function RegistrationForm() {
                 name="firstName"
                 value={form.firstName}
                 onChange={handleChange}
-                className={`px-3 py-2 rounded-lg bg-white/5 border ${errors.firstName ? "border-red-400" : "border-white/10"} text-white`}
+                className={`px-3 py-2 rounded-lg bg-white/5 border ${errors.firstName ? "border-red-400" : "border-white/10"} text-black`}
                 placeholder="Mario"
                 aria-invalid={!!errors.firstName}
                 aria-describedby={errors.firstName ? "err-firstName" : undefined}
@@ -104,7 +127,7 @@ export default function RegistrationForm() {
                 name="lastName"
                 value={form.lastName}
                 onChange={handleChange}
-                className={`px-3 py-2 rounded-lg bg-white/5 border ${errors.lastName ? "border-red-400" : "border-white/10"} text-white`}
+                className={`px-3 py-2 rounded-lg bg-white/5 border ${errors.lastName ? "border-red-400" : "border-white/10"} text-black`}
                 placeholder="Rossi"
                 aria-invalid={!!errors.lastName}
                 aria-describedby={errors.lastName ? "err-lastName" : undefined}
@@ -123,7 +146,7 @@ export default function RegistrationForm() {
               name="email"
               value={form.email}
               onChange={handleChange}
-              className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.email ? "border-red-400" : "border-white/10"} text-white`}
+              className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.email ? "border-red-400" : "border-white/10"} text-black`}
               placeholder="mario@example.com"
               aria-invalid={!!errors.email}
               aria-describedby={errors.email ? "err-email" : undefined}
@@ -142,7 +165,7 @@ export default function RegistrationForm() {
               type="password"
               value={form.password}
               onChange={handleChange}
-              className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.password ? "border-red-400" : "border-white/10"} text-white`}
+              className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.password ? "border-red-400" : "border-white/10"} text-black`}
               placeholder="Almeno 8 caratteri"
               aria-invalid={!!errors.password}
               aria-describedby={errors.password ? "err-password" : undefined}
@@ -161,7 +184,7 @@ export default function RegistrationForm() {
               type="password"
               value={form.confirmPassword}
               onChange={handleChange}
-              className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.confirmPassword ? "border-red-400" : "border-white/10"} text-white`}
+              className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.confirmPassword ? "border-red-400" : "border-white/10"} text-black`}
               placeholder="Ripeti la password"
               aria-invalid={!!errors.confirmPassword}
               aria-describedby={errors.confirmPassword ? "err-confirmPassword" : undefined}
@@ -190,3 +213,5 @@ export default function RegistrationForm() {
     </div>
   );
 }
+
+export default RegistrationForm;

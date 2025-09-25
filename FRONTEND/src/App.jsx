@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import React, { useState, useEffect } from "react";
-
+import { AuthProvider } from "./auth/AuthContext.jsx";
 import TopBar from "./components/Topbar";
 import Home from "./components/Home";
 import Atalanta from "./components/Atalanta";
@@ -26,46 +25,181 @@ import Udinese from "./components/Udinese";
 import Verona from "./components/Verona";
 import RegistrationForm from "./components/RegistrationForm";
 import LoginForm from "./components/LoginForm";
+import PrivateRoute from "./auth/PrivateRoute.jsx";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    // Qui controlli se esiste un token nello storage
-    const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token);
-  }, []);
-
   return (
-    <BrowserRouter>
-      <TopBar isAuthenticated={isAuthenticated} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/register" element={<RegistrationForm />} />
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/atalanta" element={<Atalanta />} />
-        <Route path="/bologna" element={<Bologna />} />
-        <Route path="/cagliari" element={<Cagliari />} />
-        <Route path="/como" element={<Como />} />
-        <Route path="/cremonese" element={<Cremonese />} />
-        <Route path="/fiorentina" element={<Fiorentina />} />
-        <Route path="/genoa" element={<Genoa />} />
-        <Route path="/inter" element={<Inter />} />
-        <Route path="/juventus" element={<Juventus />} />
-        <Route path="/lazio" element={<Lazio />} />
-        <Route path="/lecce" element={<Lecce />} />
-        <Route path="/milan" element={<Milan />} />
-        <Route path="/napoli" element={<Napoli />} />
-        <Route path="/parma" element={<Parma />} />
-        <Route path="/pisa" element={<Pisa />} />
-        <Route path="/roma" element={<Roma />} />
-        <Route path="/sassuolo" element={<Sassuolo />} />
-        <Route path="/torino" element={<Torino />} />
-        <Route path="/udinese" element={<Udinese />} />
-        <Route path="/verona" element={<Verona />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <TopBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/register" element={<RegistrationForm />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route
+            path="/atalanta"
+            element={
+              <PrivateRoute>
+                <Atalanta />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/bologna"
+            element={
+              <PrivateRoute>
+                <Bologna />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/cagliari"
+            element={
+              <PrivateRoute>
+                <Cagliari />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/como"
+            element={
+              <PrivateRoute>
+                <Como />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/cremonese"
+            element={
+              <PrivateRoute>
+                <Cremonese />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/fiorentina"
+            element={
+              <PrivateRoute>
+                <Fiorentina />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/genoa"
+            element={
+              <PrivateRoute>
+                <Genoa />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/inter"
+            element={
+              <PrivateRoute>
+                <Inter />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/juventus"
+            element={
+              <PrivateRoute>
+                <Juventus />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/lazio"
+            element={
+              <PrivateRoute>
+                <Lazio />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/lecce"
+            element={
+              <PrivateRoute>
+                <Lecce />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/milan"
+            element={
+              <PrivateRoute>
+                <Milan />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/napoli"
+            element={
+              <PrivateRoute>
+                <Napoli />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/parma"
+            element={
+              <PrivateRoute>
+                <Parma />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/pisa"
+            element={
+              <PrivateRoute>
+                <Pisa />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/roma"
+            element={
+              <PrivateRoute>
+                <Roma />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/sassuolo"
+            element={
+              <PrivateRoute>
+                <Sassuolo />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/torino"
+            element={
+              <PrivateRoute>
+                <Torino />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/udinese"
+            element={
+              <PrivateRoute>
+                <Udinese />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/verona"
+            element={
+              <PrivateRoute>
+                <Verona />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
