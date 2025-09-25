@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container, Navbar, Nav, Form, Button, Row, Col, Card, Alert } from "react-bootstrap";
+import PayButton from "./PayButton";
 
 const matches = ["Atalanta vs Juventus - 05/10/2025", "Atalanta vs Milan - 19/10/2025", "Atalanta vs Inter - 02/11/2025"];
 
@@ -104,10 +105,7 @@ const Inter = () => {
                     </Form.Group>
                   </Col>
                 </Row>
-
-                <Button type="submit" variant="black" style={{ backgroundColor: "#000000", borderColor: "#ffffff", color: "white" }}>
-                  Acquista
-                </Button>
+                <PayButton></PayButton>
               </Form>
             </Card.Body>
           </Card>

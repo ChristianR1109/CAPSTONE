@@ -95,7 +95,12 @@ const TopBar = () => {
             )}
             <img src={Image} alt="Easytickets" style={{ width: 50, marginLeft: 10 }} />
           </Navbar.Brand>
-
+          {/* Scritta sotto il brand, visibile solo se non loggati */}
+          {!isAuthenticated && (
+            <div>
+              <h6 className="text-white mb-0 brand-subtitle">Accedi per acquistare i biglietti!</h6>
+            </div>
+          )}
           {/* Dropdown sotto il brand */}
           {isAuthenticated && (
             <DropdownButton
@@ -136,7 +141,7 @@ const TopBar = () => {
               </Button>
               <Button variant="outline-light mt-2" href="/register">
                 Registrazione
-              </Button>
+              </Button>{" "}
             </>
           ) : (
             <>

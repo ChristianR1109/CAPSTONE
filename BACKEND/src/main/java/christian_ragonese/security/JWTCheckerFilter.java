@@ -53,6 +53,6 @@ public class JWTCheckerFilter extends OncePerRequestFilter {
         AntPathMatcher matcher = new AntPathMatcher();
         String path = request.getRequestURI();
         String method = request.getMethod();
-        return new AntPathMatcher().match("/public/**", request.getServletPath());
+        return path.startsWith("/public/") || path.equals("/api/create-order");
     }
 }
