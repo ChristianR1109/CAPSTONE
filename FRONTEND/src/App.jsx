@@ -38,7 +38,15 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/backoffice" element={<Backoffice />} />
+
+          <Route
+            path="/backoffice"
+            element={
+              <PrivateRoute requireAdmin={true}>
+                <Backoffice />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/atalanta"
             element={

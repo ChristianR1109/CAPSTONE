@@ -158,7 +158,7 @@ const TopBar = () => {
             </>
           ) : user.role === "ADMIN" ? (
             <>
-              <Button variant="outline-light mt-2" onClick={() => navigate("/admin/dashboard")}>
+              <Button variant="outline-light mt-2" onClick={() => navigate("/backoffice")}>
                 Dashboard
               </Button>
               <Button variant="outline-light mt-2" onClick={() => navigate("/home")}>
