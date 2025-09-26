@@ -1,5 +1,9 @@
 package christian_ragonese.controllers;
 
+import christian_ragonese.entities.Order;
+import christian_ragonese.payloads.TicketsDTO;
+import christian_ragonese.repositories.OrderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -26,26 +30,47 @@ public class PayPalController {
 
     private final String PAYPAL_BASE = "https://api-m.sandbox.paypal.com";
 
-    @PostMapping("/create-order")
-    public ResponseEntity<Map> createOrder() {
-        try {
-            RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private OrderRepository orderRepository;
 
-            // 1️⃣ Ottieni access token
-            HttpHeaders headers = new HttpHeaders();
-            headers.setBasicAuth(CLIENT_ID, SECRET);
-            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-            HttpEntity<String> tokenRequest = new HttpEntity<>("grant_type=client_credentials", headers);
-            Map<String, Object> tokenResponse = restTemplate.postForObject(PAYPAL_BASE + "/v1/oauth2/token", tokenRequest, Map.class);
+    @PostMapping("/create-order")
+    public ResponseEntity<Map> createOrder(@RequestBody TicketsDTO request) {
+        try {
+            // 1️⃣ Calcola totale
+            int tickets = request.tickets();
+            double pricePerTicket = request.pricePerTicket();
+            double total = tickets * pricePerTicket;
+
+            if (total <= 0) {
+                return ResponseEntity.badRequest().body(Map.of("error", "Totale ordine non valido"));
+            }
+
+            // 2️⃣ Ottieni access token
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders tokenHeaders = new HttpHeaders();
+            tokenHeaders.setBasicAuth(CLIENT_ID, SECRET);
+            tokenHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+            HttpEntity<String> tokenRequest = new HttpEntity<>("grant_type=client_credentials", tokenHeaders);
+            Map<String, Object> tokenResponse = restTemplate.postForObject(
+                    PAYPAL_BASE + "/v1/oauth2/token",
+                    tokenRequest,
+                    Map.class
+            );
             String accessToken = (String) tokenResponse.get("access_token");
 
-            // 2️⃣ Crea ordine
-            headers = new HttpHeaders();
-            headers.setBearerAuth(accessToken);
-            headers.setContentType(MediaType.APPLICATION_JSON);
+            // 3️⃣ Crea ordine PayPal
+            HttpHeaders orderHeaders = new HttpHeaders();
+            orderHeaders.setBearerAuth(accessToken);
+            orderHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-            Map<String, Object> amount = Map.of("currency_code", "EUR", "value", "10.00");
+            Map<String, Object> amount = Map.of(
+                    "currency_code", "EUR",
+                    "value", String.format("%.2f", total)
+            );
+
             Map<String, Object> purchaseUnit = Map.of("amount", amount);
+
             Map<String, Object> applicationContext = Map.of(
                     "return_url", RETURN_URL,
                     "cancel_url", CANCEL_URL
@@ -57,14 +82,29 @@ public class PayPalController {
                     "application_context", applicationContext
             );
 
-            HttpEntity<Map<String, Object>> orderRequest = new HttpEntity<>(body, headers);
-            Map<String, Object> orderResponse = restTemplate.postForObject(PAYPAL_BASE + "/v2/checkout/orders", orderRequest, Map.class);
+            HttpEntity<Map<String, Object>> orderRequest = new HttpEntity<>(body, orderHeaders);
+            Map<String, Object> orderResponse = restTemplate.postForObject(
+                    PAYPAL_BASE + "/v2/checkout/orders",
+                    orderRequest,
+                    Map.class
+            );
+
+            // 4️⃣ Salva ordine nel DB
+            Order order = new Order();
+            order.setBuyerName(request.buyerName());
+            order.setBuyerEmail(request.buyerEmail());
+            order.setMatchName(request.matchName());
+            order.setTickets(tickets);
+            order.setAmount(total);
+
+            orderRepository.save(order);
 
             return ResponseEntity.ok(orderResponse);
 
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", e.getMessage()));
         }
     }
 }
