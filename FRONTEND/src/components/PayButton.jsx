@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function PayButton({ disabled }) {
+function PayButton({ disabled, tickets, pricePerTicket }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -15,6 +15,7 @@ function PayButton({ disabled }) {
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({ tickets, pricePerTicket }),
       });
 
       if (!res.ok) {

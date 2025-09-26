@@ -109,7 +109,7 @@ const Atalanta = () => {
                   </Col>
                 </Row>
 
-                <PayButton disabled={!(selectedMatch && Number(tickets) > 0 && name && isEmailValid)} />
+                <PayButton disabled={!(selectedMatch && tickets > 0 && name && email)} tickets={tickets} pricePerTicket={10} />
               </Form>
             </Card.Body>
           </Card>

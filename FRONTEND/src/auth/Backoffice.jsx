@@ -9,7 +9,7 @@ const Backoffice = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await fetch("http://localhost:1313/public/matches");
+        const res = await fetch("http://localhost:1313/public/orders");
         if (!res.ok) {
           throw new Error("Errore nel recupero degli ordini");
         }

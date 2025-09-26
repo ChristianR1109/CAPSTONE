@@ -18,7 +18,7 @@ import java.util.UUID;
 @ToString
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private UUID id;
 
     private String matchName;

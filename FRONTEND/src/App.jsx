@@ -26,6 +26,7 @@ import Verona from "./components/Verona";
 import RegistrationForm from "./components/RegistrationForm";
 import LoginForm from "./components/LoginForm";
 import PrivateRoute from "./auth/PrivateRoute.jsx";
+import Backoffice from "./auth/Backoffice.jsx";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/login" element={<LoginForm />} />
+          <Route path="/backoffice" element={<Backoffice />} />
           <Route
             path="/atalanta"
             element={
