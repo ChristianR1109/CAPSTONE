@@ -4,19 +4,31 @@ import { createContext, useState } from "react";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token"));
+  const [user, setUser] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem("user");
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch {
+      return null;
+    }
+  });
 
-  const login = (token) => {
+  // True se l'utente esiste
+  const isAuthenticated = !!user;
+
+  const login = (token, userData) => {
     localStorage.setItem("token", token);
-    setIsAuthenticated(true);
+    localStorage.setItem("user", JSON.stringify(userData));
+    setUser(userData); // così React aggiorna subito la UI
   };
 
   const logout = () => {
     localStorage.removeItem("token");
-    setIsAuthenticated(false);
+    localStorage.removeItem("user");
+    setUser(null); // Questo aggiorna subito la UI
   };
 
-  return <AuthContext.Provider value={{ isAuthenticated, login, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>{children}</AuthContext.Provider>;
 };
 
 export default AuthContext;

@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Container, Nav, Navbar, Row, Col, Spinner, Alert, Button, Dropdown, DropdownButton } from "react-bootstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Container, Navbar, Row, Col, Spinner, Alert, Button, Dropdown, DropdownButton } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom";
 import Image from "../../public/Easytickets.png";
 import useAuth from "../auth/useAuth";
 
 const TopBar = () => {
-  const { isAuthenticated, logout } = useAuth();
+  const { user, logout } = useAuth();
+  const isAuthenticated = !!user;
   const location = useLocation();
+  const navigate = useNavigate();
+
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
   const teamLogos = {
     Atalanta: "https://upload.wikimedia.org/wikipedia/it/thumb/8/81/Logo_Atalanta_Bergamo.svg/800px-Logo_Atalanta_Bergamo.svg.png",
@@ -39,6 +41,7 @@ const TopBar = () => {
     Udinese: "https://upload.wikimedia.org/wikipedia/it/thumb/a/ae/Logo_Udinese_Calcio_2010.svg/1024px-Logo_Udinese_Calcio_2010.svg.png",
   };
 
+  // Fetch squadre
   useEffect(() => {
     fetch("http://localhost:1313/public/teams?size=20")
       .then((res) => {
@@ -46,8 +49,8 @@ const TopBar = () => {
         return res.json();
       })
       .then((data) => {
-        const teamsSorted = (data.content || []).sort((a, b) => a.name.localeCompare(b.name));
-        setTeams(teamsSorted);
+        const sortedTeams = (data.content || []).sort((a, b) => a.name.localeCompare(b.name));
+        setTeams(sortedTeams);
         setLoading(false);
       })
       .catch((err) => {
@@ -71,14 +74,14 @@ const TopBar = () => {
       </Container>
     );
 
-  const getTeamFromPath = () => {
+  const currentTeam = (() => {
     const pathTeam = location.pathname.split("/")[1];
-    const foundTeam = teams.find((t) => t.name.toLowerCase() === pathTeam.toLowerCase());
+    const foundTeam = teams.find((t) => t.name.toLowerCase() === pathTeam?.toLowerCase());
     return foundTeam?.name || null;
-  };
+  })();
 
-  const currentTeam = getTeamFromPath();
   const numColumns = Math.ceil((teams?.length || 0) / 5);
+
   return (
     <Navbar expand="lg" className="sticky-top nav-bg mt-0" variant="dark">
       <Container fluid className="page-container mx-auto d-flex justify-content-between align-items-start">
@@ -95,29 +98,39 @@ const TopBar = () => {
             )}
             <img src={Image} alt="Easytickets" style={{ width: 50, marginLeft: 10 }} />
           </Navbar.Brand>
-          {/* Scritta sotto il brand, visibile solo se non loggati */}
+
+          {/* Messaggio per utenti non loggati */}
           {!isAuthenticated && (
             <div>
               <h6 className="text-white mb-0 brand-subtitle">Accedi per acquistare i biglietti!</h6>
             </div>
           )}
-          {/* Dropdown sotto il brand */}
+
+          {/* Dropdown biglietti per utenti loggati */}
           {isAuthenticated && (
             <DropdownButton
               id="dropdown-item-button"
-              title={<span style={{ color: "white", cursor: "pointer", textDecoration: "none" }}>Acquista biglietti</span>}
+              title={<span style={{ color: "white", cursor: "pointer" }}>Acquista biglietti</span>}
               variant="dark"
               className="p-0 m-0"
             >
-              <Dropdown.Item as="div" variant="dark" className="bg-dark text-white my-dark-dropdown p-2" style={{ minWidth: "550px", width: "100%" }}>
+              <Dropdown.Item as="div" className="bg-dark text-white my-dark-dropdown p-2" style={{ minWidth: "550px", width: "100%" }}>
                 <Row>
                   {[...Array(numColumns)].map((_, colIndex) => (
                     <Col key={colIndex} xs={3}>
-                      {teams.slice(colIndex * 5, colIndex * 5 + 5).map((item, idx) => (
-                        <a href={`/${item.name.toLowerCase()}`} className="text-decoration-none" key={idx}>
+                      {teams.slice(colIndex * 5, colIndex * 5 + 5).map((team, idx) => (
+                        <a href={`/${team.name.toLowerCase()}`} className="text-decoration-none" key={idx}>
                           <div className="nav-div mb-3 d-flex justify-content-between align-items-center">
-                            <h6>{item.name}</h6>
-                            <img src={item.logo || item.img} alt={item.name} style={{ width: "30%", height: "100%", objectFit: "contain" }} />
+                            <h6>{team.name}</h6>
+                            <img
+                              src={team.logo || team.img}
+                              alt={team.name}
+                              style={{
+                                width: "30%",
+                                height: "100%",
+                                objectFit: "contain",
+                              }}
+                            />
                           </div>
                         </a>
                       ))}
@@ -136,21 +149,31 @@ const TopBar = () => {
               <Button variant="outline-light mt-2" onClick={() => navigate("/home")}>
                 Home
               </Button>
-              <Button variant="outline-light mt-2" href="/login">
+              <Button variant="outline-light mt-2" onClick={() => navigate("/login")}>
                 Login
               </Button>
-              <Button variant="outline-light mt-2" href="/register">
+              <Button variant="outline-light mt-2" onClick={() => navigate("/register")}>
                 Registrazione
-              </Button>{" "}
+              </Button>
+            </>
+          ) : user.role === "ADMIN" ? (
+            <>
+              <Button variant="outline-light mt-2" onClick={() => navigate("/admin/dashboard")}>
+                Dashboard
+              </Button>
+              <Button variant="outline-light mt-2" onClick={() => navigate("/home")}>
+                Home
+              </Button>
+              <Button variant="outline-light mt-2" onClick={logout}>
+                Logout
+              </Button>
             </>
           ) : (
+            // USER loggato
             <>
-              {isAuthenticated && currentTeam && (
-                <Button variant="outline-light mt-2" onClick={() => navigate("/home")}>
-                  Home
-                </Button>
-              )}
-
+              <Button variant="outline-light mt-2" onClick={() => navigate("/home")}>
+                Home
+              </Button>
               <Button variant="outline-light mt-2" onClick={logout}>
                 Logout
               </Button>

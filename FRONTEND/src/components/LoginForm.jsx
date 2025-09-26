@@ -67,17 +67,16 @@ function LoginForm() {
         const payload = await res.json().catch(() => null);
 
         // ✅ Salvo token, email e ruolo nel localStorage
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            token: payload.token,
-            email: payload.email,
-            role: payload.role, // USER o ADMIN
-          })
-        );
+        // Nuova versione
+        const userData = {
+          email: payload.email,
+          role: payload.role, // USER o ADMIN
+        };
 
-        // Chiamata al tuo hook per salvare il token, se serve
-        login(payload.token);
+        localStorage.setItem("user", JSON.stringify(userData));
+
+        // Aggiorna il context
+        login(payload.token, userData);
 
         // Redirect alla home
         navigate("/home");
