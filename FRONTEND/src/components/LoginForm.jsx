@@ -65,8 +65,22 @@ function LoginForm() {
         setServerError(message);
       } else {
         const payload = await res.json().catch(() => null);
+
+        // ✅ Salvo token, email e ruolo nel localStorage
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            token: payload.token,
+            email: payload.email,
+            role: payload.role, // USER o ADMIN
+          })
+        );
+
+        // Chiamata al tuo hook per salvare il token, se serve
         login(payload.token);
-        navigate("/home"); // redirect alla home
+
+        // Redirect alla home
+        navigate("/home");
       }
     } catch {
       setServerError("Impossibile contattare il server");
@@ -74,67 +88,64 @@ function LoginForm() {
       setLoading(false);
     }
   };
-
   return (
-    <Container fluid className="page-container">
-      <div className=" flex items-center justify-center p-6 ">
-        <div className=" border   rounded text-white ">
-          <h2 className="text-2xl font-semibold text-white text-center mb-4">Accedi</h2>
-          {visibleMessage && <div className="bg-green-600/90 text-white px-4 py-2 rounded mb-4">{visibleMessage}</div>}
+    <Container fluid className="page-container-login mt-5">
+      <div className="    text-white rounded-5 card-box-shadoww  " style={{ border: "2px solid #ffffffff" }}>
+        <h2 className="text-2xl font-semibold text-white text-center mb-4">Accedi</h2>
+        {visibleMessage && <div className="bg-green-600/90 text-white px-4 py-2 rounded mb-4">{visibleMessage}</div>}
 
-          {serverError && <div className="bg-red-600/90 text-white px-4 py-2 rounded mb-4">{String(serverError)}</div>}
+        {serverError && <div className="bg-red-600/90 text-white px-4 py-2 rounded mb-4">{String(serverError)}</div>}
 
-          <div className="d-flex justify-content-center">
-            <form onSubmit={handleSubmit} noValidate>
-              <label className="flex flex-col text-sm text-white/85 mb-3 ">
-                <span className="mb-1">Email</span>
-                <input
-                  name="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  className={`w-full mx-3 py-2 rounded bg-white border ${errors.email ? "border-red-400" : "border-white/10"} text-black`}
-                  placeholder="prova@example.com"
-                  aria-invalid={!!errors.email}
-                  aria-describedby={errors.email ? "err-email" : undefined}
-                />
-                {errors.email && (
-                  <small id="err-email" className="text-red-300 mt-1">
-                    {errors.email}
-                  </small>
-                )}
-              </label>
+        <div className="d-flex justify-content-center">
+          <form onSubmit={handleSubmit} noValidate>
+            <label className="flex flex-col text-sm text-white/85 mb-3 ">
+              <span className="mb-1">Email</span>
+              <input
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                className={`w-full mx-3 py-2 rounded bg-white border ${errors.email ? "border-red-400" : "border-white/10"} text-black`}
+                placeholder="prova@example.com"
+                aria-invalid={!!errors.email}
+                aria-describedby={errors.email ? "err-email" : undefined}
+              />
+              {errors.email && (
+                <small id="err-email" className="text-red-300 mt-1">
+                  {errors.email}
+                </small>
+              )}
+            </label>
 
-              <label className="flex flex-col text-sm text-white/85 mb-4">
-                <span className="mb-1">Password</span>
-                <input
-                  name="password"
-                  type="password"
-                  value={form.password}
-                  onChange={handleChange}
-                  className={` mx-3 py-2 rounded bg-white border ${errors.password ? "border-red-400" : "border-white/10"} text-black`}
-                  placeholder="Password"
-                  aria-invalid={!!errors.password}
-                  aria-describedby={errors.password ? "err-password" : undefined}
-                />
-                {errors.password && (
-                  <small id="err-password" className="text-red-300 mt-1">
-                    {errors.password}
-                  </small>
-                )}
-              </label>
+            <label className="flex flex-col text-sm text-white/85 mb-4">
+              <span className="mb-1">Password</span>
+              <input
+                name="password"
+                type="password"
+                value={form.password}
+                onChange={handleChange}
+                className={` mx-3 py-2 rounded bg-white border ${errors.password ? "border-red-400" : "border-white/10"} text-black`}
+                placeholder="Password"
+                aria-invalid={!!errors.password}
+                aria-describedby={errors.password ? "err-password" : undefined}
+              />
+              {errors.password && (
+                <small id="err-password" className="text-red-300 mt-1">
+                  {errors.password}
+                </small>
+              )}
+            </label>
 
-              <button type="submit" disabled={loading} className="py-2 rounded bg-white text-black ">
-                {loading ? "Accesso in corso..." : "Accedi"}
-              </button>
+            <button type="submit" disabled={loading} className="py-2 rounded bg-white text-black ">
+              {loading ? "Accesso in corso..." : "Accedi"}
+            </button>
 
-              <div className="mt-4 text-center text-white/70 text-sm">
-                Non hai un account?{" "}
-                <a href="/register" className="underline">
-                  Registrati
-                </a>
-              </div>
-            </form>
-          </div>
+            <div className="mt-4 text-center text-white/70 text-sm">
+              Non hai un account?{" "}
+              <a href="/register" className="underline text-white">
+                Registrati
+              </a>
+            </div>
+          </form>
         </div>
       </div>
     </Container>

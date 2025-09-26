@@ -1,5 +1,6 @@
 package christian_ragonese.controllers;
 
+import christian_ragonese.entities.User;
 import christian_ragonese.payloads.UserLoginDTO;
 import christian_ragonese.payloads.UserLoginRespDTO;
 import christian_ragonese.services.AuthorizationService;
@@ -19,10 +20,21 @@ public class AuthorizationController {
     @Autowired
     public AuthorizationService authorizationsService;
 
+
     //LOGIN
     @PostMapping("/login")
     public UserLoginRespDTO login(@RequestBody UserLoginDTO payload) {
+        // controlla email e password, ritorna token
         String extractedToken = authorizationsService.checkEmailBeforeLogin(payload);
-        return new UserLoginRespDTO(extractedToken);
+
+        // Recupera l’utente dal DB
+        User user = userService.findByEmail(payload.email());
+
+        // Costruisci il DTO completo
+        return new UserLoginRespDTO(
+                extractedToken,
+                user.getEmail(),
+                user.getRole().name() // supponendo enum Role {USER, ADMIN}
+        );
     }
-}
+    }

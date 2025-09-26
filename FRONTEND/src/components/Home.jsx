@@ -19,6 +19,8 @@ const LeagueTable = () => {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const role = user?.role || "USER";
 
   useEffect(() => {
     // Fetch standings
@@ -61,6 +63,17 @@ const LeagueTable = () => {
     return (
       <Container className="mx-5 my-3">
         <Alert variant="danger">{error}</Alert>
+      </Container>
+    );
+  }
+  if (role === "ADMIN") {
+    return (
+      <Container className="p-5 text-center">
+        <h1 className="text-white">Pannello Admin</h1>
+        <p className="text-light">Qui puoi gestire squadre, partite e utenti.</p>
+        <button className="btn btn-warning mt-3" onClick={() => (window.location.href = "/admin/dashboard")}>
+          Vai al pannello di gestione
+        </button>
       </Container>
     );
   }

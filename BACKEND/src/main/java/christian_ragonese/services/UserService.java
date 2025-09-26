@@ -1,6 +1,7 @@
 package christian_ragonese.services;
 
 
+import christian_ragonese.entities.Role;
 import christian_ragonese.entities.User;
 import christian_ragonese.exceptions.BadRequestException;
 import christian_ragonese.exceptions.NotFoundException;
@@ -65,26 +66,7 @@ public class UserService {
         return new UserRespDTO(savedUser.getId());
     }
 
-    public UserRespDTO saveAdmin(UserRegistrationDTO body) {
-        userRepository.findByEmail(body.email()).ifPresent(user -> {
-            throw new BadRequestException("The Email " + user.getEmail() + " is already in use!");
-        });
-        userRepository.findByUsername(body.username()).ifPresent(user -> {
-            throw new BadRequestException("The username " + user.getUsername() + " is already in use!");
-        });
 
-        User newUser = new User(
-                body.username(),
-                body.email(),
-                passwordEncoder.encode(body.password()),
-                body.name(),
-                body.surname()
-        );
-
-
-        User savedUser = userRepository.save(newUser);
-        return new UserRespDTO(savedUser.getId());
-    }
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email)
@@ -107,6 +89,16 @@ public class UserService {
         userRepository.delete(found);
     }
 
+    public UserRespDTO saveAdmin(UserRegistrationDTO dto) {
+        User user = new User();
+        user.setUsername(dto.username());
+        user.setEmail(dto.email());
+        user.setPassword(passwordEncoder.encode(dto.password()));
+        user.setName(dto.name());
+        user.setSurname(dto.surname());
+        user.setRole(Role.ADMIN);  // 👈 assegni qui il ruolo fisso
+        return new UserRespDTO(userRepository.save(user).getId());
+    }
 
 
     public User tryFindByEmail(String email) {
