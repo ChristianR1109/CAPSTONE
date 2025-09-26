@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
-function PayButton({ disabled, tickets, pricePerTicket }) {
+function PayButton({ disabled, tickets }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const pricePerTicket = 20.0;
 
   const handlePay = async () => {
     if (disabled) return;
@@ -15,7 +16,7 @@ function PayButton({ disabled, tickets, pricePerTicket }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ tickets, pricePerTicket }),
+        body: JSON.stringify({ tickets: Number(tickets), pricePerTicket }),
       });
 
       if (!res.ok) {
@@ -40,7 +41,7 @@ function PayButton({ disabled, tickets, pricePerTicket }) {
       setLoading(false);
     }
   };
-
+  console.log("PREZZO ", pricePerTicket);
   return (
     <div style={{ marginTop: "1rem" }}>
       {error && <p style={{ color: "red" }}>{error}</p>}
