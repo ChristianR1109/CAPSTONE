@@ -282,3 +282,9 @@ h6 {
   background-color: #26315a;
   padding: 0;
 }
+.navbar .brand-subtitle {
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 2px; /* distanza dal brand */
+  text-align: left; /* o center, se preferisci */
+}

@@ -10,7 +10,8 @@ const Inter = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
-
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isEmailValid = emailRegex.test(email);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (selectedMatch && name && email) {
@@ -85,7 +86,7 @@ const Inter = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        style={{ backgroundColor: "#ffffffff", color: "white", borderColor: "#ffffffff" }}
+                        style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
                         className="custom-placeholder"
                       />
                     </Form.Group>
@@ -102,10 +103,12 @@ const Inter = () => {
                         style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
                         className="custom-placeholder"
                       />
+                      {email && !isEmailValid && <small style={{ color: "red" }}>Inserisci un indirizzo email valido</small>}
                     </Form.Group>
                   </Col>
                 </Row>
-                <PayButton></PayButton>
+
+                <PayButton disabled={!(selectedMatch && Number(tickets) > 0 && name && isEmailValid)} />
               </Form>
             </Card.Body>
           </Card>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container, Navbar, Nav, Form, Button, Row, Col, Card, Alert } from "react-bootstrap";
+import PayButton from "./PayButton";
 
 const matches = ["Atalanta vs Juventus - 05/10/2025", "Atalanta vs Milan - 19/10/2025", "Atalanta vs Inter - 02/11/2025"];
 
@@ -9,6 +10,8 @@ const Roma = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isEmailValid = emailRegex.test(email);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -84,7 +87,7 @@ const Roma = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        style={{ backgroundColor: "#ffffffff", color: "white", borderColor: "#ffffffff" }}
+                        style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
                         className="custom-placeholder"
                       />
                     </Form.Group>
@@ -101,13 +104,12 @@ const Roma = () => {
                         style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
                         className="custom-placeholder"
                       />
+                      {email && !isEmailValid && <small style={{ color: "red" }}>Inserisci un indirizzo email valido</small>}
                     </Form.Group>
                   </Col>
                 </Row>
 
-                <Button type="submit" variant="black" style={{ backgroundColor: "#000000", borderColor: "#ffffff", color: "white" }}>
-                  Acquista
-                </Button>
+                <PayButton disabled={!(selectedMatch && Number(tickets) > 0 && name && isEmailValid)} />
               </Form>
             </Card.Body>
           </Card>
