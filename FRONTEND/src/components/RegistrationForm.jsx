@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function RegistrationForm() {
@@ -76,141 +77,145 @@ function RegistrationForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-900 to-indigo-800 flex items-center justify-center p-6">
-      <div className="max-w-md w-full bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl shadow-xl p-6">
-        <h2 className="text-2xl font-semibold text-white text-center mb-4">Crea il tuo account</h2>
+    <Container fluid className="page-container">
+      <div className="min-h-screen bg-gradient-to-br from-sky-900 to-indigo-800 flex items-center justify-center p-6">
+        <div className="max-w-md w-full bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl shadow-xl p-6">
+          <h2 className="text-2xl font-semibold text-white text-center mb-4">Crea il tuo account</h2>
 
-        {serverError && <div className="bg-red-600/90 text-white px-4 py-2 rounded mb-4">{String(serverError)}</div>}
-        {success && <div className="bg-green-600/90 text-white px-4 py-2 rounded mb-4">{success}</div>}
+          {serverError && <div className="bg-red-600/90 text-white px-4 py-2 rounded mb-4">{String(serverError)}</div>}
+          {success && <div className="bg-green-600/90 text-white px-4 py-2 rounded mb-4">{success}</div>}
 
-        <form onSubmit={handleSubmit} noValidate>
-          <label className="flex flex-col text-sm text-white/85 mb-3">
-            <span className="mb-1">Username</span>
-            <input
-              name="username"
-              value={form.username}
-              onChange={handleChange}
-              className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.username ? "border-red-400" : "border-white/10"} text-black`}
-              placeholder="mario.rossi"
-              aria-invalid={!!errors.username}
-              aria-describedby={errors.username ? "err-username" : undefined}
-            />
-            {errors.username && (
-              <small id="err-username" className="text-red-300 mt-1">
-                {errors.username}
-              </small>
-            )}
-          </label>
+          <div className="d-flex">
+            <form onSubmit={handleSubmit} noValidate>
+              <label className="text-white mb-3">
+                <span className="mb-1">Username</span>
+                <input
+                  name="username"
+                  value={form.username}
+                  onChange={handleChange}
+                  className={`mx-2 py-2 rounded-lg bg-white border ${errors.username ? "border-red-400" : "border-white/10"} text-black`}
+                  placeholder="mario.rossi"
+                  aria-invalid={!!errors.username}
+                  aria-describedby={errors.username ? "err-username" : undefined}
+                />
+                {errors.username && (
+                  <small id="err-username" className="text-red-300 mt-1">
+                    {errors.username}
+                  </small>
+                )}
+              </label>
 
-          <div className="grid grid-cols-2 gap-3 mb-3">
-            <label className="flex flex-col text-sm text-white/85">
-              <span className="mb-1">Nome</span>
-              <input
-                name="firstName"
-                value={form.firstName}
-                onChange={handleChange}
-                className={`px-3 py-2 rounded-lg bg-white/5 border ${errors.firstName ? "border-red-400" : "border-white/10"} text-black`}
-                placeholder="Mario"
-                aria-invalid={!!errors.firstName}
-                aria-describedby={errors.firstName ? "err-firstName" : undefined}
-              />
-              {errors.firstName && (
-                <small id="err-firstName" className="text-red-300 mt-1">
-                  {errors.firstName}
-                </small>
-              )}
-            </label>
+              <div className="grid grid-cols-2 gap-3 mb-3">
+                <label className="flex flex-col text-sm text-white/85">
+                  <span className="mb-1">Nome</span>
+                  <input
+                    name="firstName"
+                    value={form.firstName}
+                    onChange={handleChange}
+                    className={`px-3 py-2 rounded-lg bg-white/5 border ${errors.firstName ? "border-red-400" : "border-white/10"} text-black`}
+                    placeholder="Mario"
+                    aria-invalid={!!errors.firstName}
+                    aria-describedby={errors.firstName ? "err-firstName" : undefined}
+                  />
+                  {errors.firstName && (
+                    <small id="err-firstName" className="text-red-300 mt-1">
+                      {errors.firstName}
+                    </small>
+                  )}
+                </label>
 
-            <label className="flex flex-col text-sm text-white/85">
-              <span className="mb-1">Cognome</span>
-              <input
-                name="lastName"
-                value={form.lastName}
-                onChange={handleChange}
-                className={`px-3 py-2 rounded-lg bg-white/5 border ${errors.lastName ? "border-red-400" : "border-white/10"} text-black`}
-                placeholder="Rossi"
-                aria-invalid={!!errors.lastName}
-                aria-describedby={errors.lastName ? "err-lastName" : undefined}
-              />
-              {errors.lastName && (
-                <small id="err-lastName" className="text-red-300 mt-1">
-                  {errors.lastName}
-                </small>
-              )}
-            </label>
+                <label className="flex flex-col text-sm text-white/85">
+                  <span className="mb-1">Cognome</span>
+                  <input
+                    name="lastName"
+                    value={form.lastName}
+                    onChange={handleChange}
+                    className={`px-3 py-2 rounded-lg bg-white/5 border ${errors.lastName ? "border-red-400" : "border-white/10"} text-black`}
+                    placeholder="Rossi"
+                    aria-invalid={!!errors.lastName}
+                    aria-describedby={errors.lastName ? "err-lastName" : undefined}
+                  />
+                  {errors.lastName && (
+                    <small id="err-lastName" className="text-red-300 mt-1">
+                      {errors.lastName}
+                    </small>
+                  )}
+                </label>
+              </div>
+
+              <label className="flex flex-col text-sm text-white/85 mb-3">
+                <span className="mb-1">Email</span>
+                <input
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.email ? "border-red-400" : "border-white/10"} text-black`}
+                  placeholder="mario@example.com"
+                  aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? "err-email" : undefined}
+                />
+                {errors.email && (
+                  <small id="err-email" className="text-red-300 mt-1">
+                    {errors.email}
+                  </small>
+                )}
+              </label>
+
+              <label className="flex flex-col text-sm text-white/85 mb-3">
+                <span className="mb-1">Password</span>
+                <input
+                  name="password"
+                  type="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.password ? "border-red-400" : "border-white/10"} text-black`}
+                  placeholder="Almeno 8 caratteri"
+                  aria-invalid={!!errors.password}
+                  aria-describedby={errors.password ? "err-password" : undefined}
+                />
+                {errors.password && (
+                  <small id="err-password" className="text-red-300 mt-1">
+                    {errors.password}
+                  </small>
+                )}
+              </label>
+
+              <label className="flex flex-col text-sm text-white/85 mb-4">
+                <span className="mb-1">Conferma password</span>
+                <input
+                  name="confirmPassword"
+                  type="password"
+                  value={form.confirmPassword}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.confirmPassword ? "border-red-400" : "border-white/10"} text-black`}
+                  placeholder="Ripeti la password"
+                  aria-invalid={!!errors.confirmPassword}
+                  aria-describedby={errors.confirmPassword ? "err-confirmPassword" : undefined}
+                />
+                {errors.confirmPassword && (
+                  <small id="err-confirmPassword" className="text-red-300 mt-1">
+                    {errors.confirmPassword}
+                  </small>
+                )}
+              </label>
+
+              <button type="submit" disabled={loading} className="w-full py-2 rounded-full bg-white/10 hover:bg-white/20 text-white font-medium transition">
+                {loading ? "Registrazione in corso..." : "Registrati"}
+              </button>
+
+              <div className="text-xs text-white/60 mt-3">Password sicura, non condividere i dati con nessuno.</div>
+            </form>
           </div>
 
-          <label className="flex flex-col text-sm text-white/85 mb-3">
-            <span className="mb-1">Email</span>
-            <input
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.email ? "border-red-400" : "border-white/10"} text-black`}
-              placeholder="mario@example.com"
-              aria-invalid={!!errors.email}
-              aria-describedby={errors.email ? "err-email" : undefined}
-            />
-            {errors.email && (
-              <small id="err-email" className="text-red-300 mt-1">
-                {errors.email}
-              </small>
-            )}
-          </label>
-
-          <label className="flex flex-col text-sm text-white/85 mb-3">
-            <span className="mb-1">Password</span>
-            <input
-              name="password"
-              type="password"
-              value={form.password}
-              onChange={handleChange}
-              className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.password ? "border-red-400" : "border-white/10"} text-black`}
-              placeholder="Almeno 8 caratteri"
-              aria-invalid={!!errors.password}
-              aria-describedby={errors.password ? "err-password" : undefined}
-            />
-            {errors.password && (
-              <small id="err-password" className="text-red-300 mt-1">
-                {errors.password}
-              </small>
-            )}
-          </label>
-
-          <label className="flex flex-col text-sm text-white/85 mb-4">
-            <span className="mb-1">Conferma password</span>
-            <input
-              name="confirmPassword"
-              type="password"
-              value={form.confirmPassword}
-              onChange={handleChange}
-              className={`w-full px-3 py-2 rounded-lg bg-white/5 border ${errors.confirmPassword ? "border-red-400" : "border-white/10"} text-black`}
-              placeholder="Ripeti la password"
-              aria-invalid={!!errors.confirmPassword}
-              aria-describedby={errors.confirmPassword ? "err-confirmPassword" : undefined}
-            />
-            {errors.confirmPassword && (
-              <small id="err-confirmPassword" className="text-red-300 mt-1">
-                {errors.confirmPassword}
-              </small>
-            )}
-          </label>
-
-          <button type="submit" disabled={loading} className="w-full py-2 rounded-full bg-white/10 hover:bg-white/20 text-white font-medium transition">
-            {loading ? "Registrazione in corso..." : "Registrati"}
-          </button>
-
-          <div className="text-xs text-white/60 mt-3">Password sicura, non condividere i dati con nessuno.</div>
-        </form>
-
-        <div className="mt-4 text-center text-white/70 text-sm">
-          Hai già un account?{" "}
-          <a href="/login" className="underline">
-            Accedi
-          </a>
+          <div className="mt-4 text-center text-white/70 text-sm">
+            Hai già un account?{" "}
+            <a href="/login" className="underline">
+              Accedi
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
 
