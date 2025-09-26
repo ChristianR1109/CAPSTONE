@@ -2,7 +2,8 @@ package christian_ragonese.controllers;
 
 import christian_ragonese.entities.Order;
 import christian_ragonese.payloads.TicketsDTO;
-import christian_ragonese.repositories.OrderRepository;
+
+import christian_ragonese.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -31,7 +32,7 @@ public class PayPalController {
     private final String PAYPAL_BASE = "https://api-m.sandbox.paypal.com";
 
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderService orderService;
 
     @PostMapping("/create-order")
     public ResponseEntity<Map> createOrder(@RequestBody TicketsDTO request) {
@@ -97,7 +98,7 @@ public class PayPalController {
             order.setTickets(tickets);
             order.setAmount(total);
 
-            orderRepository.save(order);
+            orderService.save(order);
 
             return ResponseEntity.ok(orderResponse);
 

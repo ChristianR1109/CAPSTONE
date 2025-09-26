@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { Container, Table, Card, Alert, Spinner } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Card, Nav } from "react-bootstrap";
+import Orders from "./Orders";
+import Matches from "./Matches";
+import Users from "./Users";
+import Standings from "./Standings";
 
 const Backoffice = () => {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // Stato per tracciare componente attivo
+  const [activeComponent, setActiveComponent] = useState("Orders");
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const res = await fetch("http://localhost:1313/public/orders");
-        if (!res.ok) {
-          throw new Error("Errore nel recupero degli ordini");
-        }
-        const data = await res.json();
-        setOrders(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOrders();
-  }, []);
+  // Renderizza il componente selezionato
+  const renderComponent = () => {
+    switch (activeComponent) {
+      case "Orders":
+        return <Orders />;
+      case "Matches":
+        return <Matches />;
+      case "Users":
+        return <Users />;
+      case "Standings":
+        return <Standings />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="admin-dashboard" style={{ minHeight: "100vh", background: "#f4f4f4", padding: "20px" }}>
@@ -31,68 +31,31 @@ const Backoffice = () => {
         <Card className="mb-4 shadow">
           <Card.Body>
             <h2 className="text-center">📊 Pannello di Controllo Admin</h2>
-            <p className="text-center text-muted">Gestione degli ordini PayPal</p>
+            <Nav
+              fill
+              variant="tabs"
+              defaultActiveKey="Orders"
+              onSelect={(selectedKey) => setActiveComponent(selectedKey)}
+              className="justify-content-center mb-3"
+            >
+              <Nav.Item>
+                <Nav.Link eventKey="Orders">Orders</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="Matches">Matches</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="Users">Users</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="Standings">Standings</Nav.Link>
+              </Nav.Item>
+            </Nav>
           </Card.Body>
         </Card>
 
-        {loading && (
-          <div className="text-center">
-            <Spinner animation="border" /> Caricamento ordini...
-          </div>
-        )}
-
-        {error && (
-          <Alert variant="danger" className="text-center">
-            {error}
-          </Alert>
-        )}
-
-        {!loading && !error && orders.length === 0 && (
-          <Alert variant="info" className="text-center">
-            Nessun ordine trovato.
-          </Alert>
-        )}
-
-        {!loading && orders.length > 0 && (
-          <Card className="shadow">
-            <Card.Body>
-              <Table striped bordered hover responsive>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Partita</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Biglietti</th>
-                    <th>Importo</th>
-                    <th>Stato</th>
-                    <th>Data</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.map((order, index) => (
-                    <tr key={order.id}>
-                      <td>{index + 1}</td>
-                      <td>{order.match}</td>
-                      <td>{order.name}</td>
-                      <td>{order.email}</td>
-                      <td>{order.tickets}</td>
-                      <td>{order.amount} €</td>
-                      <td>
-                        {order.status === "COMPLETED" ? (
-                          <span style={{ color: "green", fontWeight: "bold" }}>✔ Pagato</span>
-                        ) : (
-                          <span style={{ color: "red", fontWeight: "bold" }}>✘ Non pagato</span>
-                        )}
-                      </td>
-                      <td>{new Date(order.createdAt).toLocaleString()}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </Card.Body>
-          </Card>
-        )}
+        {/* Render del componente selezionato */}
+        {renderComponent()}
       </Container>
     </div>
   );

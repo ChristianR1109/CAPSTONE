@@ -27,6 +27,7 @@ import RegistrationForm from "./components/RegistrationForm";
 import LoginForm from "./components/LoginForm";
 import PrivateRoute from "./auth/PrivateRoute.jsx";
 import Backoffice from "./auth/Backoffice.jsx";
+import Orders from "./auth/Orders.jsx";
 
 function App() {
   return (
@@ -38,7 +39,14 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/login" element={<LoginForm />} />
-
+          <Route
+            path="/orders"
+            element={
+              <PrivateRoute requireAdmin={true}>
+                <Orders />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/backoffice"
             element={

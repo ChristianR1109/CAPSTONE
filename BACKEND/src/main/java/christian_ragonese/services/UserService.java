@@ -33,10 +33,20 @@ public class UserService {
 
 
     public Page<User> findAllUsers(int page, int size, String sortBy) {
+        if (page < 0) page = 0;
+        if (size <= 0) size = 10;          // default size
         if (size > 50) size = 50;
+
+        // campo sortBy valido da whitelist o fallback
+        List<String> allowedSort = List.of("id", "username", "email", "createdAt");
+        if (!allowedSort.contains(sortBy)) {
+            sortBy = "createdAt";          // valore di default
+        }
+
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
         return userRepository.findAll(pageable);
     }
+
 
     public User findById(UUID userId) {
         return userRepository.findById(userId).orElseThrow(() -> new NotFoundException(userId));
@@ -104,6 +114,11 @@ public class UserService {
     public User tryFindByEmail(String email) {
         return userRepository.findByEmail(email).orElse(null);
     }
-
+    public List<User> findAllUsersSimple(int page, int size, String sortBy) {
+        if (size > 50) size = 50;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
+        Page<User> pageResult = userRepository.findAll(pageable);
+        return pageResult.getContent(); // restituisce solo la lista contenuta nella pagina
+    }
 
 }

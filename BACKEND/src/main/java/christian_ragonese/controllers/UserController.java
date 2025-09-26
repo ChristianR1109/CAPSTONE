@@ -26,12 +26,13 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public Page<User> findAllUsers(@RequestParam(defaultValue = "0") int page,
+//    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<User> findAllUsers(@RequestParam(defaultValue = "0") int page,
                                    @RequestParam(defaultValue = "10") int size,
                                    @RequestParam(defaultValue = "id") String sortBy) {
-        return userService.findAllUsers(page, size, sortBy);
+        return userService.findAllUsersSimple(page, size, sortBy);
     }
+
 
     @GetMapping("/{userId}")
     public User findUserById(@PathVariable UUID userId) {

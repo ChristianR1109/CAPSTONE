@@ -24,5 +24,24 @@ public class OrderService {
     public Optional<Order> findById(UUID id){
         return orderRepository.findById(id);
     }
+    public Optional<Order> updateOrder(UUID id, Order updatedOrder) {
+        return orderRepository.findById(id).map(order -> {
+            order.setBuyerName(updatedOrder.getBuyerName());
+            order.setBuyerEmail(updatedOrder.getBuyerEmail());
+            order.setMatchName(updatedOrder.getMatchName());
+            order.setTickets(updatedOrder.getTickets());
+            order.setAmount(updatedOrder.getAmount());
+            // Nota: createdAt solitamente non si modifica
+            return orderRepository.save(order);
+        });
+    }
 
+    // Elimina un ordine per ID
+    public boolean deleteOrder(UUID id) {
+        if(orderRepository.existsById(id)) {
+            orderRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }

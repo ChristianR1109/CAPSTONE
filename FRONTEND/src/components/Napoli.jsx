@@ -64,7 +64,7 @@ const Napoli = () => {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formTickets">
-                <Form.Label style={{ color: "#ffffffff" }}>Numero biglietti</Form.Label>
+                <Form.Label style={{ color: "#ffffffff" }}>Numero biglietti (max 5)</Form.Label>
                 <Form.Control
                   type="number"
                   min="1"
@@ -109,13 +109,20 @@ const Napoli = () => {
               </Row>
 
               {/* Passo i dati al PayButton */}
-              <PayButton
-                disabled={!(selectedMatch && Number(tickets) > 0 && buyerName && isEmailValid)}
-                tickets={tickets}
-                buyerName={buyerName}
-                buyerEmail={buyerEmail}
-                matchName={selectedMatch}
-              />
+              <div className="d-flex justify-content-between align-items-center">
+                <div>
+                  <PayButton
+                    disabled={!(selectedMatch && Number(tickets) > 0 && buyerName && isEmailValid)}
+                    tickets={tickets}
+                    buyerName={buyerName}
+                    buyerEmail={buyerEmail}
+                    matchName={selectedMatch}
+                  />{" "}
+                </div>
+                <div>
+                  <h4 className="p-0 mt-3"> Totale = {tickets * 20}€</h4>
+                </div>
+              </div>
             </Form>
           </Card.Body>
         </Card>
