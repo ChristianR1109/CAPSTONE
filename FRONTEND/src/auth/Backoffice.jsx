@@ -30,7 +30,7 @@ const Backoffice = () => {
       <Container>
         <Card className="mb-4 shadow">
           <Card.Body>
-            <h2 className="text-center">📊 Pannello di Controllo Admin</h2>
+            <h2 className="text-center"> Pannello di Controllo Admin</h2>
             <Nav
               fill
               variant="tabs"

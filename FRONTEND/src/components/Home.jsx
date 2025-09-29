@@ -95,10 +95,19 @@ const LeagueTable = () => {
                 {Array.isArray(standings) && standings.length > 0 ? (
                   [...standings]
                     .sort((a, b) => {
-                      if (b.won * 3 + b.drawn === a.won * 3 + a.drawn) {
-                        return b.goalsFor - b.goalsAgainst - (a.goalsFor - a.goalsAgainst);
+                      const pointsA = a.won * 3 + a.drawn;
+                      const pointsB = b.won * 3 + b.drawn;
+
+                      if (pointsB === pointsA) {
+                        const diffA = a.goalsFor - a.goalsAgainst;
+                        const diffB = b.goalsFor - b.goalsAgainst;
+
+                        if (diffB === diffA) {
+                          return b.goalsFor - a.goalsFor;
+                        }
+                        return diffB - diffA;
                       }
-                      return b.won * 3 + b.drawn - (a.won * 3 + a.drawn);
+                      return pointsB - pointsA;
                     })
                     .map((team, c) => (
                       <tr key={team.team.name}>
@@ -148,7 +157,7 @@ const LeagueTable = () => {
               <thead>
                 <tr>
                   <th colSpan={3} className="table-rnd">
-                    PROSSIMA GIORNATA
+                    PROSSIME PARTITE
                   </th>
                 </tr>
                 <tr>

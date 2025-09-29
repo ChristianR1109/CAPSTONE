@@ -31,12 +31,12 @@ public class OrderService {
             order.setMatchName(updatedOrder.getMatchName());
             order.setTickets(updatedOrder.getTickets());
             order.setAmount(updatedOrder.getAmount());
-            // Nota: createdAt solitamente non si modifica
+
             return orderRepository.save(order);
         });
     }
 
-    // Elimina un ordine per ID
+
     public boolean deleteOrder(UUID id) {
         if(orderRepository.existsById(id)) {
             orderRepository.deleteById(id);
