@@ -17,11 +17,8 @@ public record MatchDTO(
         @Size(message = "Location must be between 3 and 40 characters.")
         String location,
         @NotNull(message = "Date is required")
-        LocalDate date,
-        @NotNull(message = "Team1 Id is required. ")
-        UUID team1Id,
-        @NotNull(message = "Team2 Id is required. ")
-        UUID team2Id
+        LocalDate date
+
 
 ) {
 }

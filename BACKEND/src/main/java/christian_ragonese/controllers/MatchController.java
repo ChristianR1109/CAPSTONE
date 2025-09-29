@@ -25,10 +25,8 @@ public class MatchController {
     private MatchService matchService;
 
     @GetMapping
-    public Page<Match> findAllMatches(@RequestParam(defaultValue = "0") int page,
-                                      @RequestParam(defaultValue = "10") int size,
-                                      @RequestParam(defaultValue = "id") String sortBy){
-        return matchService.findAllMatches(page,size,sortBy);
+    public List<Match> findAll(){
+        return matchService.findAll();
     }
 
     @GetMapping("/{matchId}")

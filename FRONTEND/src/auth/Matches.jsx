@@ -9,16 +9,16 @@ const Matches = () => {
   // Stati per modifica inline
   const [editingMatchId, setEditingMatchId] = useState(null);
   const [editFormData, setEditFormData] = useState({
-    homeTeam: "",
-    awayTeam: "",
-    matchDate: "",
+    matchTitle: "",
+    date: "",
+    location: "",
   });
 
   // Stati per aggiungere nuovo match
   const [newMatch, setNewMatch] = useState({
-    homeTeam: "",
-    awayTeam: "",
-    matchDate: "",
+    matchTitle: "",
+    date: "",
+    location: "",
   });
   const [adding, setAdding] = useState(false);
 
@@ -39,6 +39,18 @@ const Matches = () => {
     }
   };
 
+  // Utility per validare e formattare la data
+  const isValidDate = (dateStr) => {
+    if (!dateStr) return false;
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    return regex.test(dateStr);
+  };
+  const formatDate = (dateStr) => {
+    if (!isValidDate(dateStr)) return "Data non valida";
+    const [year, month, day] = dateStr.split("-");
+    return `${day}/${month}/${year}`;
+  };
+
   // Elimina partita
   const handleDelete = async (id) => {
     if (!window.confirm("Sei sicuro di voler eliminare questa partita?")) return;
@@ -52,13 +64,12 @@ const Matches = () => {
     }
   };
 
-  // Attiva modalità modifica
   const handleEdit = (match) => {
     setEditingMatchId(match.id);
     setEditFormData({
-      homeTeam: match.homeTeam,
-      awayTeam: match.awayTeam,
-      matchDate: match.matchDate.substring(0, 16), // per input datetime-local
+      matchTitle: match.matchTitle,
+      date: match.date ? match.date.substring(0, 10) : "",
+      location: match.location || "",
     });
   };
 
@@ -69,9 +80,9 @@ const Matches = () => {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          homeTeam: editFormData.homeTeam,
-          awayTeam: editFormData.awayTeam,
-          matchDate: new Date(editFormData.matchDate).toISOString(),
+          matchTitle: editFormData.matchTitle,
+          date: isValidDate(editFormData.date) ? editFormData.date : null,
+          location: editFormData.location,
         }),
       });
       if (!res.ok) throw new Error("Errore durante il salvataggio");
@@ -91,15 +102,15 @@ const Matches = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          homeTeam: newMatch.homeTeam,
-          awayTeam: newMatch.awayTeam,
-          matchDate: new Date(newMatch.matchDate).toISOString(),
+          matchTitle: newMatch.matchTitle,
+          date: isValidDate(newMatch.date) ? newMatch.date : null,
+          location: newMatch.location,
         }),
       });
       if (!res.ok) throw new Error("Errore durante l'aggiunta");
       const created = await res.json();
       setMatches((prev) => [...prev, created]);
-      setNewMatch({ homeTeam: "", awayTeam: "", matchDate: "" });
+      setNewMatch({ matchTitle: "", date: "", location: "" });
       setAdding(false);
     } catch (err) {
       alert(err.message);
@@ -121,9 +132,9 @@ const Matches = () => {
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Squadra Casa</th>
-                  <th>Squadra Ospite</th>
+                  <th>Match</th>
                   <th>Data partita</th>
+                  <th>Location</th>
                   <th>Azioni</th>
                 </tr>
               </thead>
@@ -136,33 +147,48 @@ const Matches = () => {
                         {editingMatchId === match.id ? (
                           <Form.Control
                             type="text"
-                            value={editFormData.homeTeam}
-                            onChange={(e) => setEditFormData((prev) => ({ ...prev, homeTeam: e.target.value }))}
+                            value={editFormData.matchTitle}
+                            onChange={(e) =>
+                              setEditFormData((prev) => ({
+                                ...prev,
+                                matchTitle: e.target.value,
+                              }))
+                            }
                           />
                         ) : (
-                          match.homeTeam
+                          match.matchTitle
+                        )}
+                      </td>
+                      <td>
+                        {editingMatchId === match.id ? (
+                          <Form.Control
+                            type="date"
+                            value={editFormData.date}
+                            onChange={(e) =>
+                              setEditFormData((prev) => ({
+                                ...prev,
+                                date: e.target.value,
+                              }))
+                            }
+                          />
+                        ) : (
+                          formatDate(match.date)
                         )}
                       </td>
                       <td>
                         {editingMatchId === match.id ? (
                           <Form.Control
                             type="text"
-                            value={editFormData.awayTeam}
-                            onChange={(e) => setEditFormData((prev) => ({ ...prev, awayTeam: e.target.value }))}
+                            value={editFormData.location}
+                            onChange={(e) =>
+                              setEditFormData((prev) => ({
+                                ...prev,
+                                location: e.target.value,
+                              }))
+                            }
                           />
                         ) : (
-                          match.awayTeam
-                        )}
-                      </td>
-                      <td>
-                        {editingMatchId === match.id ? (
-                          <Form.Control
-                            type="datetime-local"
-                            value={editFormData.matchDate}
-                            onChange={(e) => setEditFormData((prev) => ({ ...prev, matchDate: e.target.value }))}
-                          />
-                        ) : (
-                          new Date(match.matchDate).toLocaleString()
+                          match.location
                         )}
                       </td>
                       <td>
@@ -202,24 +228,39 @@ const Matches = () => {
                     <td>
                       <Form.Control
                         type="text"
-                        value={newMatch.homeTeam}
-                        onChange={(e) => setNewMatch((prev) => ({ ...prev, homeTeam: e.target.value }))}
-                        placeholder="Squadra Casa"
+                        value={newMatch.matchTitle}
+                        onChange={(e) =>
+                          setNewMatch((prev) => ({
+                            ...prev,
+                            matchTitle: e.target.value,
+                          }))
+                        }
+                        placeholder="Match (es: Juventus vs Milan)"
+                      />
+                    </td>
+                    <td>
+                      <Form.Control
+                        type="date"
+                        value={newMatch.date}
+                        onChange={(e) =>
+                          setNewMatch((prev) => ({
+                            ...prev,
+                            date: e.target.value,
+                          }))
+                        }
                       />
                     </td>
                     <td>
                       <Form.Control
                         type="text"
-                        value={newMatch.awayTeam}
-                        onChange={(e) => setNewMatch((prev) => ({ ...prev, awayTeam: e.target.value }))}
-                        placeholder="Squadra Ospite"
-                      />
-                    </td>
-                    <td>
-                      <Form.Control
-                        type="datetime-local"
-                        value={newMatch.matchDate}
-                        onChange={(e) => setNewMatch((prev) => ({ ...prev, matchDate: e.target.value }))}
+                        value={newMatch.location}
+                        onChange={(e) =>
+                          setNewMatch((prev) => ({
+                            ...prev,
+                            location: e.target.value,
+                          }))
+                        }
+                        placeholder="Location"
                       />
                     </td>
                     <td>
@@ -234,7 +275,6 @@ const Matches = () => {
                 )}
               </tbody>
             </Table>
-
             {!adding && (
               <Button variant="primary" onClick={() => setAdding(true)}>
                 Aggiungi Partita

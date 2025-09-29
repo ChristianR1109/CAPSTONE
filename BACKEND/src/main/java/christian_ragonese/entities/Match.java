@@ -42,6 +42,11 @@ public class   Match {
         this.team2= team2;
     }
 
+    public Match(String matchTitle, String location, LocalDate date) {
+        this.matchTitle = matchTitle;
+        this.location = location;
+        this.date = date;
+    }
 
     public void ifPresentOrElse(Object o, Object o1) {
 

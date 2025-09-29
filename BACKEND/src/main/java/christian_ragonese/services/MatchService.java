@@ -1,6 +1,7 @@
 package christian_ragonese.services;
 
 import christian_ragonese.entities.Match;
+import christian_ragonese.entities.Order;
 import christian_ragonese.entities.Team;
 import christian_ragonese.exceptions.BadRequestException;
 import christian_ragonese.exceptions.NotFoundException;
@@ -47,32 +48,15 @@ private TeamService teamService;
             throw new BadRequestException("Match title "+ body.matchTitle() + " is already in use!");
         });
 
-        Team team1 = teamService.findById(body.team1Id());
 
-        Team team2 = teamService.findById(body.team2Id());
 
         Match newMatch = new Match(
                 body.matchTitle(),
                 body.location(),
-                body.date(),
-                team1,
-                team2
-        );
-        if (team1.getMatchesAsTeam1() != null) {
-            team1.getMatchesAsTeam1().add(newMatch);
-        } else {
-            List<Match> list = new ArrayList<>();
-            list.add(newMatch);
-            team1.setMatchesAsTeam1(list);
-        }
+                body.date()
 
-        if (team2.getMatchesAsTeam2() != null) {
-            team2.getMatchesAsTeam2().add(newMatch);
-        } else {
-            List<Match> list = new ArrayList<>();
-            list.add(newMatch);
-            team2.setMatchesAsTeam2(list);
-        }
+        );
+
 
         Match savedMatch=matchRepository.save(newMatch);
         return new MatchRespDTO(savedMatch.getId());
@@ -94,17 +78,14 @@ private TeamService teamService;
 
     public Match findByIdAndUpdate(UUID matchId, MatchDTO body) {
     
-        Team team1 = teamService.findById(body.team1Id());
 
-        Team team2 = teamService.findById(body.team2Id());
 
 
         Match found = this.findById(matchId);
         found.setMatchTitle(body.matchTitle());
         found.setLocation(body.location());
         found.setDate(body.date());
-        found.setTeam1(team1);
-        found.setTeam2(team2);
+
 
         return matchRepository.save(found);
     }
@@ -116,6 +97,9 @@ private TeamService teamService;
         return matchRepository.save(match);
     }
 
+    public List<Match> findAll(){
+        return matchRepository.findAll();
+    }
 
 
 }
