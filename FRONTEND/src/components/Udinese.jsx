@@ -87,13 +87,19 @@ const Udinese = () => {
                   <Form.Group className="mb-3" controlId="formName">
                     <Form.Label style={{ color: "#ffffffff" }}>Nome</Form.Label>
                     <Form.Control
-                      type="text"
-                      placeholder="Nome completo"
-                      value={buyerName}
-                      onChange={(e) => setBuyerName(e.target.value)}
+                      type="number"
+                      min="1"
+                      max="5"
+                      value={tickets}
+                      onChange={(e) => {
+                        const val = e.target.value;
+
+                        if (val === "" || (Number(val) >= 1 && Number(val) <= 5)) {
+                          setTickets(val);
+                        }
+                      }}
                       required
                       style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
-                      className="custom-placeholder"
                     />
                   </Form.Group>
                 </Col>

@@ -68,9 +68,15 @@ const Pisa = () => {
                 <Form.Control
                   type="number"
                   min="1"
-                  max="10"
+                  max="5"
                   value={tickets}
-                  onChange={(e) => setTickets(e.target.value)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+
+                    if (val === "" || (Number(val) >= 1 && Number(val) <= 5)) {
+                      setTickets(val);
+                    }
+                  }}
                   required
                   style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
                 />
@@ -95,13 +101,19 @@ const Pisa = () => {
                   <Form.Group className="mb-3" controlId="formEmail">
                     <Form.Label style={{ color: "#ffffffff" }}>Email</Form.Label>
                     <Form.Control
-                      type="email"
-                      placeholder="esempio@mail.com"
-                      value={buyerEmail}
-                      onChange={(e) => setBuyerEmail(e.target.value)}
+                      type="number"
+                      min="1"
+                      max="5"
+                      value={tickets}
+                      onChange={(e) => {
+                        const val = e.target.value;
+
+                        if (val === "" || (Number(val) >= 1 && Number(val) <= 5)) {
+                          setTickets(val);
+                        }
+                      }}
                       required
                       style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
-                      className="custom-placeholder"
                     />
                     {buyerEmail && !isEmailValid && <small style={{ color: "red" }}>Inserisci un indirizzo email valido</small>}
                   </Form.Group>

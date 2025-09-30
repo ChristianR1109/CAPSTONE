@@ -9,8 +9,8 @@ const Verona = () => {
   const [buyerName, setBuyerName] = useState("");
   const [buyerEmail, setBuyerEmail] = useState("");
   const [success, setSuccess] = useState(false);
-  const squadraDesiderata = "Verona";
-  const filteredMatches = matches.filter((match) => match.matchTitle.includes(squadraDesiderata));
+  // const squadraDesiderata = "Verona";
+  // const filteredMatches = matches.filter((match) => match.matchTitle.includes(squadraDesiderata));
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const isEmailValid = emailRegex.test(buyerEmail);
@@ -22,12 +22,10 @@ const Verona = () => {
         return res.json();
       })
       .then((data) => {
-        // Adatta 'content' o struttura a come arrivano i dati reali
         const matchList = data.content || data || [];
         console.log(data);
-        const squadraDesiderata = "Verona"; // cambia con il nome squadra richiesta
+        const squadraDesiderata = "Verona";
         const filteredMatches = matchList.filter((match) => match.matchTitle.includes(squadraDesiderata));
-        // Mappa i match in stringhe nel formato atteso per la select
 
         setMatches(filteredMatches);
       })
@@ -92,9 +90,15 @@ const Verona = () => {
                 <Form.Control
                   type="number"
                   min="1"
-                  max="10"
+                  max="5"
                   value={tickets}
-                  onChange={(e) => setTickets(e.target.value)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+
+                    if (val === "" || (Number(val) >= 1 && Number(val) <= 5)) {
+                      setTickets(val);
+                    }
+                  }}
                   required
                   style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
                 />

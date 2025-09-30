@@ -1,23 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Form, Row, Col, Card, Alert } from "react-bootstrap";
 import PayButton from "./PayButton";
 
-const matches = ["Atalanta vs Juventus - 05/10/2025", "Atalanta vs Milan - 19/10/2025", "Atalanta vs Inter - 02/11/2025"];
-
 const Genoa = () => {
+  const [matches, setMatches] = useState([]);
   const [selectedMatch, setSelectedMatch] = useState("");
   const [tickets, setTickets] = useState(1);
   const [buyerName, setBuyerName] = useState("");
   const [buyerEmail, setBuyerEmail] = useState("");
-  const [success, setSuccess] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const isEmailValid = emailRegex.test(buyerEmail);
 
+  useEffect(() => {
+    fetch("http://localhost:1313/public/matches")
+      .then((res) => {
+        if (!res.ok) throw new Error("Errore nel caricamento delle partite");
+        return res.json();
+      })
+      .then((data) => {
+        const matchList = data.content || data || [];
+        console.log(data);
+        const squadraDesiderata = "Genoa";
+        const filteredMatches = matchList.filter((match) => match.matchTitle.includes(squadraDesiderata));
+
+        setMatches(filteredMatches);
+      })
+      .catch((err) => {
+        console.error(err);
+        setMatches([]);
+      });
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (selectedMatch && buyerName && isEmailValid) {
-      setSuccess(true);
       setSelectedMatch("");
       setTickets(1);
       setBuyerName("");
@@ -39,12 +56,6 @@ const Genoa = () => {
               Seleziona la partita e inserisci i tuoi dati
             </Card.Subtitle>
 
-            {success && (
-              <Alert variant="success" onClose={() => setSuccess(false)} dismissible>
-                Acquisto completato con successo! Grazie per il supporto.
-              </Alert>
-            )}
-
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="formMatch">
                 <Form.Label style={{ color: "#ffffffff" }}>Partita</Form.Label>
@@ -55,11 +66,12 @@ const Genoa = () => {
                   style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
                 >
                   <option value="">Seleziona partita</option>
-                  {matches.map((match, idx) => (
-                    <option key={idx} value={match}>
-                      {match}
-                    </option>
-                  ))}
+                  {matches.length > 0 &&
+                    matches.map((match, idx) => (
+                      <option key={idx} value={match.id}>
+                        {match.matchTitle} - {match.date.replace(/-/g, "/")}
+                      </option>
+                    ))}
                 </Form.Select>
               </Form.Group>
 
