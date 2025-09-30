@@ -21,9 +21,12 @@ public class StandingsUpdaterRunner implements CommandLineRunner {
         List<Standings> standingsList = standingService.findAll();
 
         for (Standings standings : standingsList) {
-            var updated = getUpdatedStatsForTeam(standings.getTeam().getName());
+           if(standings.getTeam() == null){
+               System.out.println("standings senza team, id =" + standings.getId());
+               continue;
+           }
 
-
+    var updated = getUpdatedStatsForTeam(standings.getTeam().getName());
             standings.setWon(updated.won());
             standings.setDrawn(updated.drawn());
             standings.setLost(updated.lost());

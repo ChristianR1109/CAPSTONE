@@ -3,6 +3,7 @@ import { Table, Badge, Container, Row, Col, Spinner, Alert } from "react-bootstr
 
 import AuthContext from "../auth/AuthContext";
 import Image from "../../public/Easytickets.png";
+import { data } from "react-router-dom";
 const getBadgeVariant = (result) => {
   switch (result) {
     case "W":
@@ -23,14 +24,15 @@ const LeagueTable = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch standings
     const fetchStandings = fetch("http://localhost:1313/public/standings")
       .then((res) => {
         if (!res.ok) throw new Error("Errore nel caricamento della classifica");
-        return res.json();
+        return res.json(); // <--- qui converti in JSON
       })
-      .then((data) => setStandings(data));
-
+      .then((data) => {
+        console.log("Standings fetched:", data); // qui avrai l’array corretto
+        setStandings(data);
+      });
     // Fetch matches
     const fetchMatches = fetch("http://localhost:1313/public/matches")
       .then((res) => {
@@ -38,7 +40,7 @@ const LeagueTable = () => {
         return res.json();
       })
       .then((data) => {
-        console.log("Matches fetched:", data);
+        // console.log("Matches fetched:", data);
         setMatches(data.content || data || []);
       });
 
@@ -109,6 +111,7 @@ const LeagueTable = () => {
                       }
                       return pointsB - pointsA;
                     })
+
                     .map((team, c) => (
                       <tr key={team.team.name}>
                         <td>{c + 1}</td>
