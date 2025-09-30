@@ -8,7 +8,7 @@ const Napoli = () => {
   const [tickets, setTickets] = useState(1);
   const [buyerName, setBuyerName] = useState("");
   const [buyerEmail, setBuyerEmail] = useState("");
-
+  const matchName = matches.find((m) => m.id.toString() === selectedMatch)?.matchTitle || "";
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const isEmailValid = emailRegex.test(buyerEmail);
 
@@ -21,7 +21,7 @@ const Napoli = () => {
       .then((data) => {
         const matchList = data.content || data || [];
         console.log(data);
-        const squadraDesiderata = "Atalanta";
+        const squadraDesiderata = "Napoli";
         const filteredMatches = matchList.filter((match) => match.matchTitle.includes(squadraDesiderata));
 
         setMatches(filteredMatches);
@@ -134,8 +134,8 @@ const Napoli = () => {
                     tickets={tickets}
                     buyerName={buyerName}
                     buyerEmail={buyerEmail}
-                    matchName={selectedMatch}
-                  />{" "}
+                    matchName={matchName}
+                  />
                 </div>
                 <div>
                   <h4 className="p-0 mt-3"> Totale = {tickets * 20}€</h4>

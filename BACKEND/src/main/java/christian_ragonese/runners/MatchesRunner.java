@@ -78,7 +78,7 @@ public class MatchesRunner implements CommandLineRunner {
         );
 
 
-        for (Match match : day6) {
+        for (Match match : day8) {
             boolean exists = matchService.findByMatchTitle(match.getMatchTitle()).isPresent();
             if (!exists) {
                 newMatches.add(match);

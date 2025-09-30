@@ -22,6 +22,7 @@ const LeagueTable = () => {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   useEffect(() => {
     const fetchStandings = fetch("http://localhost:1313/public/standings")
@@ -50,6 +51,11 @@ const LeagueTable = () => {
         setError(err.message);
         setLoading(false);
       });
+    const query = new URLSearchParams(window.location.search);
+    const tokenParam = query.get("token");
+    if (tokenParam) {
+      setShowConfirmation(true);
+    }
   }, []);
 
   if (loading) {
@@ -71,133 +77,152 @@ const LeagueTable = () => {
 
   return (
     <Container fluid className="page-container">
-      {" "}
-      <h1 className="text-center team-title m-0 text-white pt-4">
-        EASYTICKETS <img src={Image} style={{ width: 80, marginBottom: 5 }} className="img-border"></img>
-      </h1>
-      <Container fluid className="my-4 d-flex justify-content-center mx-auto p-0">
-        <Row className="w-100">
-          <Col lg={8} className="p-0">
-            <Table striped bordered hover variant="dark" responsive>
-              <thead>
-                <tr>
-                  <th className="table-rnd-l">#</th>
-                  <th>Team</th>
-                  <th>P</th>
-                  <th>W</th>
-                  <th>D</th>
-                  <th>L</th>
-                  <th>DIFF</th>
-                  <th>Goals</th>
-                  <th>Last 5</th>
-                  <th className="table-rnd-r">PTS</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Array.isArray(standings) && standings.length > 0 ? (
-                  [...standings]
-                    .sort((a, b) => {
-                      const pointsA = a.won * 3 + a.drawn;
-                      const pointsB = b.won * 3 + b.drawn;
+      <div>
+        {showConfirmation && (
+          <div className="confirmation-popup text-white d-flex justify-content-center text-center border border-2 rounded card-box-shadoww mt-2 pb-2">
+            <div>
+              <h2>Acquisto completato con successo!</h2>
+              <button
+                className="rounded"
+                onClick={() => {
+                  setShowConfirmation(false);
+                  const url = new URL(window.location);
+                  url.searchParams.delete("token");
+                  window.history.replaceState({}, document.title, url.toString());
+                }}
+              >
+                Chiudi
+              </button>
+            </div>
+          </div>
+        )}{" "}
+        <h1 className="text-center team-title m-0 text-white pt-4">
+          EASYTICKETS <img src={Image} style={{ width: 80, marginBottom: 5 }} className="img-border"></img>
+        </h1>
+        <Container fluid className="my-4 d-flex justify-content-center mx-auto p-0">
+          <Row className="w-100">
+            <Col lg={8} className="p-0">
+              <Table striped bordered hover variant="dark" responsive>
+                <thead>
+                  <tr>
+                    <th className="table-rnd-l">#</th>
+                    <th>Team</th>
+                    <th>P</th>
+                    <th>W</th>
+                    <th>D</th>
+                    <th>L</th>
+                    <th>DIFF</th>
+                    <th>Goals</th>
+                    <th>Last 5</th>
+                    <th className="table-rnd-r">PTS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Array.isArray(standings) && standings.length > 0 ? (
+                    [...standings]
+                      .sort((a, b) => {
+                        const pointsA = a.won * 3 + a.drawn;
+                        const pointsB = b.won * 3 + b.drawn;
 
-                      if (pointsB === pointsA) {
-                        const diffA = a.goalsFor - a.goalsAgainst;
-                        const diffB = b.goalsFor - b.goalsAgainst;
+                        if (pointsB === pointsA) {
+                          const diffA = a.goalsFor - a.goalsAgainst;
+                          const diffB = b.goalsFor - b.goalsAgainst;
 
-                        if (diffB === diffA) {
-                          return b.goalsFor - a.goalsFor;
+                          if (diffB === diffA) {
+                            return b.goalsFor - a.goalsFor;
+                          }
+                          return diffB - diffA;
                         }
-                        return diffB - diffA;
-                      }
-                      return pointsB - pointsA;
-                    })
+                        return pointsB - pointsA;
+                      })
 
-                    .map((team, c) => (
-                      <tr key={team.team.name}>
-                        <td>{c + 1}</td>
-                        <td>
-                          <div className="d-flex align-items-center">
-                            <img
-                              src={team.team.logo} // adatta il path corretto al logo
-                              alt={team.team.name + " logo"}
-                              style={{ width: "30px", height: "30px", objectFit: "contain", marginRight: "10px" }}
-                            />
-                            <span>{team.team.name}</span>
-                          </div>
-                        </td>
-                        <td>{team.won + team.lost + team.drawn}</td>
-                        <td>{team.won}</td>
-                        <td>{team.drawn}</td>
-                        <td>{team.lost}</td>
-                        <td>{team.goalsFor - team.goalsAgainst}</td>
-                        <td>{team.goalsFor + ":" + team.goalsAgainst}</td>
-                        <td>
-                          {typeof team.last5 === "string" && team.last5.length > 0 ? (
-                            team.last5.split("").map((res, i) => (
-                              <Badge key={`${res}-${i}`} bg={getBadgeVariant(res)} className="me-1 px-2 py-1">
-                                {res}
-                              </Badge>
-                            ))
-                          ) : (
-                            <span>-</span>
-                          )}
-                        </td>
-                        <td>{team.won * 3 + team.drawn}</td>
-                      </tr>
-                    ))
-                ) : (
-                  <tr>
-                    <td colSpan="10" className="text-center">
-                      No standings available
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
-          </Col>
-          <Col lg={4} className="pe-0">
-            <Table striped bordered hover variant="dark" responsive className="  text-center">
-              <thead>
-                <tr>
-                  <th colSpan={3} className="table-rnd">
-                    PROSSIME PARTITE
-                  </th>
-                </tr>
-                <tr>
-                  <th>Date</th>
-                  <th>Home</th>
-                  <th>Away</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Array.isArray(matches) && matches.length > 0 ? (
-                  [...matches]
-                    .sort((a, b) => new Date(a.date) - new Date(b.date)) // Ordina per data crescente
-                    .slice(0, 10)
-                    .map((match, idx) => {
-                      const teams = match.matchTitle.split(" vs ");
-                      const team1 = teams[0] || "";
-                      const team2 = teams[1] || "";
-                      return (
-                        <tr key={idx}>
-                          <td>{match.date}</td>
-                          <td>{team1}</td>
-                          <td>{team2}</td>
+                      .map((team, c) => (
+                        <tr key={team.team.name}>
+                          <td>{c + 1}</td>
+                          <td>
+                            <div className="d-flex align-items-center">
+                              <img
+                                src={team.team.logo} // adatta il path corretto al logo
+                                alt={team.team.name + " logo"}
+                                style={{ width: "30px", height: "30px", objectFit: "contain", marginRight: "10px" }}
+                              />
+                              <span>{team.team.name}</span>
+                            </div>
+                          </td>
+                          <td>{team.won + team.lost + team.drawn}</td>
+                          <td>{team.won}</td>
+                          <td>{team.drawn}</td>
+                          <td>{team.lost}</td>
+                          <td>{team.goalsFor - team.goalsAgainst}</td>
+                          <td>{team.goalsFor + ":" + team.goalsAgainst}</td>
+                          <td>
+                            {typeof team.last5 === "string" && team.last5.length > 0 ? (
+                              team.last5.split("").map((res, i) => (
+                                <Badge key={`${res}-${i}`} bg={getBadgeVariant(res)} className="me-1 px-2 py-1">
+                                  {res}
+                                </Badge>
+                              ))
+                            ) : (
+                              <span>-</span>
+                            )}
+                          </td>
+                          <td>{team.won * 3 + team.drawn}</td>
                         </tr>
-                      );
-                    })
-                ) : (
+                      ))
+                  ) : (
+                    <tr>
+                      <td colSpan="10" className="text-center">
+                        No standings available
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </Table>
+            </Col>
+            <Col lg={4} className="pe-0">
+              <Table striped bordered hover variant="dark" responsive className="  text-center">
+                <thead>
                   <tr>
-                    <td colSpan="4" className="text-center">
-                      No matches available
-                    </td>
+                    <th colSpan={3} className="table-rnd">
+                      PROSSIME PARTITE
+                    </th>
                   </tr>
-                )}
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
-      </Container>
+                  <tr>
+                    <th>Date</th>
+                    <th>Home</th>
+                    <th>Away</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Array.isArray(matches) && matches.length > 0 ? (
+                    [...matches]
+                      .sort((a, b) => new Date(a.date) - new Date(b.date)) // Ordina per data crescente
+                      .slice(0, 10)
+                      .map((match, idx) => {
+                        const teams = match.matchTitle.split(" vs ");
+                        const team1 = teams[0] || "";
+                        const team2 = teams[1] || "";
+                        return (
+                          <tr key={idx}>
+                            <td>{match.date}</td>
+                            <td>{team1}</td>
+                            <td>{team2}</td>
+                          </tr>
+                        );
+                      })
+                  ) : (
+                    <tr>
+                      <td colSpan="4" className="text-center">
+                        No matches available
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+        </Container>{" "}
+      </div>
     </Container>
   );
 };
