@@ -30,7 +30,7 @@ const Matches = () => {
   useEffect(() => {
     fetchTeams();
     fetchMatches();
-  }, []);
+  });
 
   const fetchTeams = async () => {
     try {

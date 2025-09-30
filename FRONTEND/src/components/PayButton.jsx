@@ -41,7 +41,7 @@ function PayButton({ disabled, tickets, buyerName, buyerEmail, matchName }) {
       setLoading(false);
     }
   };
-  console.log("PREZZO ", pricePerTicket);
+
   return (
     <div style={{ marginTop: "1rem" }}>
       {error && <p style={{ color: "red" }}>{error}</p>}
