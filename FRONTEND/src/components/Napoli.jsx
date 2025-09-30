@@ -68,9 +68,15 @@ const Napoli = () => {
                 <Form.Control
                   type="number"
                   min="1"
-                  max="10"
+                  max="5"
                   value={tickets}
-                  onChange={(e) => setTickets(e.target.value)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+
+                    if (val === "" || (Number(val) >= 1 && Number(val) <= 5)) {
+                      setTickets(val);
+                    }
+                  }}
                   required
                   style={{ backgroundColor: "#ffffffff", color: "black", borderColor: "#ffffffff" }}
                 />

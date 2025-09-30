@@ -45,18 +45,6 @@ const Standings = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("Sei sicuro di voler eliminare questa classifica?")) return;
-
-    try {
-      const res = await fetch(`http://localhost:1313/public/standings/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Errore durante l'eliminazione");
-      setStandings((prev) => prev.filter((s) => s.id !== id));
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
   const handleEdit = (standing) => {
     setEditingId(standing.id);
     setEditFormData({
@@ -152,29 +140,8 @@ const Standings = () => {
                   standings.map((s, idx) => (
                     <tr key={s.id}>
                       <td>{idx + 1}</td>
-                      <td>
-                        {editingId === s.id ? (
-                          <Form.Control
-                            type="text"
-                            value={editFormData.teamName}
-                            onChange={(e) => setEditFormData((prev) => ({ ...prev, teamName: e.target.value }))}
-                          />
-                        ) : (
-                          s.team.name
-                        )}
-                      </td>
-                      <td>
-                        {editingId === s.id ? (
-                          <Form.Control
-                            type="number"
-                            min="0"
-                            value={editFormData.played}
-                            onChange={(e) => setEditFormData((prev) => ({ ...prev, played: e.target.value }))}
-                          />
-                        ) : (
-                          s.won + s.lost + s.drawn
-                        )}
-                      </td>
+                      <td>{editingId === s.id ? s.team.name : s.team.name}</td>
+                      <td>{editingId === s.id ? s.won + s.lost + s.drawn : s.won + s.lost + s.drawn}</td>
                       <td>
                         {editingId === s.id ? (
                           <Form.Control
@@ -211,18 +178,7 @@ const Standings = () => {
                           s.lost
                         )}
                       </td>
-                      <td>
-                        {editingId === s.id ? (
-                          <Form.Control
-                            type="number"
-                            min="0"
-                            value={editFormData.points}
-                            onChange={(e) => setEditFormData((prev) => ({ ...prev, points: e.target.value }))}
-                          />
-                        ) : (
-                          s.won * 3 + s.drawn
-                        )}
-                      </td>
+                      <td>{editingId === s.id ? s.won * 3 + s.drawn : s.won * 3 + s.drawn}</td>
                       <td>
                         {editingId === s.id ? (
                           <>
@@ -237,9 +193,6 @@ const Standings = () => {
                           <>
                             <Button variant="warning" size="sm" className="me-2" onClick={() => handleEdit(s)}>
                               Modifica
-                            </Button>
-                            <Button variant="danger" size="sm" onClick={() => handleDelete(s.id)}>
-                              Elimina
                             </Button>
                           </>
                         )}
@@ -265,15 +218,7 @@ const Standings = () => {
                         placeholder="Squadra"
                       />
                     </td>
-                    <td>
-                      <Form.Control
-                        type="number"
-                        min="0"
-                        value={newStanding.played}
-                        onChange={(e) => setNewStanding((prev) => ({ ...prev, played: e.target.value }))}
-                        placeholder="Giocate"
-                      />
-                    </td>
+
                     <td>
                       <Form.Control
                         type="number"
@@ -301,15 +246,7 @@ const Standings = () => {
                         placeholder="Perse"
                       />
                     </td>
-                    <td>
-                      <Form.Control
-                        type="number"
-                        min="0"
-                        value={newStanding.points}
-                        onChange={(e) => setNewStanding((prev) => ({ ...prev, points: e.target.value }))}
-                        placeholder="Punti"
-                      />
-                    </td>
+
                     <td>
                       <Button variant="success" size="sm" className="me-2" onClick={handleAdd}>
                         Aggiungi
@@ -322,12 +259,6 @@ const Standings = () => {
                 )}
               </tbody>
             </Table>
-
-            {!adding && (
-              <Button variant="primary" onClick={() => setAdding(true)}>
-                Aggiungi Classifica
-              </Button>
-            )}
           </Card.Body>
         </Card>
       )}

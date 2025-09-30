@@ -3,7 +3,7 @@ import { Table, Badge, Container, Row, Col, Spinner, Alert } from "react-bootstr
 
 import AuthContext from "../auth/AuthContext";
 import Image from "../../public/Easytickets.png";
-import { data } from "react-router-dom";
+
 const getBadgeVariant = (result) => {
   switch (result) {
     case "W":
