@@ -83,13 +83,16 @@ const Users = () => {
   const handleAddUser = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:1313/public/users", {
+      const res = await fetch("http://localhost:1313/public/users/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           username: newUser.username,
           email: newUser.email,
           role: newUser.role,
+          password: newUser.password,
+          name: newUser.name,
+          surname: newUser.surname,
         }),
       });
       if (!res.ok) throw new Error("Errore durante l'aggiunta");
@@ -191,43 +194,74 @@ const Users = () => {
                     </td>
                   </tr>
                 )}
-
                 {adding && (
-                  <tr>
-                    <td>Nuovo</td>
-                    <td>
-                      <Form.Control
-                        type="text"
-                        value={newUser.username}
-                        onChange={(e) => setNewUser((prev) => ({ ...prev, username: e.target.value }))}
-                        placeholder="Username"
-                      />
-                    </td>
-                    <td>
-                      <Form.Control
-                        type="email"
-                        value={newUser.email}
-                        onChange={(e) => setNewUser((prev) => ({ ...prev, email: e.target.value }))}
-                        placeholder="Email"
-                      />
-                    </td>
-                    <td>
-                      <Form.Control
-                        type="text"
-                        value={newUser.role}
-                        onChange={(e) => setNewUser((prev) => ({ ...prev, role: e.target.value }))}
-                        placeholder="Ruolo"
-                      />
-                    </td>
-                    <td>
-                      <Button variant="success" size="sm" className="me-2" onClick={handleAddUser}>
-                        Aggiungi
-                      </Button>
-                      <Button variant="secondary" size="sm" onClick={() => setAdding(false)}>
-                        Annulla
-                      </Button>
-                    </td>
-                  </tr>
+                  <>
+                    <tr>
+                      <td>Nuovo</td>
+                      <td>
+                        <Form.Control
+                          type="text"
+                          value={newUser.username}
+                          onChange={(e) => setNewUser((prev) => ({ ...prev, username: e.target.value }))}
+                          placeholder="Username"
+                        />
+                      </td>
+                      <td>
+                        <Form.Control
+                          type="email"
+                          value={newUser.email}
+                          onChange={(e) => setNewUser((prev) => ({ ...prev, email: e.target.value }))}
+                          placeholder="Email"
+                        />
+                      </td>
+                      <td>
+                        <Form.Control
+                          type="text"
+                          value={newUser.role}
+                          onChange={(e) => setNewUser((prev) => ({ ...prev, role: e.target.value }))}
+                          placeholder="Ruolo"
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>
+                        <Form.Control
+                          type="password"
+                          value={newUser.password}
+                          onChange={(e) => setNewUser((prev) => ({ ...prev, password: e.target.value }))}
+                          placeholder="Password"
+                        />
+                      </td>
+                      <td>
+                        <Form.Control
+                          type="text"
+                          value={newUser.name}
+                          onChange={(e) => setNewUser((prev) => ({ ...prev, name: e.target.value }))}
+                          placeholder="Name"
+                        />
+                      </td>
+                      <td>
+                        <Form.Control
+                          type="text"
+                          value={newUser.surname}
+                          onChange={(e) => setNewUser((prev) => ({ ...prev, surname: e.target.value }))}
+                          placeholder="Surname"
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td colSpan={3}>
+                        <Button variant="success" size="sm" className="me-2 mt-3" onClick={handleAddUser}>
+                          Aggiungi
+                        </Button>
+                        <Button variant="secondary" size="sm" className="mt-3" onClick={() => setAdding(false)}>
+                          Annulla
+                        </Button>
+                      </td>
+                    </tr>
+                  </>
                 )}
               </tbody>
             </Table>
