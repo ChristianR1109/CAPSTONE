@@ -36,6 +36,7 @@ const Standings = () => {
       const res = await fetch("http://localhost:1313/public/standings");
       if (!res.ok) throw new Error("Errore nel recupero delle classifiche");
       const data = await res.json();
+      console.log("WEWE", data);
       setStandings(data);
     } catch (err) {
       setError(err.message);
@@ -159,7 +160,7 @@ const Standings = () => {
                             onChange={(e) => setEditFormData((prev) => ({ ...prev, teamName: e.target.value }))}
                           />
                         ) : (
-                          s.teamName
+                          s.team.name
                         )}
                       </td>
                       <td>
@@ -171,7 +172,7 @@ const Standings = () => {
                             onChange={(e) => setEditFormData((prev) => ({ ...prev, played: e.target.value }))}
                           />
                         ) : (
-                          s.played
+                          s.won + s.lost + s.drawn
                         )}
                       </td>
                       <td>
@@ -219,7 +220,7 @@ const Standings = () => {
                             onChange={(e) => setEditFormData((prev) => ({ ...prev, points: e.target.value }))}
                           />
                         ) : (
-                          s.points
+                          s.won * 3 + s.drawn
                         )}
                       </td>
                       <td>

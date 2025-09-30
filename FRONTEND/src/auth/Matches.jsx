@@ -3,7 +3,7 @@ import { Container, Table, Card, Alert, Spinner, Button, Form } from "react-boot
 
 const Matches = () => {
   const [matches, setMatches] = useState([]);
-  const [teams, setTeams] = useState([]);
+  const [setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
