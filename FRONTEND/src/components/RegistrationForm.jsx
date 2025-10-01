@@ -77,7 +77,7 @@ function RegistrationForm() {
   };
 
   return (
-    <Container fluid className="page-container-registration mt-5">
+    <Container fluid className="page-container-registration my-5">
       <div className="    rounded-5 card-box-shadoww  " style={{ border: "2px solid #ffffffff" }}>
         <h2 className="text-2xl font-semibold text-white text-center mb-4">Crea il tuo account</h2>
 
@@ -89,7 +89,7 @@ function RegistrationForm() {
             <Row className="d-flex ">
               <Col xs={6} className="p-0 d-flex justify-content-center">
                 <label className="text-white mb-3 text-center mx-5">
-                  <h5 className="mb-1 ">Cognome</h5>
+                  <h5 className="mb-1 ">Username</h5>
                   <input
                     name="username"
                     value={form.username}

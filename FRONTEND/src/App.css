@@ -2,8 +2,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Delius&family=Roboto:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
 
 body,
-html {
+html,
+#root {
   background-color: #26315a;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* altezza minima viewport */
 }
 .nav-bg {
   background-color: #171c1f;
@@ -131,6 +140,7 @@ h6 {
   margin-right: auto;
   padding-left: 1rem; /* padding coerente */
   padding-right: 1rem;
+  flex: 1;
 }
 .page-container-login {
   max-width: 900px; /* larghezza container di bootstrap lg */
@@ -304,4 +314,46 @@ h6 {
   font-weight: 500;
   margin-top: 2px; /* distanza dal brand */
   text-align: left; /* o center, se preferisci */
+}
+.carousel-control-prev {
+  left: 1.5em;
+  top: 1em;
+}
+
+.carousel-control-next {
+  top: 1em;
+  right: 1.5em;
+}
+.carousel-indicators {
+  top: 30em;
+}
+.minimal-arrow {
+  font-size: 2rem;
+  color: white; /* Cambia se ti serve */
+  background: none;
+  border: none;
+  box-shadow: none;
+  text-decoration: none;
+}
+.carousel-control-prev,
+.carousel-control-next {
+  text-decoration: none !important;
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+.footer {
+  background-color: #171c1f;
+  color: white;
+  padding: 1.5rem 0 0.5rem 0;
+}
+.phrase {
+  font-family: "Delius", cursive;
+  margin-bottom: 0.5em;
+  text-align: center;
+}
+
+.main-content {
+  flex: 1; /* occupa tutto lo spazio verticale disponibile, spingendo il footer in fondo */
+  overflow-y: auto; /* contenuto scrollabile (opzionale) */
 }

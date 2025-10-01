@@ -29,187 +29,193 @@ import PrivateRoute from "./auth/PrivateRoute.jsx";
 import Backoffice from "./auth/Backoffice.jsx";
 import Orders from "./auth/Orders.jsx";
 import Matches from "./auth/Matches.jsx";
+import Footer from "./components/Footer.jsx";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <TopBar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/register" element={<RegistrationForm />} />
-          <Route path="/login" element={<LoginForm />} />
+        <div className="App">
+          <TopBar />
+          <div className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/register" element={<RegistrationForm />} />
+              <Route path="/login" element={<LoginForm />} />
 
-          <Route
-            path="/backoffice"
-            element={
-              <PrivateRoute requireAdmin={true}>
-                <Backoffice />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/atalanta"
-            element={
-              <PrivateRoute>
-                <Atalanta />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/bologna"
-            element={
-              <PrivateRoute>
-                <Bologna />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/cagliari"
-            element={
-              <PrivateRoute>
-                <Cagliari />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/como"
-            element={
-              <PrivateRoute>
-                <Como />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/cremonese"
-            element={
-              <PrivateRoute>
-                <Cremonese />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/fiorentina"
-            element={
-              <PrivateRoute>
-                <Fiorentina />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/genoa"
-            element={
-              <PrivateRoute>
-                <Genoa />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/inter"
-            element={
-              <PrivateRoute>
-                <Inter />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/juventus"
-            element={
-              <PrivateRoute>
-                <Juventus />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/lazio"
-            element={
-              <PrivateRoute>
-                <Lazio />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/lecce"
-            element={
-              <PrivateRoute>
-                <Lecce />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/milan"
-            element={
-              <PrivateRoute>
-                <Milan />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/napoli"
-            element={
-              <PrivateRoute>
-                <Napoli />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/parma"
-            element={
-              <PrivateRoute>
-                <Parma />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/pisa"
-            element={
-              <PrivateRoute>
-                <Pisa />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/roma"
-            element={
-              <PrivateRoute>
-                <Roma />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/sassuolo"
-            element={
-              <PrivateRoute>
-                <Sassuolo />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/torino"
-            element={
-              <PrivateRoute>
-                <Torino />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/udinese"
-            element={
-              <PrivateRoute>
-                <Udinese />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/verona"
-            element={
-              <PrivateRoute>
-                <Verona />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
+              <Route
+                path="/backoffice"
+                element={
+                  <PrivateRoute requireAdmin={true}>
+                    <Backoffice />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/atalanta"
+                element={
+                  <PrivateRoute>
+                    <Atalanta />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/bologna"
+                element={
+                  <PrivateRoute>
+                    <Bologna />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/cagliari"
+                element={
+                  <PrivateRoute>
+                    <Cagliari />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/como"
+                element={
+                  <PrivateRoute>
+                    <Como />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/cremonese"
+                element={
+                  <PrivateRoute>
+                    <Cremonese />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/fiorentina"
+                element={
+                  <PrivateRoute>
+                    <Fiorentina />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/genoa"
+                element={
+                  <PrivateRoute>
+                    <Genoa />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/inter"
+                element={
+                  <PrivateRoute>
+                    <Inter />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/juventus"
+                element={
+                  <PrivateRoute>
+                    <Juventus />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/lazio"
+                element={
+                  <PrivateRoute>
+                    <Lazio />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/lecce"
+                element={
+                  <PrivateRoute>
+                    <Lecce />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/milan"
+                element={
+                  <PrivateRoute>
+                    <Milan />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/napoli"
+                element={
+                  <PrivateRoute>
+                    <Napoli />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/parma"
+                element={
+                  <PrivateRoute>
+                    <Parma />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/pisa"
+                element={
+                  <PrivateRoute>
+                    <Pisa />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/roma"
+                element={
+                  <PrivateRoute>
+                    <Roma />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/sassuolo"
+                element={
+                  <PrivateRoute>
+                    <Sassuolo />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/torino"
+                element={
+                  <PrivateRoute>
+                    <Torino />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/udinese"
+                element={
+                  <PrivateRoute>
+                    <Udinese />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/verona"
+                element={
+                  <PrivateRoute>
+                    <Verona />
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
+          </div>
+          <Footer />
+        </div>
       </BrowserRouter>
     </AuthProvider>
   );

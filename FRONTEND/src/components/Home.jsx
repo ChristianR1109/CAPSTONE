@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Badge, Container, Row, Col, Spinner, Alert } from "react-bootstrap";
+import { Table, Badge, Container, Row, Col, Spinner, Alert, Carousel } from "react-bootstrap";
 
 import AuthContext from "../auth/AuthContext";
 import Image from "../../public/Easytickets.png";
@@ -23,6 +23,8 @@ const LeagueTable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const itemsPerSlide = 10;
+  const totalSlides = Math.ceil(matches.length / itemsPerSlide);
 
   useEffect(() => {
     const fetchStandings = fetch("http://localhost:1313/public/standings")
@@ -99,6 +101,7 @@ const LeagueTable = () => {
         <h1 className="text-center team-title m-0 text-white pt-4">
           EASYTICKETS <img src={Image} style={{ width: 80, marginBottom: 5 }} className="img-border"></img>
         </h1>
+        <h5 className="text-center phrase m-0 p-0 text-white">Biglietti facili, emozioni vere.</h5>
         <Container fluid className="my-4 d-flex justify-content-center mx-auto p-0">
           <Row className="w-100">
             <Col lg={8} className="p-0">
@@ -180,45 +183,41 @@ const LeagueTable = () => {
               </Table>
             </Col>
             <Col lg={4} className="pe-0">
-              <Table striped bordered hover variant="dark" responsive className="  text-center">
-                <thead>
-                  <tr>
-                    <th colSpan={3} className="table-rnd">
-                      PROSSIME PARTITE
-                    </th>
-                  </tr>
-                  <tr>
-                    <th>Date</th>
-                    <th>Home</th>
-                    <th>Away</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Array.isArray(matches) && matches.length > 0 ? (
-                    [...matches]
-                      .sort((a, b) => new Date(a.date) - new Date(b.date)) // Ordina per data crescente
-                      .slice(0, 10)
-                      .map((match, idx) => {
-                        const teams = match.matchTitle.split(" vs ");
-                        const team1 = teams[0] || "";
-                        const team2 = teams[1] || "";
-                        return (
-                          <tr key={idx}>
-                            <td>{match.date}</td>
-                            <td>{team1}</td>
-                            <td>{team2}</td>
+              <Carousel prevIcon={<span className="minimal-arrow">{"<"}</span>} nextIcon={<span className="minimal-arrow">{">"}</span>} interval={null}>
+                {[...Array(totalSlides)].map((_, idx) => {
+                  const slideMatches = matches.slice(idx * itemsPerSlide, idx * itemsPerSlide + itemsPerSlide);
+                  return (
+                    <Carousel.Item key={idx}>
+                      <Table striped bordered hover variant="dark" responsive className="text-center mb-0">
+                        <thead>
+                          <tr>
+                            <th colSpan={3} className="text-center table-rnd-l table-rnd-r">
+                              Giornata {idx + 6}
+                            </th>
                           </tr>
-                        );
-                      })
-                  ) : (
-                    <tr>
-                      <td colSpan="4" className="text-center">
-                        No matches available
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </Table>
+                          <tr>
+                            <th>Date</th>
+                            <th>Home</th>
+                            <th>Away</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {slideMatches.map((match, i) => {
+                            const [home, away] = match.matchTitle.split(" vs ");
+                            return (
+                              <tr key={i}>
+                                <td>{match.date}</td>
+                                <td>{home}</td>
+                                <td>{away}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </Table>
+                    </Carousel.Item>
+                  );
+                })}
+              </Carousel>
             </Col>
           </Row>
         </Container>{" "}
